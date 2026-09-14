@@ -1,0 +1,537 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — Design Tokens
+   These are overridable by Supabase site_settings
+   ───────────────────────────────────────────────── */
+:root {
+  /* Brand Colors */
+  --color-primary: #d45c33;       /* terracotta-500 */
+  --color-primary-dark: #c04426;  /* terracotta-600 */
+  --color-primary-light: #eda98b; /* terracotta-300 */
+  --color-secondary: #f59e0b;     /* amber-500 */
+  --color-secondary-light: #fcd34d; /* amber-300 */
+  --color-accent: #0f766e;        /* teal-700 */
+  --color-accent-light: #14b8a6;  /* teal-500 */
+  --color-background: #FAF7F2;    /* cream */
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #f5f0e8;
+  --color-text-primary: #1a1007;
+  --color-text-secondary: #5c4a32;
+  --color-text-muted: #9c8268;
+  --color-border: #e8dfd0;
+  --color-deep-teal: #0B4F4A;
+
+  /* Typography */
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans: 'Manrope', 'Inter', system-ui, sans-serif;
+
+  /* Spacing */
+  --nav-height: 72px;
+  --bottom-nav-height: 72px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.14);
+  --shadow-glow-primary: 0 0 40px rgba(212, 92, 51, 0.25);
+  --shadow-glow-accent: 0 0 40px rgba(15, 118, 110, 0.25);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─────────────────────────────────────────────────
+   BASE STYLES
+   ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────────
+   TYPOGRAPHY SCALE
+   ───────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  line-height: 1.15;
+  color: var(--color-text-primary);
+}
+
+.display-hero {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.display-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.display-lg {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  line-height: 1.2;
+}
+
+.display-md {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 2.5vw, 2rem);
+  line-height: 1.25;
+}
+
+.body-lg {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.body-md {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.body-sm {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────
+   GRAIN TEXTURE OVERLAY
+   ───────────────────────────────────────────────── */
+.grain-overlay {
+  position: relative;
+}
+
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  z-index: 10;
+}
+
+/* ─────────────────────────────────────────────────
+   GLASSMORPHISM UTILITIES
+   ───────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(11, 79, 74, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─────────────────────────────────────────────────
+   CUSTOM SCROLLBAR
+   ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* ─────────────────────────────────────────────────
+   CUSTOM CURSOR (desktop)
+   ───────────────────────────────────────────────── */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, select, textarea, label {
+    cursor: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   DOTTED FLIGHT PATH DECORATION
+   ───────────────────────────────────────────────── */
+.flight-path-dots {
+  background-image: radial-gradient(circle, var(--color-primary) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+}
+
+.flight-path-dashes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-primary-light),
+    var(--color-primary-light) 8px,
+    transparent 8px,
+    transparent 18px
+  );
+  height: 2px;
+}
+
+/* ─────────────────────────────────────────────────
+   POLAROID FRAME EFFECT
+   ───────────────────────────────────────────────── */
+.polaroid {
+  background: white;
+  padding: 12px 12px 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+  transform: rotate(-2deg);
+  transition: transform var(--transition-slow);
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.polaroid-alt {
+  transform: rotate(2deg);
+}
+
+.polaroid-alt:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+/* ─────────────────────────────────────────────────
+   JOURNEY ROAD SVG STYLES
+   ───────────────────────────────────────────────── */
+.road-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.road-path {
+  fill: none;
+  stroke: #e8dfd0;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.road-path-progress {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 10000;
+  stroke-dashoffset: 10000;
+}
+
+.road-center-line {
+  fill: none;
+  stroke: rgba(255,255,255,0.6);
+  stroke-width: 2;
+  stroke-dasharray: 16 10;
+  stroke-linecap: round;
+}
+
+.day-stop-marker {
+  cursor: pointer;
+  transition: transform var(--transition-spring);
+}
+
+.day-stop-marker:hover {
+  transform: scale(1.15);
+}
+
+/* ─────────────────────────────────────────────────
+   BOTTOM NAV MOBILE
+   ───────────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--color-border);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ─────────────────────────────────────────────────
+   SKIP TO CONTENT (Accessibility)
+   ───────────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ─────────────────────────────────────────────────
+   SHIMMER SKELETON LOADER
+   ───────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-alt) 25%,
+    rgba(255,255,255,0.8) 50%,
+    var(--color-surface-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─────────────────────────────────────────────────
+   SECTION DIVIDER — Hand-drawn style
+   ───────────────────────────────────────────────── */
+.section-divider-wave {
+  width: 100%;
+  height: 60px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30' stroke='%23e8dfd0' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 1440px 60px;
+  opacity: 0.6;
+}
+
+/* ─────────────────────────────────────────────────
+   MARQUEE (destination strip)
+   ───────────────────────────────────────────────── */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track-reverse {
+  animation: marquee 30s linear infinite reverse;
+}
+
+/* ─────────────────────────────────────────────────
+   UTILITY CLASSES
+   ───────────────────────────────────────────────── */
+.container-site {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 640px) {
+  .container-site {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    padding: 0 48px;
+  }
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-teal {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hover underline animation */
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width var(--transition-base);
+  border-radius: var(--radius-full);
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────
+   REDUCED MOTION SUPPORT
+   ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track,
+  .marquee-track-reverse {
+    animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   MOBILE SAFE AREA BOTTOM PADDING
+   ───────────────────────────────────────────────── */
+.pb-safe {
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+/* ─────────────────────────────────────────────────
+   FOCUS STYLES (Accessibility)
+   ───────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────
+   ADMIN DASHBOARD STYLES
+   ───────────────────────────────────────────────── */
+.admin-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: #0f1117;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  margin: 2px 8px;
+}
+
+.admin-nav-item:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.admin-nav-item.active {
+  background: rgba(212, 92, 51, 0.2);
+  color: #eda98b;
+}
+
+/* ─────────────────────────────────────────────────
+   CARD HOVER TILT EFFECT (via framer-motion, defined in component)
+   ───────────────────────────────────────────────── */
+.package-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* ─────────────────────────────────────────────────
+   WHATSAPP BUTTON PULSE
+   ───────────────────────────────────────────────── */
+.whatsapp-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-full);
+  background: #25d366;
+  animation: pulseSoft 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* ─────────────────────────────────────────────────
+   PRINT STYLES
+   ───────────────────────────────────────────────── */
+@media print {
+  .bottom-nav,
+  .top-nav,
+  .compass-cursor,
+  [data-no-print] {
+    display: none !important;
+  }
+}
