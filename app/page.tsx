@@ -8,6 +8,7 @@ import DestinationMarquee from "@/components/home/DestinationMarquee";
 import { getFeaturedPackages, getPublishedTestimonials, getSiteSettings } from "@/lib/supabase/queries";
 import { getLocalBusinessJsonLd } from "@/lib/structured-data";
 import { SkeletonCard } from "@/components/ui/Skeleton";
+import TourLoader from "@/components/ui/TourLoader";
 
 export const metadata: Metadata = {
   title: "ENJOY Holidays — Premium Travel Experiences in India",
@@ -76,8 +77,8 @@ export default async function HomePage() {
       {/* ── Testimonials ─────────────────────────────────────────── */}
       <Suspense
         fallback={
-          <div className="py-20 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full border-2 border-[var(--color-primary)] border-t-transparent animate-spin" />
+          <div className="py-16 flex items-center justify-center">
+            <TourLoader label="Gathering verified guest stories..." />
           </div>
         }
       >

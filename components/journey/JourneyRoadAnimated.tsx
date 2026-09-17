@@ -138,14 +138,14 @@ export default function JourneyRoadAnimated({ days, vehicleType = "jeep" }: Jour
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto"
+      className="relative mx-auto w-full overflow-x-hidden"
       style={{ maxWidth: 700 }}
     >
-      <div className="flex gap-0 md:gap-8">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-0 md:gap-8 w-full">
         {/* SVG Road column */}
         <div
-          className="flex-shrink-0 relative"
-          style={{ width: SVG_W, height: SVG_H }}
+          className="flex-shrink-0 relative max-w-full flex justify-center"
+          style={{ width: "min(100%, 340px)", height: SVG_H }}
           aria-hidden="true"
         >
           <svg
@@ -153,7 +153,7 @@ export default function JourneyRoadAnimated({ days, vehicleType = "jeep" }: Jour
             viewBox={`0 0 ${SVG_W} ${SVG_H}`}
             width={SVG_W}
             height={SVG_H}
-            className="road-svg absolute top-0 left-0"
+            className="road-svg max-w-full"
           >
             {/* Base road (grey) */}
             <path d={roadPath} className="road-path" strokeWidth={8} />

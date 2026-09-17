@@ -91,26 +91,26 @@ export default function HeroSection(props: HeroSectionProps) {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 container-site text-center py-32 pt-40">
+      <div className="relative z-10 container-site text-center py-20 pt-28 sm:py-28 sm:pt-36 md:py-32 md:pt-40">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-white/90 text-xs font-semibold tracking-widest uppercase"
+          className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full mb-6 sm:mb-8 text-white/90 text-[11px] sm:text-xs font-semibold tracking-widest uppercase max-w-[90vw] truncate"
           style={{
             background: "rgba(255,255,255,0.12)",
             border: "1px solid rgba(255,255,255,0.25)",
             backdropFilter: "blur(8px)",
           }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] animate-pulse-soft" />
-          Premium Handcrafted Experiences · Est. 2018
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] animate-pulse-soft shrink-0" />
+          <span className="truncate">Premium Handcrafted Experiences · Est. 2018</span>
         </motion.div>
 
         {/* Headline */}
         <motion.h1
-          className="display-hero text-white mb-6"
+          className="display-hero text-white mb-4 sm:mb-6"
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -131,7 +131,7 @@ export default function HeroSection(props: HeroSectionProps) {
 
         {/* Subtext */}
         <motion.p
-          className="body-lg text-white/85 max-w-xl mx-auto mb-10"
+          className="body-lg text-white/85 max-w-xl mx-auto mb-8 sm:mb-10 text-sm sm:text-base px-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
@@ -142,14 +142,14 @@ export default function HeroSection(props: HeroSectionProps) {
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-none mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
         >
           <Link
             href="/packages"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-bold text-white shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(212,92,51,0.5)] active:scale-95"
+            className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-bold text-white shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(212,92,51,0.5)] active:scale-95"
             style={{
               background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
             }}
@@ -166,7 +166,7 @@ export default function HeroSection(props: HeroSectionProps) {
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
             style={{
               background: "rgba(255,255,255,0.15)",
               border: "2px solid rgba(255,255,255,0.4)",
@@ -181,7 +181,7 @@ export default function HeroSection(props: HeroSectionProps) {
 
         {/* Stats row */}
         <motion.div
-          className="flex items-center justify-center gap-8 mt-16 flex-wrap"
+          className="flex items-center justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 flex-wrap"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}

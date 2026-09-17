@@ -25,28 +25,33 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // Refresh session — important for Server Components
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   const pathname = request.nextUrl.pathname;
 
   // Protect all /admin/* routes except /admin/login
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+  if (pathname.startsWith("/admin")) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (pathname === "/admin/login") {
+      if (user) {
+        const dashboardUrl = request.nextUrl.clone();
+        dashboardUrl.pathname = "/admin";
+        const response = NextResponse.redirect(dashboardUrl);
+        supabaseResponse.cookies.getAll().forEach((c) => response.cookies.set(c.name, c.value, c));
+        return response;
+      }
+      return supabaseResponse;
+    }
+
     if (!user) {
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = "/admin/login";
       loginUrl.searchParams.set("redirectTo", pathname);
-      return NextResponse.redirect(loginUrl);
+      const response = NextResponse.redirect(loginUrl);
+      supabaseResponse.cookies.getAll().forEach((c) => response.cookies.set(c.name, c.value, c));
+      return response;
     }
-  }
-
-  // If logged in admin tries to visit /admin/login, redirect to dashboard
-  if (pathname === "/admin/login" && user) {
-    const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = "/admin";
-    return NextResponse.redirect(dashboardUrl);
   }
 
   return supabaseResponse;
@@ -54,13 +59,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico
-     * - public folder files
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
+

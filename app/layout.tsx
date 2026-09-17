@@ -4,7 +4,6 @@ import "./globals.css";
 import TopNav from "@/components/layout/TopNav";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
-import CompassCursor from "@/components/ui/CompassCursor";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -23,6 +22,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://enjoyholidays.in"),
   title: {
     default: "ENJOY Holidays — Premium Travel Experiences in India",
     template: "%s | ENJOY Holidays",
@@ -107,26 +107,31 @@ export default async function RootLayout({
     : "";
 
   return (
-    <html lang="en" className={`${dmSerifDisplay.variable} ${manrope.variable}`}>
-      <head>
-        {dynamicTheme && (
-          <style>{`:root { ${dynamicTheme} }`}</style>
-        )}
-      </head>
+    <html
+      lang="en"
+      className={`${dmSerifDisplay.variable} ${manrope.variable}`}
+    >
+      {dynamicTheme && (
+        <head>
+          <style
+            id="dynamic-theme"
+            dangerouslySetInnerHTML={{
+              __html: `:root { ${dynamicTheme} }`,
+            }}
+          />
+        </head>
+      )}
       <body className="bg-cream font-sans antialiased">
         {/* Accessibility: skip to main content */}
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
 
-        {/* Custom compass cursor — desktop only */}
-        <CompassCursor />
-
         {/* Desktop navigation */}
         <TopNav />
 
-        {/* Main content */}
-        <main id="main-content" className="min-h-screen">
+        {/* Main content with safe bottom padding on mobile for bottom navigation */}
+        <main id="main-content" className="min-h-screen pb-24 md:pb-0">
           {children}
         </main>
 

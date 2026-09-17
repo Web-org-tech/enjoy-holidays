@@ -117,8 +117,8 @@ export default async function ContactPage() {
           {/* Enquiry form */}
           <div>
             <h2 className="display-md text-[var(--color-text-primary)] mb-6">Send an Enquiry</h2>
-            <div className="rounded-2xl overflow-hidden">
-              <EnquiryForm className="!bg-white !border-[var(--color-border)] [&_input]:!bg-[var(--color-surface-alt)] [&_input]:!border-[var(--color-border)] [&_input]:!text-[var(--color-text-primary)] [&_input]:!placeholder-[var(--color-text-muted)] [&_h3]:!text-[var(--color-text-primary)] [&_p]:!text-[var(--color-text-muted)] [&_label]:!text-[var(--color-text-secondary)]" />
+            <div className="rounded-2xl overflow-hidden shadow-sm">
+              <EnquiryForm lightMode={true} />
             </div>
           </div>
         </div>

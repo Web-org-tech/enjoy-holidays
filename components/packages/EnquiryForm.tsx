@@ -9,16 +9,25 @@ interface EnquiryFormProps {
   packageId?: string;
   packageName?: string;
   className?: string;
+  lightMode?: boolean;
 }
 
-export default function EnquiryForm({ packageId, packageName, className = "" }: EnquiryFormProps) {
+export default function EnquiryForm({
+  packageId,
+  packageName,
+  className = "",
+  lightMode = false,
+}: EnquiryFormProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isLight = lightMode || className.includes("!bg-white") || className.includes("bg-white");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +41,7 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
       package_id: packageId,
       message: message || undefined,
       source: "form",
+      honeypot,
     });
 
     setLoading(false);
@@ -47,38 +57,61 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-2xl p-8 text-center flex flex-col items-center gap-4"
-        style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}
+        className={`rounded-2xl p-8 text-center flex flex-col items-center gap-4 ${className}`}
+        style={
+          isLight
+            ? { background: "#FFFFFF", border: "1px solid var(--color-border)" }
+            : { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }
+        }
       >
-        <CheckCircle size={48} className="text-emerald-400" />
+        <CheckCircle size={48} className="text-emerald-500" />
         <div>
-          <h3 className="font-serif text-2xl text-white mb-2">Message Received!</h3>
-          <p className="text-white/60 text-sm">
+          <h3 className={`font-serif text-2xl mb-2 ${isLight ? "text-[var(--color-text-primary)]" : "text-white"}`}>
+            Message Received!
+          </h3>
+          <p className={`text-sm ${isLight ? "text-[var(--color-text-muted)]" : "text-white/70"}`}>
             Thank you {name}! We&apos;ll call you back within 2 hours.{" "}
-            {packageName && <span>Your enquiry about <strong className="text-white/80">{packageName}</strong> is noted.</span>}
+            {packageName && (
+              <span>
+                Your enquiry about <strong className={isLight ? "text-[var(--color-primary)]" : "text-white"}>{packageName}</strong> is noted.
+              </span>
+            )}
           </p>
         </div>
       </motion.div>
     );
   }
 
-  const inputClass =
-    "w-full px-4 py-3 rounded-xl text-sm bg-white/10 border border-white/15 text-white placeholder-white/40 focus:outline-none focus:border-[var(--color-secondary-light)] focus:bg-white/15 transition-all duration-200";
+  const inputClass = isLight
+    ? "w-full px-4 py-3 rounded-xl text-sm bg-[#FAF8F5] border border-[#DBD4C4] text-[#0D1F1C] placeholder-[#718096] focus:outline-none focus:border-[#004741] focus:ring-1 focus:ring-[#004741]/20 transition-all font-medium"
+    : "w-full px-4 py-3 rounded-xl text-sm bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-[var(--color-secondary-light)] focus:bg-white/15 transition-all font-medium";
+
+  const labelClass = isLight
+    ? "block text-xs text-[var(--color-text-secondary)] font-bold mb-1.5"
+    : "block text-xs text-white/80 font-medium mb-1.5";
 
   return (
     <form
       onSubmit={handleSubmit}
       className={`rounded-2xl p-6 flex flex-col gap-4 ${className}`}
-      style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}
+      style={
+        isLight
+          ? { background: "#FFFFFF", border: "1px solid var(--color-border)" }
+          : { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }
+      }
       aria-label="Enquiry form"
       noValidate
     >
-      <h3 className="font-serif text-xl text-white mb-1">Send an Enquiry</h3>
-      <p className="text-white/50 text-xs mb-2">We&apos;ll call you back within 2 hours.</p>
+      <h3 className={`font-serif text-xl mb-1 ${isLight ? "text-[var(--color-text-primary)]" : "text-white"}`}>
+        Send an Enquiry
+      </h3>
+      <p className={`text-xs mb-2 ${isLight ? "text-[var(--color-text-muted)]" : "text-white/60"}`}>
+        We&apos;ll call you back within 2 hours.
+      </p>
 
       {/* Name */}
       <div>
-        <label htmlFor="enquiry-name" className="block text-xs text-white/60 font-medium mb-1.5">
+        <label htmlFor="enquiry-name" className={labelClass}>
           Full Name <span className="text-red-400">*</span>
         </label>
         <input
@@ -95,7 +128,7 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
 
       {/* Phone */}
       <div>
-        <label htmlFor="enquiry-phone" className="block text-xs text-white/60 font-medium mb-1.5">
+        <label htmlFor="enquiry-phone" className={labelClass}>
           Mobile Number <span className="text-red-400">*</span>
         </label>
         <input
@@ -114,8 +147,8 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
 
       {/* Email (optional) */}
       <div>
-        <label htmlFor="enquiry-email" className="block text-xs text-white/60 font-medium mb-1.5">
-          Email <span className="text-white/30">(optional)</span>
+        <label htmlFor="enquiry-email" className={labelClass}>
+          Email <span className={isLight ? "text-gray-400 font-normal" : "text-white/40 font-normal"}>(optional)</span>
         </label>
         <input
           id="enquiry-email"
@@ -131,7 +164,7 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
       {/* Package pre-fill (hidden if from package page) */}
       {!packageId && (
         <div>
-          <label htmlFor="enquiry-msg" className="block text-xs text-white/60 font-medium mb-1.5">
+          <label htmlFor="enquiry-msg" className={labelClass}>
             Your message
           </label>
           <textarea
@@ -148,6 +181,20 @@ export default function EnquiryForm({ packageId, packageName, className = "" }: 
       {packageId && (
         <input type="hidden" name="package_id" value={packageId} />
       )}
+
+      {/* Honeypot field for bot spam trap */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website_url">Leave blank</label>
+        <input
+          id="website_url"
+          type="text"
+          name="website_url"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       {/* Error */}
       <AnimatePresence>

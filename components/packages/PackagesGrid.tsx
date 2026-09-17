@@ -56,14 +56,14 @@ export default function PackagesGrid({ packages }: PackagesGridProps) {
       {/* Filter bar */}
       <div className="mb-8 flex flex-col gap-4">
         {/* Search */}
-        <div className="relative max-w-md">
+        <div className="relative max-w-md w-full">
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
           <input
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search destinations or packages..."
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--color-border)] bg-white text-sm focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--color-border)] bg-white text-[#0D1F1C] placeholder-[#718096] text-sm font-medium focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]/20 shadow-xs transition-colors"
             aria-label="Search packages"
             id="packages-search"
           />

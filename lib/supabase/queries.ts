@@ -184,7 +184,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   const { data, error } = await supabase
     .from("site_settings")
     .select("*")
-    .single();
+    .limit(1)
+    .maybeSingle();
 
   if (error) {
     console.error("[getSiteSettings]", error.message);
