@@ -43,6 +43,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS packages_updated_at ON packages;
 CREATE TRIGGER packages_updated_at
   BEFORE UPDATE ON packages
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS package_days (
   UNIQUE(package_id, day_number)
 );
 
-CREATE INDEX idx_package_days_package_id ON package_days(package_id);
-CREATE INDEX idx_package_days_sort ON package_days(package_id, sort_order);
+CREATE INDEX IF NOT EXISTS idx_package_days_package_id ON package_days(package_id);
+CREATE INDEX IF NOT EXISTS idx_package_days_sort ON package_days(package_id, sort_order);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- DAY ACTIVITIES
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS day_activities (
   sort_order      INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE INDEX idx_day_activities_day_id ON day_activities(package_day_id);
+CREATE INDEX IF NOT EXISTS idx_day_activities_day_id ON day_activities(package_day_id);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- PACKAGE INCLUSIONS
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS package_inclusions (
   sort_order  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE INDEX idx_inclusions_package_id ON package_inclusions(package_id);
+CREATE INDEX IF NOT EXISTS idx_inclusions_package_id ON package_inclusions(package_id);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- PACKAGE EXCLUSIONS
@@ -100,7 +101,7 @@ CREATE TABLE IF NOT EXISTS package_exclusions (
   sort_order  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE INDEX idx_exclusions_package_id ON package_exclusions(package_id);
+CREATE INDEX IF NOT EXISTS idx_exclusions_package_id ON package_exclusions(package_id);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- GALLERY ITEMS
@@ -117,8 +118,8 @@ CREATE TABLE IF NOT EXISTS gallery_items (
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_gallery_package_id ON gallery_items(package_id);
-CREATE INDEX idx_gallery_destination ON gallery_items(destination_tag);
+CREATE INDEX IF NOT EXISTS idx_gallery_package_id ON gallery_items(package_id);
+CREATE INDEX IF NOT EXISTS idx_gallery_destination ON gallery_items(destination_tag);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- TESTIMONIALS
@@ -135,7 +136,7 @@ CREATE TABLE IF NOT EXISTS testimonials (
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_testimonials_published ON testimonials(is_published);
+CREATE INDEX IF NOT EXISTS idx_testimonials_published ON testimonials(is_published);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- ENQUIRIES
@@ -154,8 +155,8 @@ CREATE TABLE IF NOT EXISTS enquiries (
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_enquiries_status ON enquiries(status);
-CREATE INDEX idx_enquiries_created ON enquiries(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_enquiries_status ON enquiries(status);
+CREATE INDEX IF NOT EXISTS idx_enquiries_created ON enquiries(created_at DESC);
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- SITE SETTINGS (singleton row)
