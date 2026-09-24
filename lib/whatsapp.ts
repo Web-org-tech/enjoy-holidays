@@ -1,6 +1,6 @@
 // ─── WhatsApp Deep-Link Utility ──────────────────────────────────────────────
 
-const DEFAULT_PHONE = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919999999999";
+const DEFAULT_PHONE = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "917010111256";
 
 export interface WhatsAppLinkOptions {
   phone?: string;
@@ -22,9 +22,9 @@ export function buildWhatsAppUrl({
   if (message) {
     text = message;
   } else if (packageName) {
-    text = `Hi! I'm interested in the *${packageName}* package. Could you please share more details about availability and pricing? Thank you! 🌍`;
+    text = `Hi Padma Tours & Travels! I'm interested in the *${packageName}* package. Could you please share more details about availability and pricing? Thank you! 🌍`;
   } else {
-    text = `Hi! I'd like to enquire about your holiday packages. Could you help me plan my trip? 🌍`;
+    text = `Hi Padma Tours & Travels! I'd like to enquire about your daily tours, sightseeing, and holiday packages. Could you help me plan my trip? 🌍`;
   }
 
   const encoded = encodeURIComponent(text);

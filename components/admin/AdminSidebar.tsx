@@ -61,7 +61,7 @@ export default function AdminSidebar({ userEmail }: AdminSidebarProps) {
             </svg>
           </div>
           <div>
-            <div className="text-white font-bold text-sm leading-none">ENJOY Holidays</div>
+            <div className="text-white font-bold text-sm leading-none">PADMA Tours</div>
             <div className="text-white/40 text-[10px] mt-0.5">Admin Panel</div>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function AdminSidebar({ userEmail }: AdminSidebarProps) {
               <path d="M10 2 L10 5 M10 15 L10 18 M2 10 L5 10 M15 10 L18 10" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
-          <span className="font-bold text-white text-xs">ENJOY Admin</span>
+          <span className="font-bold text-white text-xs">PADMA Admin</span>
         </div>
 
         <button

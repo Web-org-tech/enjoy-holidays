@@ -1,7 +1,7 @@
 import type { Package, PackageWithDays } from "@/lib/supabase/types";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://enjoyholidays.in";
-const SITE_NAME = "ENJOY Holidays";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
+const SITE_NAME = "PADMA TOURS & TRAVELS";
 
 // ─── LocalBusiness JSON-LD ────────────────────────────────────────────────────
 export function getLocalBusinessJsonLd() {
@@ -11,34 +11,59 @@ export function getLocalBusinessJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/logo.png`,
     description:
-      "Premium handcrafted holiday packages across India. Backwaters, beaches, hill stations and beyond.",
-    telephone: "+91-99999-99999",
-    email: "hello@enjoyholidays.in",
+      "Premier travel agency in Madurai since 2004. Offering daily tours, temple pilgrimages, local sightseeing, and customized package tours across South India and All India. 24/7 service.",
+    telephone: "+91-9865987975",
+    email: "nirmalharish1980@gmail.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Travel Lane",
-      addressLocality: "Kochi",
-      addressRegion: "Kerala",
-      postalCode: "682001",
+      streetAddress: "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters",
+      addressLocality: "Madurai",
+      addressRegion: "Tamil Nadu",
+      postalCode: "625002",
       addressCountry: "IN",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 9.9312,
-      longitude: 76.2673,
+      latitude: 9.9252,
+      longitude: 78.1198,
     },
-    openingHours: "Mo-Sa 09:00-19:00",
+    openingHours: "Mo-Su 00:00-24:00",
     sameAs: [
-      "https://instagram.com/enjoyholidays",
-      "https://facebook.com/enjoyholidays",
+      "https://wa.me/917010111256",
     ],
-    priceRange: "₹₹₹",
+    priceRange: "₹₹",
     currenciesAccepted: "INR",
-    paymentAccepted: "Cash, Credit Card, UPI",
+    paymentAccepted: "Cash, Credit Card, UPI, Net Banking",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "148",
+      bestRating: "5",
+      worstRating: "1",
+    },
     areaServed: {
       "@type": "Country",
       name: "India",
+    },
+  };
+}
+
+// ─── WebSite JSON-LD ──────────────────────────────────────────────────────────
+export function getWebsiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/packages?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 }

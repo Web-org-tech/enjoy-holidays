@@ -3,9 +3,9 @@ import Link from "next/link";
 import { FileCheck, AlertCircle, CreditCard, RotateCcw, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — ENJOY Holidays",
+  title: "Terms & Conditions — PADMA TOURS & TRAVELS",
   description:
-    "Review the booking conditions, payment schedules, cancellation guidelines, and operational policies for ENJOY Holidays packages.",
+    "Review the booking conditions, payment schedules, cancellation guidelines, and operational policies for PADMA TOURS & TRAVELS packages.",
 };
 
 export default function TermsPage() {
@@ -125,7 +125,7 @@ export default function TermsPage() {
               </h2>
             </div>
             <p className="body-md leading-relaxed mb-3">
-              ENJOY Holidays is not liable for itinerary disruptions, flight cancellations, road blockages, extreme weather conditions, natural disasters, or government restrictions beyond our reasonable control. In such events, our team will work diligently to reschedule your itinerary or provide equivalent credits where possible.
+              PADMA TOURS &amp; TRAVELS is not liable for itinerary disruptions, flight cancellations, road blockages, extreme weather conditions, natural disasters, or government restrictions beyond our reasonable control. In such events, our team will work diligently to reschedule your itinerary or provide equivalent credits where possible.
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export default function TermsPage() {
               5. Governing Law & Jurisdiction
             </h2>
             <p className="body-md leading-relaxed mb-4">
-              These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the competent courts in Kochi, Kerala.
+              These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the competent courts in Madurai, Tamil Nadu.
             </p>
           </div>
         </div>

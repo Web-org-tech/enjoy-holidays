@@ -3,9 +3,9 @@ import Link from "next/link";
 import { Shield, Lock, Eye, FileText, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — ENJOY Holidays",
+  title: "Privacy Policy — PADMA TOURS & TRAVELS",
   description:
-    "Read how ENJOY Holidays collects, uses, and safeguards your personal information when booking tours and travel experiences.",
+    "Read how PADMA TOURS & TRAVELS collects, uses, and safeguards your personal information when booking tours and travel experiences.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
               </h2>
             </div>
             <p className="body-md leading-relaxed mb-4">
-              When you interact with ENJOY Holidays — whether via our website enquiry forms, WhatsApp conversations, email, or telephone — we may collect personal details necessary to plan and deliver your travel itinerary:
+              When you interact with PADMA TOURS &amp; TRAVELS — whether via our website enquiry forms, WhatsApp conversations, email, or telephone — we may collect personal details necessary to plan and deliver your travel itinerary:
             </p>
             <ul className="list-disc pl-6 space-y-2 body-md">
               <li><strong>Contact Information:</strong> Full name, mobile/WhatsApp telephone number, email address, and city of origin.</li>
@@ -123,10 +123,11 @@ export default function PrivacyPolicyPage() {
               If you have any questions regarding this Privacy Policy, wish to update your contact preferences, or request data deletion, please reach out to us:
             </p>
             <div className="bg-[var(--color-surface-alt)] p-4 rounded-xl text-sm space-y-1">
-              <p><strong>ENJOY Holidays</strong></p>
-              <p>Email: <a href="mailto:hello@enjoyholidays.in" className="text-[var(--color-primary)] underline">hello@enjoyholidays.in</a></p>
-              <p>Phone: +91 99999 99999</p>
-              <p>Address: 123 Travel Lane, Kochi, Kerala — 682001</p>
+              <p><strong>PADMA TOURS &amp; TRAVELS</strong></p>
+              <p>Email: <a href="mailto:nirmalharish1980@gmail.com" className="text-[var(--color-primary)] underline">nirmalharish1980@gmail.com</a></p>
+              <p>Phone: +91 98659 87975</p>
+              <p>WhatsApp: +91 70101 11256</p>
+              <p>Address: No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002</p>
             </div>
           </div>
         </div>

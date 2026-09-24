@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import HeroSection from "@/components/home/HeroSection";
+import ServicesSection from "@/components/home/ServicesSection";
 import PackagesCarousel from "@/components/home/PackagesCarousel";
 import TrustBadges from "@/components/home/TrustBadges";
 import TestimonialsStrip from "@/components/home/TestimonialsStrip";
 import DestinationMarquee from "@/components/home/DestinationMarquee";
 import { getFeaturedPackages, getPublishedTestimonials, getSiteSettings } from "@/lib/supabase/queries";
-import { getLocalBusinessJsonLd } from "@/lib/structured-data";
+import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/structured-data";
 import { SkeletonCard } from "@/components/ui/Skeleton";
 import TourLoader from "@/components/ui/TourLoader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "ENJOY Holidays — Premium Travel Experiences in India",
+  title: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Est. 2004)",
   description:
-    "Handcrafted holiday packages across India's most stunning landscapes. Kerala backwaters, Coorg highlands, Goa beaches and beyond. Book with ENJOY Holidays.",
+    "Trusted travel agency in Madurai since 2004. Daily tours, Madurai local sightseeing, temple circuits, and customized holiday packages across South India. Available 24 hours.",
 };
 
 export const revalidate = 3600; // ISR: revalidate every hour
@@ -35,6 +37,7 @@ export default async function HomePage() {
   const whatsappNumber = settings?.contact_info?.whatsapp_number;
 
   const jsonLd = getLocalBusinessJsonLd();
+  const websiteJsonLd = getWebsiteJsonLd();
 
   return (
     <>
@@ -42,6 +45,10 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
@@ -58,32 +65,43 @@ export default async function HomePage() {
       {/* ── Destination Marquee ────────────────────────────────────── */}
       <DestinationMarquee />
 
+      {/* ── Services Offered (Daily Tour, Local Sightseeing, Packages) ── */}
+      <ScrollReveal direction="up" distance={40}>
+        <ServicesSection />
+      </ScrollReveal>
+
       {/* ── Featured Packages ─────────────────────────────────────── */}
-      <Suspense
-        fallback={
-          <div className="py-20 container-site grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        }
-      >
-        <FeaturedPackages featuredIds={featuredIds ?? undefined} />
-      </Suspense>
+      <ScrollReveal direction="up" distance={40} delay={0.1}>
+        <Suspense
+          fallback={
+            <div className="py-20 container-site grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          }
+        >
+          <FeaturedPackages featuredIds={featuredIds ?? undefined} />
+        </Suspense>
+      </ScrollReveal>
 
       {/* ── Trust Badges ─────────────────────────────────────────── */}
-      <TrustBadges />
+      <ScrollReveal direction="up" distance={30}>
+        <TrustBadges />
+      </ScrollReveal>
 
       {/* ── Testimonials ─────────────────────────────────────────── */}
-      <Suspense
-        fallback={
-          <div className="py-16 flex items-center justify-center">
-            <TourLoader label="Gathering verified guest stories..." />
-          </div>
-        }
-      >
-        <Testimonials />
-      </Suspense>
+      <ScrollReveal direction="up" distance={30}>
+        <Suspense
+          fallback={
+            <div className="py-16 flex items-center justify-center">
+              <TourLoader label="Gathering verified guest stories..." />
+            </div>
+          }
+        >
+          <Testimonials />
+        </Suspense>
+      </ScrollReveal>
 
       {/* ── Bottom padding for mobile nav ────────────────────────── */}
       <div className="h-safe md:h-0 block md:hidden" style={{ height: 80 }} aria-hidden="true" />

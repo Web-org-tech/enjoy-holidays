@@ -1,0 +1,106 @@
+================================================================================
+          TRAVEL AGENCY WEBSITE CUSTOMIZATION - CLIENT QUESTIONNAIRE
+================================================================================
+Please fill in as much information as possible. This will help us customize 
+your website with your agency's exact branding, package details, contact info, 
+and media content.
+================================================================================
+
+--------------------------------------------------------------------------------
+SECTION 1: BUSINESS & BRANDING INFORMATION
+--------------------------------------------------------------------------------
+1. Agency Name:
+   - Full Legal / Operating Business Name: PADMA TOURS & TRAVELS
+   - Short Name / Tagline (e.g., "Explore The World With Us"): Crafting Unforgettable Journeys Since 2004
+
+2. Brand Assets:
+   - Logo (High-resolution PNG/SVG with transparent background if available): Custom Padma Lotus & Travel Motif
+   - Favicon / Small Icon (optional): Custom
+   - Brand Color Preferences (e.g., Blue/Gold, Emerald/White, Dark Theme, etc.): Rich Deep Teal & Terracotta Gold
+
+3. Contact Information:
+   - Primary Phone Number (with Country Code): +91 98659 87975
+   - WhatsApp Number (for instant booking / quick inquiry button): +91 70101 11256 (917010111256)
+   - Email Address (for client inquiries): nirmalharish1980@gmail.com
+   - Physical Office Address: No: B19/3 racecourse colony, Old passport office opposite, Government quaters, Madurai 2
+   - Google Maps Location Link (optional): Madurai Racecourse Colony
+
+4. Business Hours:
+   - Monday - Sunday: 24 hrs (24/7 round-the-clock service)
+
+5. Social Media Links:
+   - Instagram: 
+   - Facebook: 
+   - WhatsApp / Telegram: +91 70101 11256
+   - YouTube / TikTok (if applicable): 
+
+
+--------------------------------------------------------------------------------
+SECTION 2: ABOUT THE AGENCY & HERO SECTION
+--------------------------------------------------------------------------------
+1. Hero Header & Introduction:
+   - Main Banner Headline: Where Will You Wander Next?
+   - Subheading / Short Description: Daily tours, Madurai local sightseeing, and customized holiday packages across India since 2004.
+
+2. About Us Section:
+   - Brief story/history of your travel agency: Started in 2004 in Madurai. Over 20 years of trusted travel service.
+   - Key highlights / Why choose us?: 20+ Years Experience, 24/7 Hours Support, Daily Tours, Madurai Local Sightseeing, Customized Tour Packages.
+   - Owner / Founder / Team message or photo (optional): Dedicated team based in Madurai.
+
+
+--------------------------------------------------------------------------------
+SECTION 3: TOUR PACKAGES & DESTINATIONS
+--------------------------------------------------------------------------------
+Please provide details for the top tour packages / destinations you want featured on the homepage and packages page:
+
+Services Offered & Specialized Circuits:
+1. Daily Tours (Regular daily departures, temple circuits, round trips)
+2. Local Sightseeing (Madurai Meenakshi Amman Temple, Thirumalai Nayak Mahal, Gandhi Museum, Alagar Kovil)
+3. Package Tours (Customized South India, Kerala, Tamil Nadu, and All-India tour packages)
+
+
+--------------------------------------------------------------------------------
+SECTION 4: SERVICES OFFERED
+--------------------------------------------------------------------------------
+Which of the following services do you offer? (Please mark 'Yes' or 'No'):
+[X] Custom Tour Packages
+[X] Daily Tours
+[X] Madurai Local Sightseeing
+[X] Car / Bus Rental & Airport Transfers
+[X] Hotel & Resort Bookings
+[ ] Flight Bookings
+[ ] Visa & Passport Assistance
+[ ] Cruise Bookings
+[ ] Travel Insurance
+[ ] Corporate / MICE Travel
+
+
+--------------------------------------------------------------------------------
+SECTION 5: REVIEWS, TESTIMONIALS & GALLERY
+--------------------------------------------------------------------------------
+1. Client Reviews / Testimonials:
+   - Please share 3 to 5 real reviews from your customers:
+     - Review 1: Client Name, Location, Rating (1-5), Review Text, Client Photo (optional)
+     - Review 2: Client Name, Location, Rating (1-5), Review Text, Client Photo (optional)
+     - Review 3: Client Name, Location, Rating (1-5), Review Text, Client Photo (optional)
+
+2. Photo Gallery:
+   - Photos of happy travelers, scenic spots, fleet cars/buses, or office:
+
+
+--------------------------------------------------------------------------------
+SECTION 6: TECHNICAL & INTEGRATION DETAILS (If Applicable)
+--------------------------------------------------------------------------------
+1. Inquiry & Booking Notifications:
+   - Where should online inquiry forms send messages? (Email / WhatsApp):
+
+2. Domain Name & Hosting:
+   - Do you already have a domain name registered? (e.g., www.youragency.com):
+   - If yes, domain registrar details / DNS access:
+
+3. Legal Documents (Optional):
+   - Do you have custom Privacy Policy or Terms & Conditions texts? (If not, we can use standard travel templates):
+
+================================================================================
+Thank you! Once completed, please share this document and any image files with us.
+================================================================================

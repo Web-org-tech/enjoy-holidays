@@ -22,43 +22,45 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://enjoyholidays.in"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://padmatoursandtravels.in"),
   title: {
-    default: "ENJOY Holidays — Premium Travel Experiences in India",
-    template: "%s | ENJOY Holidays",
+    default: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Since 2004)",
+    template: "%s | PADMA TOURS & TRAVELS",
   },
   description:
-    "Discover handcrafted holiday packages across India. From Kerala backwaters to Coorg highlands — we craft journeys, not just trips.",
+    "Trusted travel agency in Madurai since 2004. Offering daily tours, Madurai local sightseeing, temple circuits, and customized holiday packages across South India and Pan-India. 24/7 Service.",
   keywords: [
-    "holiday packages India",
+    "Padma Tours & Travels",
+    "Madurai travel agency",
+    "Madurai local sightseeing",
+    "daily tours Madurai",
+    "South India tour packages",
+    "Tamil Nadu holiday packages",
     "Kerala tour packages",
-    "Coorg travel",
-    "customized tours",
-    "ENJOY Holidays",
-    "luxury travel India",
+    "Madurai car rental with driver",
   ],
-  authors: [{ name: "ENJOY Holidays" }],
-  creator: "ENJOY Holidays",
+  authors: [{ name: "PADMA TOURS & TRAVELS" }],
+  creator: "PADMA TOURS & TRAVELS",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://enjoyholidays.in",
-    siteName: "ENJOY Holidays",
+    url: "https://padmatoursandtravels.in",
+    siteName: "PADMA TOURS & TRAVELS",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "ENJOY Holidays — Premium Travel Experiences",
+        url: "/logo.png",
+        width: 512,
+        height: 512,
+        alt: "PADMA TOURS & TRAVELS — 20+ Years of Travel Excellence",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "ENJOY Holidays — Premium Travel Experiences in India",
+    card: "summary",
+    title: "PADMA TOURS & TRAVELS — 20+ Years of Travel Excellence",
     description:
-      "Handcrafted holiday packages across India. We craft journeys, not just trips.",
-    images: ["/og-image.jpg"],
+      "Daily tours, Madurai local sightseeing, and customized holiday packages across India. 24/7 service.",
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -72,9 +74,15 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: [
+      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
@@ -111,16 +119,18 @@ export default async function RootLayout({
       lang="en"
       className={`${dmSerifDisplay.variable} ${manrope.variable}`}
     >
-      {dynamicTheme && (
-        <head>
+      <head>
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        {dynamicTheme && (
           <style
             id="dynamic-theme"
             dangerouslySetInnerHTML={{
               __html: `:root { ${dynamicTheme} }`,
             }}
           />
-        </head>
-      )}
+        )}
+      </head>
       <body className="bg-cream font-sans antialiased">
         {/* Accessibility: skip to main content */}
         <a href="#main-content" className="skip-to-content">

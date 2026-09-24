@@ -3,20 +3,21 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Shield, Award, Users, Star, Clock, MapPin } from "lucide-react";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 const badges = [
   {
-    icon: Shield,
-    value: "100%",
-    label: "Safe & Secure",
-    description: "Fully insured trips",
-    color: "from-teal-600 to-teal-500",
+    icon: Clock,
+    value: "20+",
+    label: "Years Experience",
+    description: "Serving since 2004",
+    color: "from-teal-700 to-teal-600",
   },
   {
     icon: Users,
-    value: "500+",
-    label: "Trips Completed",
-    description: "Happy travellers",
+    value: "10k+",
+    label: "Happy Travellers",
+    description: "Families & groups",
     color: "from-terracotta-600 to-terracotta-500",
   },
   {
@@ -27,24 +28,24 @@ const badges = [
     color: "from-amber-600 to-amber-500",
   },
   {
-    icon: Clock,
-    value: "6+",
-    label: "Years Experience",
-    description: "In premium travel",
-    color: "from-teal-700 to-teal-600",
+    icon: Shield,
+    value: "24/7",
+    label: "Available Always",
+    description: "Round-the-clock service",
+    color: "from-teal-600 to-teal-500",
   },
   {
     icon: MapPin,
-    value: "25+",
-    label: "Destinations",
-    description: "Across India",
+    value: "Madurai",
+    label: "Local Sightseeing",
+    description: "& Daily tour circuits",
     color: "from-terracotta-700 to-terracotta-600",
   },
   {
     icon: Award,
-    value: "IATA",
-    label: "Accredited Agent",
-    description: "Certified & trusted",
+    value: "100%",
+    label: "Verified & Safe",
+    description: "Expert local drivers",
     color: "from-amber-700 to-amber-600",
   },
 ];
@@ -96,7 +97,11 @@ export default function TrustBadges() {
             <div
               className="font-serif text-2xl font-bold text-white mb-0.5"
             >
-              {value}
+              {value === "Madurai" ? (
+                value
+              ) : (
+                <AnimatedCounter value={value} duration={2000} />
+              )}
             </div>
             <div className="text-white/90 text-xs font-semibold leading-tight mb-0.5">
               {label}

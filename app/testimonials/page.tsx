@@ -9,9 +9,9 @@ import ReviewModal from "@/components/home/ReviewModal";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Guest Reviews & Stories — ENJOY Holidays",
+  title: "Guest Reviews & Stories — PADMA TOURS & TRAVELS",
   description:
-    "Read authentic reviews from travellers who explored Kerala, Coorg, and beyond with ENJOY Holidays. Real experiences, real memories.",
+    "Read authentic reviews from travellers who explored Madurai, Tamil Nadu, Kerala, and beyond with PADMA TOURS & TRAVELS. Real experiences, real memories.",
 };
 
 export default async function TestimonialsPage() {
@@ -21,7 +21,7 @@ export default async function TestimonialsPage() {
   const reviewSchema = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
-    name: "ENJOY Holidays",
+    name: "PADMA TOURS & TRAVELS",
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
@@ -70,7 +70,7 @@ export default async function TestimonialsPage() {
             <span className="italic text-[var(--color-secondary-light)]">Remembered for a Lifetime.</span>
           </h1>
           <p className="body-lg text-white/70 max-w-2xl mx-auto">
-            From honeymooners cruising the backwaters to families exploring misty coffee trails, discover why travellers choose ENJOY Holidays.
+            From pilgrims visiting Meenakshi Amman Temple to families exploring Kerala, Coorg, and Ooty, discover why travellers trust PADMA TOURS &amp; TRAVELS.
           </p>
 
           {/* Quick rating overview & Write Review Button */}
@@ -85,7 +85,13 @@ export default async function TestimonialsPage() {
               <span className="text-white/50 text-xs">({testimonials.length} verified reviews)</span>
             </div>
 
-            <ReviewModal />
+            <Link
+              href="/feedback"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-light)] text-[var(--color-text-primary)] font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition-all"
+              id="write-review-page-button"
+            >
+              ★ Write a Review (Feedback Page)
+            </Link>
           </div>
         </div>
       </section>

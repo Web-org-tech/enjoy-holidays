@@ -50,7 +50,7 @@ export default function TourLoader({ label, fullscreen = false }: TourLoaderProp
 
       {/* Brand Title */}
       <div className="font-serif font-bold text-lg text-[var(--color-primary)] tracking-wide mb-1">
-        ENJOY Holidays
+        PADMA TOURS &amp; TRAVELS
       </div>
 
       {/* Dynamic Travel Microcopy */}

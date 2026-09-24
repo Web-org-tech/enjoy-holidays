@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import BrandLogo from "@/components/ui/BrandLogo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -12,9 +13,10 @@ const navLinks = [
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/feedback", label: "Feedback" },
 ];
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919999999999";
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "917010111256";
 
 export default function TopNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,30 +49,8 @@ export default function TopNav() {
       >
         <div className="container-site h-full flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="3" fill="white" />
-                <path d="M10 2 L10 5 M10 15 L10 18 M2 10 L5 10 M15 10 L18 10" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M4.9 4.9 L6.8 6.8 M13.2 13.2 L15.1 15.1 M15.1 4.9 L13.2 6.8 M6.8 13.2 L4.9 15.1" stroke="white" strokeWidth="1" strokeLinecap="round" />
-              </svg>
-            </div>
-            <div>
-              <span
-                className={`font-serif text-xl font-bold leading-none block transition-colors duration-300 ${
-                  scrolled ? "text-[var(--color-text-primary)]" : "text-white"
-                }`}
-              >
-                ENJOY
-              </span>
-              <span
-                className={`label text-[10px] tracking-widest leading-none transition-colors duration-300 ${
-                  scrolled ? "text-[var(--color-primary)]" : "text-[var(--color-secondary-light)]"
-                }`}
-              >
-                HOLIDAYS
-              </span>
-            </div>
+          <Link href="/" aria-label="Padma Tours and Travels Home">
+            <BrandLogo scrolled={scrolled} />
           </Link>
 
           {/* Desktop nav links */}

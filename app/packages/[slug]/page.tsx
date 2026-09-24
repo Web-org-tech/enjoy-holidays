@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://enjoyholidays.in";
 
   return {
-    title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | ENJOY Holidays`,
+    title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | PADMA TOURS & TRAVELS`,
     description: pkg.seo_description ?? pkg.summary,
     openGraph: {
       title: pkg.name,
@@ -65,7 +65,7 @@ export default async function PackageDetailPage({ params }: Params) {
     { name: pkg.name, href: `/packages/${slug}` },
   ]);
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919999999999";
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "917010111256";
 
   return (
     <>

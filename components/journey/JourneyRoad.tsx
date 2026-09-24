@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import type { PackageDay, DayActivity } from "@/lib/supabase/types";
 import JourneyReducedMotion from "./JourneyReducedMotion";
 
-const JourneyRoadAnimated = dynamic(() => import("./JourneyRoadAnimated"), {
+const JourneyTimelineJeep = dynamic(() => import("./JourneyTimelineJeep"), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center py-20">
@@ -38,5 +38,5 @@ export default function JourneyRoad({ days, vehicleType = "jeep" }: JourneyRoadP
     return <JourneyReducedMotion days={days} />;
   }
 
-  return <JourneyRoadAnimated days={days} vehicleType={vehicleType} />;
+  return <JourneyTimelineJeep days={days} vehicleType={vehicleType} />;
 }

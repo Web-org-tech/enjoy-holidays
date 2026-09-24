@@ -92,7 +92,7 @@ export default function ReviewModal() {
                     Write a Guest Review
                   </h2>
                   <p className="text-xs text-[#60736F] mt-1">
-                    Tell fellow travellers about your holiday experience with ENJOY Holidays.
+                    Tell fellow travellers about your experience with PADMA TOURS &amp; TRAVELS.
                   </p>
                 </div>
 

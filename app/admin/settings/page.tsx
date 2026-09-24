@@ -8,7 +8,7 @@ export default async function AdminSettingsPage() {
 
   const hero = settings?.hero_content || {
     headline: "Where Will You\nWander Next?",
-    subtext: "Handcrafted holiday packages across India — we craft journeys, not just trips.",
+    subtext: "Daily tours, Madurai local sightseeing, and customized holiday packages across India since 2004.",
     cta_primary_label: "Explore Packages",
     cta_secondary_label: "WhatsApp Us",
     background_media_url: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=80",
@@ -16,17 +16,17 @@ export default async function AdminSettingsPage() {
   };
 
   const contact = settings?.contact_info || {
-    phone: "+91 99999 99999",
-    email: "hello@enjoyholidays.in",
-    address: "123 Travel Lane, Kochi, Kerala 682001",
-    whatsapp_number: "918531807705",
-    gst_number: "29ABCDE1234F1Z5",
+    phone: "+91 98659 87975",
+    email: "nirmalharish1980@gmail.com",
+    address: "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002",
+    whatsapp_number: "917010111256",
+    gst_number: "",
   };
 
   const social = settings?.social_links || {
-    instagram: "https://instagram.com/enjoyholidays",
-    facebook: "https://facebook.com/enjoyholidays",
-    youtube: "https://youtube.com/@enjoyholidays",
+    instagram: "",
+    facebook: "",
+    youtube: "",
   };
 
   return (

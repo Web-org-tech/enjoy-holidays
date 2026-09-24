@@ -19,8 +19,14 @@ export async function submitReviewAction(formData: FormData): Promise<SubmitRevi
       };
     }
 
-    const customer_name = (formData.get("customer_name") as string || "").trim();
-    const quote = (formData.get("quote") as string || "").trim();
+    const raw_name = (formData.get("customer_name") as string || "").trim();
+    const customer_city = (formData.get("customer_city") as string || "").trim();
+    const tour_name = (formData.get("tour_name") as string || "").trim();
+    const customer_name = customer_city ? `${raw_name} (${customer_city})` : raw_name;
+    let quote = (formData.get("quote") as string || "").trim();
+    if (tour_name && !quote.toLowerCase().includes(tour_name.toLowerCase())) {
+      quote = `[Tour: ${tour_name}]\n${quote}`;
+    }
     const ratingRaw = formData.get("rating") as string;
     const rating = Math.min(5, Math.max(1, parseInt(ratingRaw || "5", 10)));
     const photo_url = (formData.get("photo_url") as string || "").trim() || null;

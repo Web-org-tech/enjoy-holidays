@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 interface HeroSectionProps {
   headline?: string;
@@ -18,13 +19,13 @@ interface HeroSectionProps {
 const DEFAULTS = {
   headline: "Where Will You\nWander Next?",
   subtext:
-    "Handcrafted holiday packages across India — we craft journeys, not just trips.",
+    "Handcrafted journeys, Madurai local sightseeing, daily tours, and customized holiday packages across India since 2004.",
   backgroundMediaUrl:
     "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=80",
   backgroundMediaType: "image" as const,
   ctaPrimaryLabel: "Explore Packages",
   ctaSecondaryLabel: "WhatsApp Us",
-  whatsappNumber: "919999999999",
+  whatsappNumber: "917010111256",
 };
 
 export default function HeroSection(props: HeroSectionProps) {
@@ -38,7 +39,7 @@ export default function HeroSection(props: HeroSectionProps) {
   }, []);
 
   const waUrl = `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(
-    "Hi! I'd like to enquire about your holiday packages 🌍"
+    "Hi Padma Tours & Travels! I'd like to enquire about your holiday packages & tours 🌍"
   )}`;
 
   return (
@@ -105,7 +106,7 @@ export default function HeroSection(props: HeroSectionProps) {
           }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] animate-pulse-soft shrink-0" />
-          <span className="truncate">Premium Handcrafted Experiences · Est. 2018</span>
+          <span className="truncate">✦ Trusted Travel Partner Since 2004 · 20+ Years Experience</span>
         </motion.div>
 
         {/* Headline */}
@@ -187,17 +188,17 @@ export default function HeroSection(props: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           {[
-            { value: "500+", label: "Trips Completed" },
-            { value: "98%", label: "Happy Travellers" },
-            { value: "25+", label: "Destinations" },
-            { value: "6+", label: "Years Experience" },
+            { value: "20+", label: "Years Experience" },
+            { value: "10k+", label: "Happy Travellers" },
+            { value: "24/7", label: "Booking & Support" },
+            { value: "100%", label: "Safe & Punctual" },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
               <div
                 className="font-serif text-2xl font-bold text-white"
                 style={{ textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}
               >
-                {value}
+                <AnimatedCounter value={value} duration={2200} />
               </div>
               <div className="label text-white/60 text-[10px] mt-0.5">{label}</div>
             </div>

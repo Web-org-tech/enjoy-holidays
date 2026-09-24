@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget. Book Kerala backwaters, Coorg coffee trails, Rajasthan safaris and more.",
   openGraph: {
-    title: "Holiday Packages | ENJOY Holidays",
+    title: "Holiday Packages | PADMA TOURS & TRAVELS",
     description:
       "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget.",
   },
