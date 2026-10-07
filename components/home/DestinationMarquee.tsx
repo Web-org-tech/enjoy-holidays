@@ -23,15 +23,33 @@ export const DESTINATIONS = [
 ];
 
 export default function DestinationMarquee() {
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [startX, setStartX] = useState(0);
   const [scrollLeftState, setScrollLeftState] = useState(0);
   const animationFrameId = useRef<number | null>(null);
 
   // Triple destinations for seamless infinite scroll
   const displayItems = [...DESTINATIONS, ...DESTINATIONS, ...DESTINATIONS];
+
+  // Pause when off-screen to preserve CPU & smooth frame rates
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-scroll loop moving left-to-right (continuous smooth marquee)
   useEffect(() => {
@@ -46,7 +64,7 @@ export default function DestinationMarquee() {
       const delta = Math.min(timestamp - lastTimestamp, 32);
       lastTimestamp = timestamp;
 
-      if (!isHovered && !isDragging && el) {
+      if (!isHovered && !isDragging && isVisible && el) {
         accumulatedPos += (delta * speed) / 16;
 
         const maxScroll = el.scrollWidth / 3;
@@ -70,7 +88,7 @@ export default function DestinationMarquee() {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [isHovered, isDragging]);
+  }, [isHovered, isDragging, isVisible]);
 
   // Mouse drag support
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -87,12 +105,21 @@ export default function DestinationMarquee() {
     const el = scrollContainerRef.current;
     if (!el) return;
     const x = e.pageX - el.offsetLeft;
-    const walk = (x - startX) * 1.5; // Drag speed multiplier
+    const walk = (x - startX) * 1.5;
     el.scrollLeft = scrollLeftState - walk;
   };
 
   const handleMouseUpOrLeave = () => {
     setIsDragging(false);
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = () => {
+    setIsHovered(true);
+  };
+
+  const handleTouchEnd = () => {
+    setIsHovered(false);
   };
 
   // Manual arrow navigation
@@ -104,7 +131,8 @@ export default function DestinationMarquee() {
 
   return (
     <section
-      className="py-16 sm:py-24 my-4 sm:my-8 relative overflow-hidden select-none"
+      ref={sectionRef}
+      className="py-16 sm:py-24 my-6 sm:my-10 relative overflow-hidden select-none"
       style={{
         background: "linear-gradient(180deg, #093E3A 0%, #0B4F4A 50%, #083733 100%)",
       }}
@@ -120,13 +148,13 @@ export default function DestinationMarquee() {
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar with generous margin */}
-      <div className="container-site mb-8 sm:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="container-site mb-8 sm:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FBBF24]">
             <Compass size={15} className="animate-spin-slow" />
             <span>Discover India With Us</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mt-1.5">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mt-2">
             Iconic Destinations &amp; Scenic Circuits
           </h2>
         </div>
@@ -155,13 +183,15 @@ export default function DestinationMarquee() {
         </div>
       </div>
 
-      {/* Scrollable Track — Completely hiding dragger/scrollbar with no-scrollbar and inline styles */}
+      {/* Scrollable Track */}
       <div
         ref={scrollContainerRef}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
-        className={`flex items-center gap-5 sm:gap-6 overflow-x-auto no-scrollbar scrollbar-hide px-6 cursor-grab ${
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className={`flex items-stretch gap-5 sm:gap-6 overflow-x-auto no-scrollbar scrollbar-hide px-6 py-2 cursor-grab ${
           isDragging ? "cursor-grabbing" : ""
         }`}
         style={{
@@ -175,29 +205,33 @@ export default function DestinationMarquee() {
           <Link
             key={`${item.name}-${idx}`}
             href={`/packages?search=${encodeURIComponent(item.name)}`}
-            className="flex-shrink-0 group relative rounded-2xl px-6 py-4.5 transition-all duration-300 hover:scale-105"
+            className="flex-shrink-0 group relative rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:scale-[1.03] flex flex-col justify-between w-[270px] sm:w-[300px]"
             style={{
               background: "rgba(255, 255, 255, 0.08)",
               border: "1px solid rgba(255, 255, 255, 0.15)",
               backdropFilter: "blur(12px)",
-              minWidth: "240px",
             }}
           >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#FBBF24]">
+            <div>
+              <div className="flex items-center justify-between gap-3 mb-2.5">
+                <span className="text-[11px] uppercase font-bold tracking-wider text-[#FBBF24]">
                   {item.state}
                 </span>
-                <h3 className="text-white font-serif text-base sm:text-lg font-bold group-hover:text-[#FBBF24] transition-colors whitespace-nowrap mt-0.5">
-                  {item.name}
-                </h3>
-                <p className="text-white/70 text-xs mt-1 truncate max-w-[190px]">
-                  {item.tag}
-                </p>
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#D45C33] group-hover:text-white transition-all flex-shrink-0">
+                  <MapPin size={14} />
+                </div>
               </div>
-              <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#D45C33] group-hover:text-white transition-all flex-shrink-0">
-                <MapPin size={15} />
-              </div>
+              <h3 className="text-white font-serif text-base sm:text-lg font-bold group-hover:text-[#FBBF24] transition-colors leading-snug">
+                {item.name}
+              </h3>
+              <p className="text-white/75 text-xs sm:text-sm mt-2 leading-relaxed">
+                {item.tag}
+              </p>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-semibold text-white/60 group-hover:text-white/90 transition-colors">
+              <span>View Packages</span>
+              <span className="text-[#FBBF24] group-hover:translate-x-1 transition-transform inline-block">→</span>
             </div>
 
             {/* Glowing border highlight on hover */}

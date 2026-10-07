@@ -83,7 +83,7 @@ export default function PackagesCarousel({ packages }: PackagesCarouselProps) {
         {packages.map((pkg, i) => (
           <motion.div
             key={pkg.id}
-            className="flex-shrink-0 w-[300px] md:w-[340px]"
+            className="flex-shrink-0 w-[285px] sm:w-[320px] md:w-[350px] flex flex-col self-stretch"
             role="listitem"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}

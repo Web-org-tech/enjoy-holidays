@@ -126,14 +126,14 @@ export default async function PackageDetailPage({ params }: Params) {
 
           {/* Quick badges row */}
           <div className="flex flex-wrap gap-3 items-center">
-            <Badge variant="secondary" size="lg">
-              <Clock size={14} className="mr-1" />
-              {pkg.duration_days} Days / {pkg.duration_nights} Nights
-            </Badge>
-            <Badge variant="accent" size="lg">
-              <Users size={14} className="mr-1" />
-              Max {pkg.pax_capacity} Pax
-            </Badge>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-black/65 backdrop-blur-md border border-white/25 shadow-md">
+              <Clock size={15} className="text-[#FBBF24]" />
+              <span className="text-white drop-shadow-sm">{pkg.duration_days} Days / {pkg.duration_nights} Nights</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-black/65 backdrop-blur-md border border-white/25 shadow-md">
+              <Users size={15} className="text-[#FBBF24]" />
+              <span className="text-white drop-shadow-sm">Max {pkg.pax_capacity} Persons</span>
+            </div>
             <div className="glass px-4 py-2 rounded-full">
               <span className="text-white/70 text-xs">From</span>
               <span className="text-white font-bold text-xl ml-2">

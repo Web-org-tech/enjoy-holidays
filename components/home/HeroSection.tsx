@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
@@ -60,13 +61,14 @@ export default function HeroSection(props: HeroSectionProps) {
             aria-hidden="true"
           />
         ) : (
-          <div
-            className="w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${config.backgroundMediaUrl ?? DEFAULTS.backgroundMediaUrl})`,
-            }}
-            role="img"
-            aria-label="Beautiful travel destination"
+          <Image
+            src={config.backgroundMediaUrl ?? DEFAULTS.backgroundMediaUrl}
+            alt="Beautiful India travel destination"
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="w-full h-full object-cover"
           />
         )}
 

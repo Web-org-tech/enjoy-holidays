@@ -1,361 +1,139 @@
-"use client";
-
-import React, { useState, useTransition } from "react";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Star,
-  Sparkles,
-  CheckCircle2,
-  Share2,
-  Copy,
-  Check,
-  MessageSquare,
-  ArrowRight,
-  ShieldCheck,
-  Heart,
-  Loader2,
-  MapPin,
-  Calendar,
-} from "lucide-react";
-import { submitReviewAction } from "@/app/actions/submitReview";
-import ImageUploader from "@/components/ui/ImageUploader";
+import Image from "next/image";
+import { Sparkles, Star, ShieldCheck, Heart, ArrowRight, Quote } from "lucide-react";
+import FeedbackForm from "@/components/feedback/FeedbackForm";
+import FeedbackShareButtons from "@/components/feedback/FeedbackShareButtons";
+import { getPublishedTestimonials } from "@/lib/supabase/queries";
 
-export default function FeedbackPage() {
-  const [rating, setRating] = useState(5);
-  const [hoverRating, setHoverRating] = useState<number | null>(null);
-  const [photoUrl, setPhotoUrl] = useState<string>("");
-  const [copied, setCopied] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
+export const revalidate = 3600;
 
-  const ratingDescriptions: Record<number, string> = {
-    5: "Exceptional Experience (5/5) — Exceeded All Expectations!",
-    4: "Great Experience (4/5) — Very Satisfied & Recommended",
-    3: "Good Trip (3/5) — Comfortable Journey",
-    2: "Fair (2/5) — Needs Some Improvements",
-    1: "Poor (1/5) — Did Not Meet Expectations",
-  };
+export const metadata: Metadata = {
+  title: "Guest Feedback & Reviews — PADMA TOURS & TRAVELS",
+  description:
+    "Share your travel story and feedback with PADMA TOURS & TRAVELS. Read authentic reviews from families, couples, and pilgrims who traveled with us.",
+};
 
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      // Fallback
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    }
-  };
-
-  const handleShareWhatsApp = () => {
-    const text = encodeURIComponent(
-      `Hello! Please share your travel experience and review with PADMA TOURS & TRAVELS here: ${window.location.href}`
-    );
-    window.open(`https://wa.me/?text=${text}`, "_blank");
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.set("rating", rating.toString());
-    if (photoUrl) {
-      formData.set("photo_url", photoUrl);
-    }
-
-    startTransition(async () => {
-      const res = await submitReviewAction(formData);
-      setResult(res);
-      if (res.success) {
-        form.reset();
-        setPhotoUrl("");
-        setRating(5);
-      }
-    });
-  };
+export default async function FeedbackPage() {
+  const testimonials = await getPublishedTestimonials();
+  const recentReviews = testimonials.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-28 pb-20">
-      {/* Hero Header */}
-      <section className="container-site max-w-4xl mx-auto text-center px-4 pt-4 pb-10">
+    <div className="min-h-screen bg-[#FDFBF7] pt-32 sm:pt-40 pb-20">
+      {/* ── 1. Page Heading & Introductory Content ──────────────────────── */}
+      <section className="container-site max-w-4xl mx-auto text-center px-4 mb-12 sm:mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0B4F4A]/10 text-[#0B4F4A] text-xs font-bold uppercase tracking-wider mb-4">
           <Sparkles size={14} className="text-[#F59E0B]" />
           <span>Guest Feedback &amp; Reviews</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#0B4F4A] mb-4">
+
+        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#0B4F4A] mb-4 leading-tight">
           How Was Your Journey With Us?
         </h1>
+
         <p className="text-[#4B5E59] text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
           Your feedback helps us continue crafting unforgettable travel memories. Please share your rating, photos, and experience with{" "}
           <strong className="text-[#0B4F4A]">PADMA TOURS &amp; TRAVELS</strong>.
         </p>
 
         {/* Share buttons */}
-        <div className="flex items-center justify-center gap-3 mt-6 flex-wrap">
-          <button
-            type="button"
-            onClick={handleCopyLink}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0B4F4A]/20 bg-white hover:bg-[#0B4F4A]/5 text-[#0B4F4A] text-xs font-semibold shadow-sm transition-all"
-            title="Copy URL to share with travelers"
-          >
-            {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-            <span>{copied ? "Link Copied!" : "Copy Review Link"}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleShareWhatsApp}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20BE5A] text-white text-xs font-semibold shadow-sm transition-all"
-          >
-            <Share2 size={14} />
-            <span>Share via WhatsApp</span>
-          </button>
+        <div className="mt-6">
+          <FeedbackShareButtons />
         </div>
       </section>
 
-      {/* Main Review Form Card */}
-      <div className="container-site max-w-2xl mx-auto px-4">
-        <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-[#EBE5D8] relative overflow-hidden">
-          {/* Subtle top decoration */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#0B4F4A] via-[#D45C33] to-[#F59E0B]" />
+      {/* ── 2. Review / Feedback Form Card ─────────────────────────────── */}
+      <section className="container-site max-w-2xl mx-auto px-4">
+        <FeedbackForm />
+      </section>
 
-          {result?.success ? (
-            <div className="py-12 text-center space-y-5 animate-in fade-in zoom-in-95 duration-300">
-              <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                <CheckCircle2 size={44} />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B4F4A]">
-                Thank You for Your Feedback!
-              </h2>
-              <p className="text-sm text-[#4B5E59] max-w-md mx-auto leading-relaxed">
-                {result.message}
-              </p>
-              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setResult(null)}
-                  className="px-6 py-2.5 rounded-full bg-[#0B4F4A] text-white text-xs font-bold hover:bg-[#073633] transition-colors"
-                >
-                  Submit Another Review
-                </button>
-                <Link
-                  href="/packages"
-                  className="px-6 py-2.5 rounded-full border border-[#0B4F4A]/20 text-[#0B4F4A] text-xs font-bold hover:bg-[#0B4F4A]/5 transition-colors inline-flex items-center gap-1.5"
-                >
-                  Explore More Packages <ArrowRight size={13} />
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Bot Honeypot */}
-              <input
-                type="text"
-                name="company_website"
-                tabIndex={-1}
-                autoComplete="off"
-                className="hidden"
-                aria-hidden="true"
-              />
+      {/* ── 3. Submitted Reviews / Customer Feedback ───────────────────── */}
+      {recentReviews.length > 0 && (
+        <section className="container-site max-w-6xl mx-auto px-4 mt-16 sm:mt-24 pt-14 border-t border-[#E8E1D3]">
+          <div className="text-center mb-10 sm:mb-12">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)] flex items-center justify-center gap-1.5 mb-2">
+              <Heart size={14} className="text-[#D45C33]" fill="currentColor" /> Verified Guest Experiences
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-[#0B4F4A]">
+              Recent Traveler Stories
+            </h2>
+            <p className="text-xs sm:text-sm text-[#5B6D69] mt-2 max-w-xl mx-auto leading-relaxed">
+              Read authentic feedback shared by guests who explored South India and beyond with our team.
+            </p>
+          </div>
 
-              {/* Star Rating Selection */}
-              <div className="text-center pb-4 border-b border-[#EBE5D8]">
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#0B4F4A] mb-3">
-                  Your Overall Rating
-                </label>
-                <div
-                  className="flex items-center justify-center gap-2"
-                  role="radiogroup"
-                  aria-label="Star rating"
-                >
-                  {[1, 2, 3, 4, 5].map((star) => {
-                    const currentRating = hoverRating !== null ? hoverRating : rating;
-                    const isFilled = star <= currentRating;
-                    return (
-                      <button
-                        key={star}
-                        type="button"
-                        onClick={() => setRating(star)}
-                        onMouseEnter={() => setHoverRating(star)}
-                        onMouseLeave={() => setHoverRating(null)}
-                        className="p-1 focus:outline-none focus:scale-125 transition-transform hover:scale-125"
-                        aria-label={`${star} star${star > 1 ? "s" : ""}`}
-                      >
-                        <Star
-                          size={36}
-                          className={`transition-colors duration-150 ${
-                            isFilled
-                              ? "fill-[#F59E0B] text-[#F59E0B] drop-shadow-md"
-                              : "text-[#D1D5DB] fill-transparent"
-                          }`}
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-xs font-semibold text-[#D45C33] mt-2.5 h-4">
-                  {ratingDescriptions[hoverRating !== null ? hoverRating : rating]}
-                </p>
-              </div>
-
-              {/* Guest Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="feedback-name"
-                    className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5"
-                  >
-                    Your Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="feedback-name"
-                    name="customer_name"
-                    type="text"
-                    required
-                    minLength={2}
-                    maxLength={80}
-                    placeholder="e.g. Ramesh Kumar"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D5CEC0] bg-[#FAF8F5] text-sm text-[#0B4F4A] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0B4F4A] focus:bg-white transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="feedback-city"
-                    className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5"
-                  >
-                    Your City / Town
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="feedback-city"
-                      name="customer_city"
-                      type="text"
-                      placeholder="e.g. Chennai, Bangalore, Madurai"
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#D5CEC0] bg-[#FAF8F5] text-sm text-[#0B4F4A] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0B4F4A] focus:bg-white transition-colors"
-                    />
-                    <MapPin size={15} className="absolute left-3 top-3 text-[#9CA3AF]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Tour / Package Traveled */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="feedback-tour"
-                    className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5"
-                  >
-                    Tour / Destination Traveled
-                  </label>
-                  <input
-                    id="feedback-tour"
-                    name="tour_name"
-                    type="text"
-                    placeholder="e.g. Madurai Sightseeing, Rameswaram, Kerala"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D5CEC0] bg-[#FAF8F5] text-sm text-[#0B4F4A] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0B4F4A] focus:bg-white transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="feedback-date"
-                    className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5"
-                  >
-                    Date of Journey (Approx)
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="feedback-date"
-                      name="travel_date"
-                      type="date"
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#D5CEC0] bg-[#FAF8F5] text-sm text-[#0B4F4A] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0B4F4A] focus:bg-white transition-colors"
-                    />
-                    <Calendar size={15} className="absolute left-3 top-3 text-[#9CA3AF]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Photo Upload */}
-              <div>
-                <label className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5">
-                  Upload a Photo from Your Trip (Optional)
-                </label>
-                <ImageUploader
-                  name="photo_uploader"
-                  bucket="avatars"
-                  isPublic={true}
-                  aspectRatio="square"
-                  defaultValue={photoUrl}
-                  onChange={(url) => setPhotoUrl(url)}
-                  placeholder="Upload or paste image URL of your happy travel moment..."
-                />
-              </div>
-
-              {/* Review Testimonial Text */}
-              <div>
-                <label
-                  htmlFor="feedback-quote"
-                  className="block text-xs font-bold text-[#0B4F4A] uppercase tracking-wider mb-1.5"
-                >
-                  Your Review &amp; Experience <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  id="feedback-quote"
-                  name="quote"
-                  required
-                  rows={4}
-                  minLength={10}
-                  maxLength={1500}
-                  placeholder="Share details about the driver, vehicle punctuality, comfort, sightseeing, and hospitality..."
-                  className="w-full px-4 py-3 rounded-xl border border-[#D5CEC0] bg-[#FAF8F5] text-sm text-[#0B4F4A] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0B4F4A] focus:bg-white transition-colors resize-y leading-relaxed"
-                />
-                <span className="text-[11px] text-[#869692] mt-1 block">
-                  Minimum 10 characters. Your authentic feedback guides other travelers!
-                </span>
-              </div>
-
-              {/* Error Alert if any */}
-              {result && !result.success && (
-                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                  <span className="font-bold">Error:</span> {result.message}
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#0B4F4A] to-[#15803D] hover:from-[#083E3A] hover:to-[#116731] text-white font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all active:scale-[0.99] disabled:opacity-60 flex items-center justify-center gap-2"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recentReviews.map((item) => (
+              <article
+                key={item.id}
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E8E1D3] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
-                {isPending ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    <span>Submitting Your Review...</span>
-                  </>
-                ) : (
-                  <>
-                    <MessageSquare size={18} />
-                    <span>Publish My Review</span>
-                  </>
-                )}
-              </button>
+                <div>
+                  <div className="flex items-center justify-between mb-3.5">
+                    <div className="flex items-center gap-1 text-[#F59E0B]">
+                      {[...Array(item.rating)].map((_, i) => (
+                        <Star key={i} size={15} fill="currentColor" stroke="none" />
+                      ))}
+                      <span className="text-xs font-bold text-stone-700 ml-1.5">{item.rating}.0</span>
+                    </div>
+                    <Quote size={20} className="text-[#D45C33]/30" />
+                  </div>
 
-              <div className="flex items-center justify-center gap-4 text-center text-[11px] text-[#71827E] pt-2">
-                <span className="flex items-center gap-1">
-                  <ShieldCheck size={14} className="text-emerald-600" /> Verified Guest Reviews
-                </span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <Heart size={14} className="text-[#D45C33]" /> Handled with Care Since 2004
-                </span>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
+                  <p className="text-xs sm:text-sm text-[#445652] italic leading-relaxed mb-6 break-words whitespace-normal">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#F2ECE1] flex items-center gap-3">
+                  {item.photo_url ? (
+                    <div className="w-10 h-10 rounded-full overflow-hidden relative flex-shrink-0 bg-stone-100">
+                      <Image
+                        src={item.photo_url}
+                        alt={item.customer_name}
+                        fill
+                        className="object-cover"
+                        sizes="40px"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-bold text-sm flex items-center justify-center flex-shrink-0">
+                      {item.customer_name.charAt(0)}
+                    </div>
+                  )}
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-xs sm:text-sm text-[#0B4F4A] truncate flex items-center gap-1">
+                      <span>{item.customer_name}</span>
+                      <ShieldCheck size={13} className="text-emerald-600 flex-shrink-0" />
+                    </h3>
+                    {item.package && (
+                      <Link
+                        href={`/packages/${item.package.slug}`}
+                        className="text-[11px] text-[#8C7A6B] hover:text-[var(--color-primary)] truncate block mt-0.5"
+                      >
+                        {item.package.name}
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link
+              href="/testimonials"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] font-bold text-xs sm:text-sm hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300 hover:scale-105"
+            >
+              <span>View All Verified Reviews</span>
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Safe padding for mobile navbar */}
+      <div className="h-16 md:h-0 block md:hidden" aria-hidden="true" />
     </div>
   );
 }

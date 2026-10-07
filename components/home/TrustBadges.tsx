@@ -106,7 +106,7 @@ export default function TrustBadges() {
             <div className="text-white/90 text-xs font-semibold leading-tight mb-0.5">
               {label}
             </div>
-            <div className="text-white/40 text-[11px] leading-tight">{description}</div>
+            <div className="text-white/70 text-[11px] leading-tight">{description}</div>
           </motion.div>
         ))}
       </div>

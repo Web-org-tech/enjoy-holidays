@@ -188,8 +188,8 @@ BEGIN
         "business_hours": "24/7 Round-the-Clock Service"
       }',
       '{
-        "instagram": "https://instagram.com",
-        "facebook": "https://facebook.com",
+        "instagram": "https://www.instagram.com/padma_tours_and_travels_?stkn=YTV1bmx2OGpkeXBy",
+        "facebook": "https://www.facebook.com/share/1CYGDUN1MB/?mibextid=wwXIfr",
         "whatsapp": "https://wa.me/917010111256"
       }',
       NULL
@@ -208,6 +208,11 @@ BEGIN
         "address": "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002",
         "whatsapp_number": "917010111256",
         "business_hours": "24/7 Round-the-Clock Service"
+      }',
+      social_links = '{
+        "instagram": "https://www.instagram.com/padma_tours_and_travels_?stkn=YTV1bmx2OGpkeXBy",
+        "facebook": "https://www.facebook.com/share/1CYGDUN1MB/?mibextid=wwXIfr",
+        "whatsapp": "https://wa.me/917010111256"
       }'
     WHERE id = (SELECT id FROM site_settings LIMIT 1);
   END IF;

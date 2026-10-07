@@ -131,7 +131,7 @@ export default function PackagesGrid({ packages }: PackagesGridProps) {
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Holiday packages">
           {filtered.map((pkg, i) => (
-            <div key={pkg.id} role="listitem">
+            <div key={pkg.id} role="listitem" className="flex flex-col h-full">
               <PackageCard pkg={pkg} priority={i < 3} />
             </div>
           ))}

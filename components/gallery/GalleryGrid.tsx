@@ -28,43 +28,59 @@ export default function GalleryGrid({ items }: GalleryGridProps) {
 
   return (
     <>
-      {/* Destination filter chips */}
-      {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-8">
-          <button
-            onClick={() => setSelectedTag(null)}
-            className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
-              !selectedTag
-                ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                : "bg-white border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-primary)]"
-            }`}
-            aria-pressed={!selectedTag}
-            id="gallery-filter-all"
-          >
-            All Destinations
-          </button>
-          {tags.map((tag) => (
+      {/* Destination filter section with proper spacing and category context */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-[#E8E1D3]/80">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--color-primary)]">
+              Filter by Destination
+            </span>
+            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
+              Explore authentic moments captured by travelers across India
+            </p>
+          </div>
+          <span className="text-xs text-[var(--color-text-muted)] font-medium">
+            Showing {filtered.length} {filtered.length === 1 ? "photo" : "photos"}
+          </span>
+        </div>
+
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-2.5">
             <button
-              key={tag}
-              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
-                selectedTag === tag
-                  ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
+              onClick={() => setSelectedTag(null)}
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-all shadow-xs ${
+                !selectedTag
+                  ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm"
                   : "bg-white border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-primary)]"
               }`}
-              aria-pressed={selectedTag === tag}
-              id={`gallery-filter-${tag.toLowerCase().replace(/\s+/g, "-")}`}
+              aria-pressed={!selectedTag}
+              id="gallery-filter-all"
             >
-              {tag}
+              All Destinations ({items.length})
             </button>
-          ))}
-        </div>
-      )}
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-all shadow-xs ${
+                  selectedTag === tag
+                    ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm"
+                    : "bg-white border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-primary)]"
+                }`}
+                aria-pressed={selectedTag === tag}
+                id={`gallery-filter-${tag.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* Masonry grid */}
+      {/* Masonry grid with comfortable gaps */}
       {filtered.length > 0 ? (
         <div
-          className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3"
+          className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-5 space-y-4 sm:space-y-5"
           role="list"
           aria-label="Gallery photos"
         >
