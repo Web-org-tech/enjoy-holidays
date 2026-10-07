@@ -25,13 +25,17 @@ export default function TopNav() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu on route change
+  // Close menu on route change and sync scroll state
   useEffect(() => {
     setMenuOpen(false);
+    if (typeof window !== "undefined") {
+      setScrolled(window.scrollY > 40);
+    }
   }, [pathname]);
 
   const isAdminRoute = pathname?.startsWith("/admin");
@@ -43,7 +47,7 @@ export default function TopNav() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? "bg-white/95 backdrop-blur-xl shadow-md border-b border-[var(--color-border)]"
-            : "bg-transparent"
+            : "bg-gradient-to-b from-black/35 via-black/10 to-transparent"
         }`}
         style={{ height: "var(--nav-height)" }}
       >

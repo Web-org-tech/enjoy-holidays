@@ -19,33 +19,46 @@ export default async function FeedbackPage() {
   const recentReviews = testimonials.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-32 sm:pt-40 pb-20">
-      {/* ── 1. Page Heading & Introductory Content ──────────────────────── */}
-      <section className="container-site max-w-4xl mx-auto text-center px-4 mb-12 sm:mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0B4F4A]/10 text-[#0B4F4A] text-xs font-bold uppercase tracking-wider mb-4">
-          <Sparkles size={14} className="text-[#F59E0B]" />
-          <span>Guest Feedback &amp; Reviews</span>
+    <>
+      {/* ── 1. Page Heading & Hero Banner (Deep Teal) ──────────────────────── */}
+      <section
+        className="relative pt-36 sm:pt-44 pb-16 sm:pb-20 grain-overlay overflow-hidden"
+        style={{ background: "var(--color-deep-teal)" }}
+        aria-labelledby="feedback-page-heading"
+      >
+        <div className="container-site max-w-4xl text-center relative z-10 px-4">
+          <span className="label text-[var(--color-secondary-light)] mb-3 inline-block">
+            ✦ Guest Feedback &amp; Reviews
+          </span>
+
+          <h1 id="feedback-page-heading" className="display-xl text-white mb-4">
+            How Was Your <span className="italic text-[var(--color-secondary-light)]">Journey With Us?</span>
+          </h1>
+
+          <p className="body-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
+            Your feedback helps us continue crafting unforgettable travel memories. Please share your rating, photos, and experience with{" "}
+            <strong className="text-white">PADMA TOURS &amp; TRAVELS</strong>.
+          </p>
+
+          {/* Share buttons */}
+          <div className="mt-6 flex justify-center">
+            <FeedbackShareButtons />
+          </div>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#0B4F4A] mb-4 leading-tight">
-          How Was Your Journey With Us?
-        </h1>
-
-        <p className="text-[#4B5E59] text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Your feedback helps us continue crafting unforgettable travel memories. Please share your rating, photos, and experience with{" "}
-          <strong className="text-[#0B4F4A]">PADMA TOURS &amp; TRAVELS</strong>.
-        </p>
-
-        {/* Share buttons */}
-        <div className="mt-6">
-          <FeedbackShareButtons />
+        {/* Decorative subtle bottom wave */}
+        <div className="absolute bottom-0 left-0 right-0 h-6 overflow-hidden pointer-events-none opacity-40">
+          <svg viewBox="0 0 1440 24" fill="none" preserveAspectRatio="none" className="w-full h-full">
+            <path d="M0,24 C360,8 1080,8 1440,24 L1440,24 L0,24 Z" fill="#FDFBF7" />
+          </svg>
         </div>
       </section>
 
       {/* ── 2. Review / Feedback Form Card ─────────────────────────────── */}
-      <section className="container-site max-w-2xl mx-auto px-4">
-        <FeedbackForm />
-      </section>
+      <div className="bg-[#FDFBF7] py-12 sm:py-16">
+        <section className="container-site max-w-2xl mx-auto px-4">
+          <FeedbackForm />
+        </section>
 
       {/* ── 3. Submitted Reviews / Customer Feedback ───────────────────── */}
       {recentReviews.length > 0 && (
@@ -135,5 +148,6 @@ export default async function FeedbackPage() {
       {/* Safe padding for mobile navbar */}
       <div className="h-16 md:h-0 block md:hidden" aria-hidden="true" />
     </div>
+    </>
   );
 }
