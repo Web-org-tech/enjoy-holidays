@@ -357,7 +357,7 @@ export default function PackageEditor({
         {/* TAB 1: FORM & DYNAMIC ITINERARY BUILDER */}
         <div className={activeTab === "edit" ? "block space-y-6" : "hidden"}>
           {/* Section 1: Basic Information */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5E7EB] shadow-sm space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
               <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
                 <Sparkles size={18} className="text-[#059669]" /> 1. Basic Package Information
@@ -453,7 +453,7 @@ export default function PackageEditor({
           </div>
 
           {/* Section 2: Duration, Pricing & Vehicle */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5E7EB] shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5E7EB]">
               <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
                 <Clock size={18} className="text-[#059669]" /> 2. Duration, Capacity &amp; Pricing
@@ -579,7 +579,7 @@ export default function PackageEditor({
           </div>
 
           {/* Section 3: DYNAMIC DAY-BY-DAY ITINERARY BUILDER */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-6">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5E7EB] shadow-sm space-y-5 sm:space-y-6 overflow-hidden">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5E7EB]">
               <div>
                 <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
@@ -612,11 +612,11 @@ export default function PackageEditor({
                     {/* Day Card Header Bar */}
                     <div
                       onClick={() => setExpandedDayId(isExpanded ? null : day.id)}
-                      className="p-4 flex items-center justify-between cursor-pointer hover:bg-[#F8FAFC] transition-colors"
+                      className="p-3.5 sm:p-4 flex items-center justify-between cursor-pointer hover:bg-[#F8FAFC] transition-colors gap-2"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
                         <span
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shadow-xs ${
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shadow-xs shrink-0 ${
                             day.is_departure
                               ? "bg-[#059669] text-white"
                               : day.is_return
@@ -627,18 +627,18 @@ export default function PackageEditor({
                           {day.is_departure ? "D0" : day.is_return ? "★" : `D${day.day_number || dIdx}`}
                         </span>
 
-                        <div>
-                          <div className="font-semibold text-sm text-[#111827]">
+                        <div className="min-w-0 flex-1">
+                          <div className="font-semibold text-xs sm:text-sm text-[#111827] truncate">
                             {day.title || `Day ${dIdx}`}
                           </div>
                           {day.subtitle && (
-                            <div className="text-xs text-[#6B7280]">{day.subtitle}</div>
+                            <div className="text-[11px] sm:text-xs text-[#6B7280] truncate">{day.subtitle}</div>
                           )}
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <span className="text-[11px] font-semibold text-[#6B7280] bg-[#F1F5F9] px-2.5 py-0.5 rounded-full">
+                      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                        <span className="text-[10px] sm:text-[11px] font-semibold text-[#6B7280] bg-[#F1F5F9] px-2 py-0.5 rounded-full whitespace-nowrap">
                           {day.activities?.length || 0} activities
                         </span>
                         {isExpanded ? <ChevronUp size={16} className="text-[#6B7280]" /> : <ChevronDown size={16} className="text-[#6B7280]" />}
@@ -647,8 +647,8 @@ export default function PackageEditor({
 
                     {/* Day Expanded Form Details */}
                     {isExpanded && (
-                      <div className="p-5 border-t border-[#E5E7EB] bg-[#F8FAFC] space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="p-3.5 sm:p-5 border-t border-[#E5E7EB] bg-[#F8FAFC] space-y-4 overflow-hidden">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div>
                             <label className="block text-xs font-semibold text-[#374151] mb-1">
                               Day Title *
@@ -658,7 +658,7 @@ export default function PackageEditor({
                               value={day.title}
                               onChange={(e) => handleUpdateDay(day.id, { title: e.target.value })}
                               placeholder="e.g. Alleppey — Life on the Backwaters"
-                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
+                              className="w-full min-w-0 px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-xs sm:text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                             />
                           </div>
 
@@ -671,7 +671,7 @@ export default function PackageEditor({
                               value={day.subtitle}
                               onChange={(e) => handleUpdateDay(day.id, { subtitle: e.target.value })}
                               placeholder="e.g. Private Houseboat Cruise"
-                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
+                              className="w-full min-w-0 px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-xs sm:text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                             />
                           </div>
                         </div>
@@ -693,7 +693,7 @@ export default function PackageEditor({
 
                         {/* Activities List Editor */}
                         <div className="space-y-3 pt-2">
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
                             <span className="text-xs font-bold text-[#111827]">
                               Scheduled Activities &amp; Highlights:
                             </span>
@@ -706,18 +706,31 @@ export default function PackageEditor({
                             </button>
                           </div>
 
-                          <div className="space-y-2">
+                          <div className="space-y-2.5">
                             {day.activities.map((act) => (
                               <div
                                 key={act.id}
-                                className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-[#E5E7EB] shadow-xs"
+                                className="flex flex-col sm:flex-row sm:items-center gap-2 bg-white p-2.5 sm:p-3 rounded-xl border border-[#E5E7EB] shadow-xs"
                               >
-                                <ActivityIconPicker
-                                  value={act.icon}
-                                  onChange={(iconKey) =>
-                                    handleUpdateActivity(day.id, act.id, { icon: iconKey })
-                                  }
-                                />
+                                <div className="flex items-center gap-2 w-full sm:w-auto">
+                                  <div className="flex-1 sm:flex-none min-w-0">
+                                    <ActivityIconPicker
+                                      value={act.icon}
+                                      onChange={(iconKey) =>
+                                        handleUpdateActivity(day.id, act.id, { icon: iconKey })
+                                      }
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveActivity(day.id, act.id)}
+                                    className="sm:hidden p-2 text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg transition-colors shrink-0"
+                                    title="Remove activity"
+                                    aria-label="Remove activity"
+                                  >
+                                    <Trash2 size={15} />
+                                  </button>
+                                </div>
 
                                 <input
                                   type="text"
@@ -726,14 +739,15 @@ export default function PackageEditor({
                                     handleUpdateActivity(day.id, act.id, { label: e.target.value })
                                   }
                                   placeholder="e.g. Sunset cruise along backwaters"
-                                  className="flex-1 px-3 py-2 text-xs text-[#111827] rounded-lg border border-[#E5E7EB] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
+                                  className="w-full flex-1 min-w-0 px-3 py-2 text-xs sm:text-sm text-[#111827] rounded-lg border border-[#E5E7EB] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
                                 />
 
                                 <button
                                   type="button"
                                   onClick={() => handleRemoveActivity(day.id, act.id)}
-                                  className="p-2 text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg transition-colors shrink-0"
+                                  className="hidden sm:flex p-2 text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg transition-colors shrink-0"
                                   title="Remove activity"
+                                  aria-label="Remove activity"
                                 >
                                   <Trash2 size={14} />
                                 </button>
@@ -754,16 +768,16 @@ export default function PackageEditor({
                               handleUpdateDay(day.id, { transition_text: e.target.value })
                             }
                             placeholder="e.g. Early morning scenic drive south to Alleppey (90 min)..."
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-xs italic text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
+                            className="w-full min-w-0 px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-xs italic text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
                           />
                         </div>
 
                         {/* Day Card Footer Actions */}
-                        <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
+                        <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB] gap-2 flex-wrap">
                           <button
                             type="button"
                             onClick={() => handleRemoveDay(day.id)}
-                            className="text-xs font-semibold text-[#DC2626] hover:text-[#B91C1C] flex items-center gap-1"
+                            className="text-xs font-semibold text-[#DC2626] hover:text-[#B91C1C] flex items-center gap-1 py-1"
                           >
                             <Trash2 size={13} /> Remove Stop
                           </button>
@@ -771,7 +785,7 @@ export default function PackageEditor({
                           <button
                             type="button"
                             onClick={() => setExpandedDayId(null)}
-                            className="text-xs font-semibold text-[#059669] hover:underline"
+                            className="text-xs font-semibold text-[#059669] hover:underline py-1"
                           >
                             Done Editing Stop
                           </button>
@@ -785,7 +799,7 @@ export default function PackageEditor({
           </div>
 
           {/* Section 4: Media, Inclusions & Exclusions */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5E7EB] shadow-sm space-y-4">
             <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2 pb-3 border-b border-[#E5E7EB]">
               <Camera size={18} className="text-[#059669]" /> 4. Inclusions &amp; Exclusions
             </h2>
@@ -822,7 +836,7 @@ export default function PackageEditor({
 
         {/* TAB 2: REAL-TIME LIVE TRAVEL PREVIEW */}
         <div className={activeTab === "preview" ? "block space-y-6" : "hidden"}>
-          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5E7EB] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-[#059669] uppercase tracking-wider">
                 Live Customer View Simulation

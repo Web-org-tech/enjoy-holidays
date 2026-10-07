@@ -62,7 +62,7 @@ export default function ActivityIconPicker({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#059669] text-xs font-semibold text-[#111827] transition-all shadow-sm group text-left min-w-[140px] cursor-pointer"
+        className="flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#059669] text-xs font-semibold text-[#111827] transition-all shadow-sm group text-left w-full sm:w-auto sm:min-w-[130px] max-w-full cursor-pointer"
         title="Choose activity or highlight icon"
       >
         <div className="w-6 h-6 rounded-lg bg-[#ECFDF5] text-[#059669] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
@@ -83,7 +83,7 @@ export default function ActivityIconPicker({
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="fixed sm:absolute z-50 left-4 right-4 sm:left-0 sm:right-auto sm:w-96 top-1/2 sm:top-full -translate-y-1/2 sm:translate-y-2 bg-white rounded-2xl shadow-2xl border border-[#E5E7EB] p-4 text-[#111827] max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+          <div className="fixed sm:absolute z-50 left-3 right-3 sm:left-0 sm:right-auto sm:w-96 top-1/2 sm:top-full -translate-y-1/2 sm:translate-y-2 bg-white rounded-2xl shadow-2xl border border-[#E5E7EB] p-4 text-[#111827] max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
               <div className="flex items-center gap-2">
