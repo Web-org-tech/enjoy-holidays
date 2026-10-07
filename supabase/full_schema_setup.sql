@@ -1,15 +1,329 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- PADMA TOURS & TRAVELS — Seed Data
--- Run AFTER 001_initial_schema.sql and 002_rls_policies.sql
+-- PADMA TOURS & TRAVELS — Complete All-in-One Database Setup
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Instructions:
+-- 1. Open Supabase Dashboard -> SQL Editor -> New query
+-- 2. Paste this entire file and click "Run" (Ctrl+Enter)
+-- 3. Everything (tables, triggers, RLS, storage buckets, settings & packages)
+--    will be created and configured immediately.
 -- ═══════════════════════════════════════════════════════════════════════════
 
--- Clean up any prior seeds for safe idempotent re-runs
+-- Enable necessary extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 1. TABLES
+-- ─────────────────────────────────────────────────────────────────────────────
+
+-- PACKAGES
+CREATE TABLE IF NOT EXISTS packages (
+  id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  slug                TEXT UNIQUE NOT NULL,
+  name                TEXT NOT NULL,
+  summary             TEXT NOT NULL DEFAULT '',
+  destinations        TEXT[] NOT NULL DEFAULT '{}',
+  duration_nights     INTEGER NOT NULL DEFAULT 1,
+  duration_days       INTEGER NOT NULL DEFAULT 2,
+  pax_capacity        INTEGER NOT NULL DEFAULT 20,
+  price_with_food     NUMERIC(10,2) NOT NULL DEFAULT 0,
+  price_without_food  NUMERIC(10,2),
+  hero_image_url      TEXT,
+  hero_video_url      TEXT,
+  vehicle_type        TEXT NOT NULL DEFAULT 'jeep'
+                      CHECK (vehicle_type IN ('jeep','tuk-tuk','boat','bike','train')),
+  status              TEXT NOT NULL DEFAULT 'draft'
+                      CHECK (status IN ('draft','published','archived')),
+  seo_title           TEXT,
+  seo_description     TEXT,
+  notes               TEXT,
+  created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Auto-update updated_at function
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS packages_updated_at ON packages;
+CREATE TRIGGER packages_updated_at
+  BEFORE UPDATE ON packages
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- PACKAGE DAYS
+CREATE TABLE IF NOT EXISTS package_days (
+  id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  package_id      UUID NOT NULL REFERENCES packages(id) ON DELETE CASCADE,
+  day_number      INTEGER NOT NULL,
+  title           TEXT NOT NULL,
+  subtitle        TEXT,
+  photo_url       TEXT,
+  transition_text TEXT,
+  sort_order      INTEGER NOT NULL DEFAULT 0,
+  UNIQUE(package_id, day_number)
+);
+
+CREATE INDEX IF NOT EXISTS idx_package_days_package_id ON package_days(package_id);
+CREATE INDEX IF NOT EXISTS idx_package_days_sort ON package_days(package_id, sort_order);
+
+-- DAY ACTIVITIES
+CREATE TABLE IF NOT EXISTS day_activities (
+  id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  package_day_id  UUID NOT NULL REFERENCES package_days(id) ON DELETE CASCADE,
+  icon            TEXT NOT NULL DEFAULT 'activity',
+  label           TEXT NOT NULL,
+  sort_order      INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_day_activities_day_id ON day_activities(package_day_id);
+
+-- PACKAGE INCLUSIONS
+CREATE TABLE IF NOT EXISTS package_inclusions (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  package_id  UUID NOT NULL REFERENCES packages(id) ON DELETE CASCADE,
+  text        TEXT NOT NULL,
+  sort_order  INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_inclusions_package_id ON package_inclusions(package_id);
+
+-- PACKAGE EXCLUSIONS
+CREATE TABLE IF NOT EXISTS package_exclusions (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  package_id  UUID NOT NULL REFERENCES packages(id) ON DELETE CASCADE,
+  text        TEXT NOT NULL,
+  sort_order  INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_exclusions_package_id ON package_exclusions(package_id);
+
+-- GALLERY ITEMS
+CREATE TABLE IF NOT EXISTS gallery_items (
+  id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  package_id      UUID REFERENCES packages(id) ON DELETE SET NULL,
+  destination_tag TEXT,
+  media_url       TEXT NOT NULL,
+  media_type      TEXT NOT NULL DEFAULT 'image'
+                  CHECK (media_type IN ('image','video')),
+  alt_text        TEXT,
+  sort_order      INTEGER NOT NULL DEFAULT 0,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_gallery_package_id ON gallery_items(package_id);
+CREATE INDEX IF NOT EXISTS idx_gallery_destination ON gallery_items(destination_tag);
+
+-- TESTIMONIALS
+CREATE TABLE IF NOT EXISTS testimonials (
+  id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  customer_name   TEXT NOT NULL,
+  photo_url       TEXT,
+  rating          INTEGER NOT NULL DEFAULT 5 CHECK (rating BETWEEN 1 AND 5),
+  quote           TEXT NOT NULL,
+  package_id      UUID REFERENCES packages(id) ON DELETE SET NULL,
+  sort_order      INTEGER NOT NULL DEFAULT 0,
+  is_published    BOOLEAN NOT NULL DEFAULT false,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_testimonials_published ON testimonials(is_published);
+
+-- ENQUIRIES
+CREATE TABLE IF NOT EXISTS enquiries (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name        TEXT NOT NULL,
+  phone       TEXT NOT NULL,
+  email       TEXT,
+  package_id  UUID REFERENCES packages(id) ON DELETE SET NULL,
+  message     TEXT,
+  source      TEXT NOT NULL DEFAULT 'form'
+              CHECK (source IN ('form','whatsapp_click','phone')),
+  status      TEXT NOT NULL DEFAULT 'new'
+              CHECK (status IN ('new','contacted','converted','closed')),
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_enquiries_status ON enquiries(status);
+CREATE INDEX IF NOT EXISTS idx_enquiries_created ON enquiries(created_at DESC);
+
+-- SITE SETTINGS
+CREATE TABLE IF NOT EXISTS site_settings (
+  id                    UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  theme_colors          JSONB,
+  hero_content          JSONB,
+  contact_info          JSONB,
+  social_links          JSONB,
+  featured_package_ids  UUID[],
+  updated_at            TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Ensure singleton row exists with authentic client data
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM site_settings LIMIT 1) THEN
+    INSERT INTO site_settings (
+      theme_colors,
+      hero_content,
+      contact_info,
+      social_links,
+      featured_package_ids
+    ) VALUES (
+      '{}',
+      '{
+        "headline": "Where Will You\nWander Next?",
+        "subtext": "Daily tours, Madurai local sightseeing, and customized holiday packages across India since 2004.",
+        "cta_primary_label": "Explore Packages",
+        "cta_secondary_label": "WhatsApp Us"
+      }',
+      '{
+        "phone": "+91 98659 87975",
+        "email": "nirmalharish1980@gmail.com",
+        "address": "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002",
+        "whatsapp_number": "917010111256",
+        "business_hours": "24/7 Round-the-Clock Service"
+      }',
+      '{
+        "instagram": "https://instagram.com",
+        "facebook": "https://facebook.com",
+        "whatsapp": "https://wa.me/917010111256"
+      }',
+      NULL
+    );
+  ELSE
+    UPDATE site_settings SET
+      hero_content = '{
+        "headline": "Where Will You\nWander Next?",
+        "subtext": "Daily tours, Madurai local sightseeing, and customized holiday packages across India since 2004.",
+        "cta_primary_label": "Explore Packages",
+        "cta_secondary_label": "WhatsApp Us"
+      }',
+      contact_info = '{
+        "phone": "+91 98659 87975",
+        "email": "nirmalharish1980@gmail.com",
+        "address": "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002",
+        "whatsapp_number": "917010111256",
+        "business_hours": "24/7 Round-the-Clock Service"
+      }'
+    WHERE id = (SELECT id FROM site_settings LIMIT 1);
+  END IF;
+END $$;
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 2. ROW LEVEL SECURITY (RLS)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+ALTER TABLE packages             ENABLE ROW LEVEL SECURITY;
+ALTER TABLE package_days         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE day_activities       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE package_inclusions   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE package_exclusions   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gallery_items        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE testimonials         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE enquiries            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE site_settings        ENABLE ROW LEVEL SECURITY;
+
+-- Packages
+DROP POLICY IF EXISTS "packages_public_read" ON packages;
+CREATE POLICY "packages_public_read" ON packages FOR SELECT USING (status = 'published');
+DROP POLICY IF EXISTS "packages_auth_all" ON packages;
+CREATE POLICY "packages_auth_all" ON packages FOR ALL USING (auth.role() = 'authenticated');
+
+-- Package Days
+DROP POLICY IF EXISTS "package_days_public_read" ON package_days;
+CREATE POLICY "package_days_public_read" ON package_days FOR SELECT USING (
+  EXISTS (SELECT 1 FROM packages p WHERE p.id = package_days.package_id AND p.status = 'published')
+);
+DROP POLICY IF EXISTS "package_days_auth_all" ON package_days;
+CREATE POLICY "package_days_auth_all" ON package_days FOR ALL USING (auth.role() = 'authenticated');
+
+-- Day Activities
+DROP POLICY IF EXISTS "day_activities_public_read" ON day_activities;
+CREATE POLICY "day_activities_public_read" ON day_activities FOR SELECT USING (
+  EXISTS (SELECT 1 FROM package_days pd JOIN packages p ON p.id = pd.package_id WHERE pd.id = day_activities.package_day_id AND p.status = 'published')
+);
+DROP POLICY IF EXISTS "day_activities_auth_all" ON day_activities;
+CREATE POLICY "day_activities_auth_all" ON day_activities FOR ALL USING (auth.role() = 'authenticated');
+
+-- Inclusions / Exclusions
+DROP POLICY IF EXISTS "inclusions_public_read" ON package_inclusions;
+CREATE POLICY "inclusions_public_read" ON package_inclusions FOR SELECT USING (
+  EXISTS (SELECT 1 FROM packages p WHERE p.id = package_inclusions.package_id AND p.status = 'published')
+);
+DROP POLICY IF EXISTS "inclusions_auth_all" ON package_inclusions;
+CREATE POLICY "inclusions_auth_all" ON package_inclusions FOR ALL USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "exclusions_public_read" ON package_exclusions;
+CREATE POLICY "exclusions_public_read" ON package_exclusions FOR SELECT USING (
+  EXISTS (SELECT 1 FROM packages p WHERE p.id = package_exclusions.package_id AND p.status = 'published')
+);
+DROP POLICY IF EXISTS "exclusions_auth_all" ON package_exclusions;
+CREATE POLICY "exclusions_auth_all" ON package_exclusions FOR ALL USING (auth.role() = 'authenticated');
+
+-- Gallery
+DROP POLICY IF EXISTS "gallery_public_read" ON gallery_items;
+CREATE POLICY "gallery_public_read" ON gallery_items FOR SELECT USING (true);
+DROP POLICY IF EXISTS "gallery_auth_all" ON gallery_items;
+CREATE POLICY "gallery_auth_all" ON gallery_items FOR ALL USING (auth.role() = 'authenticated');
+
+-- Testimonials
+DROP POLICY IF EXISTS "testimonials_public_read" ON testimonials;
+CREATE POLICY "testimonials_public_read" ON testimonials FOR SELECT USING (is_published = true);
+DROP POLICY IF EXISTS "testimonials_auth_all" ON testimonials;
+CREATE POLICY "testimonials_auth_all" ON testimonials FOR ALL USING (auth.role() = 'authenticated');
+
+-- Enquiries
+DROP POLICY IF EXISTS "enquiries_public_insert" ON enquiries;
+CREATE POLICY "enquiries_public_insert" ON enquiries FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "enquiries_auth_all" ON enquiries;
+CREATE POLICY "enquiries_auth_all" ON enquiries FOR ALL USING (auth.role() = 'authenticated');
+
+-- Settings
+DROP POLICY IF EXISTS "settings_public_read" ON site_settings;
+CREATE POLICY "settings_public_read" ON site_settings FOR SELECT USING (true);
+DROP POLICY IF EXISTS "settings_auth_update" ON site_settings;
+CREATE POLICY "settings_auth_update" ON site_settings FOR ALL USING (auth.role() = 'authenticated');
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 3. STORAGE BUCKETS
+-- ─────────────────────────────────────────────────────────────────────────────
+
+INSERT INTO storage.buckets (id, name, public) VALUES ('package-media', 'package-media', true) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public) VALUES ('gallery', 'gallery', true) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true) ON CONFLICT DO NOTHING;
+
+-- Storage policies
+DROP POLICY IF EXISTS "package_media_public_read" ON storage.objects;
+CREATE POLICY "package_media_public_read" ON storage.objects FOR SELECT USING (bucket_id = 'package-media');
+DROP POLICY IF EXISTS "package_media_auth_write" ON storage.objects;
+CREATE POLICY "package_media_auth_write" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'package-media' AND auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "package_media_auth_delete" ON storage.objects;
+CREATE POLICY "package_media_auth_delete" ON storage.objects FOR DELETE USING (bucket_id = 'package-media' AND auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "gallery_public_read_storage" ON storage.objects;
+CREATE POLICY "gallery_public_read_storage" ON storage.objects FOR SELECT USING (bucket_id = 'gallery');
+DROP POLICY IF EXISTS "gallery_auth_write" ON storage.objects;
+CREATE POLICY "gallery_auth_write" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'gallery' AND auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "gallery_auth_delete" ON storage.objects;
+CREATE POLICY "gallery_auth_delete" ON storage.objects FOR DELETE USING (bucket_id = 'gallery' AND auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "avatars_public_read" ON storage.objects;
+CREATE POLICY "avatars_public_read" ON storage.objects FOR SELECT USING (bucket_id = 'avatars');
+DROP POLICY IF EXISTS "avatars_auth_write" ON storage.objects;
+CREATE POLICY "avatars_auth_write" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'avatars' AND auth.role() = 'authenticated');
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 4. SEED DATA (AUTHENTIC PADMA TOURS & TRAVELS SHOWCASE PACKAGES)
+-- ─────────────────────────────────────────────────────────────────────────────
+
 DELETE FROM packages WHERE slug IN ('madurai-heritage-temple-tour', 'kerala-coastal-escape', 'coorg-highlands-retreat');
 DELETE FROM testimonials WHERE customer_name IN ('Priya Nair', 'Rahul & Deepa Sharma', 'Dr. Anand Venkatesh', 'K. Senthil Nathan');
 
--- ─────────────────────────────────────────────────────────────────────────────
 -- PACKAGE 1: Madurai Heritage & Temple Circuit (2 Days / 1 Night)
--- ─────────────────────────────────────────────────────────────────────────────
 WITH pkg_madurai AS (
   INSERT INTO packages (
     slug, name, summary, destinations, duration_nights, duration_days,
@@ -81,9 +395,7 @@ SELECT id, text, sort_order FROM pkg_m_id,
   ('Meals not explicitly chosen in the booking option', 3)
 ) AS t(text, sort_order);
 
--- ─────────────────────────────────────────────────────────────────────────────
 -- PACKAGE 2: Kerala Coastal Escape (5 Days / 4 Nights)
--- ─────────────────────────────────────────────────────────────────────────────
 WITH pkg1 AS (
   INSERT INTO packages (
     slug, name, summary, destinations, duration_nights, duration_days,
@@ -198,9 +510,7 @@ SELECT id, text, sort_order FROM pkg1_id,
   ('Meals not specified in the itinerary', 5)
 ) AS t(text, sort_order);
 
--- ─────────────────────────────────────────────────────────────────────────────
 -- PACKAGE 3: Coorg Highlands (4 Days / 3 Nights)
--- ─────────────────────────────────────────────────────────────────────────────
 WITH pkg2 AS (
   INSERT INTO packages (
     slug, name, summary, destinations, duration_nights, duration_days,
@@ -304,9 +614,7 @@ SELECT id, text, sort_order FROM pkg2_id,
   ('Travel insurance', 4)
 ) AS t(text, sort_order);
 
--- ─────────────────────────────────────────────────────────────────────────────
 -- GALLERY ITEMS
--- ─────────────────────────────────────────────────────────────────────────────
 DELETE FROM gallery_items WHERE destination_tag IN ('Madurai', 'Kerala', 'Coorg');
 
 WITH pkg_m_id AS (SELECT id FROM packages WHERE slug = 'madurai-heritage-temple-tour'),
@@ -322,9 +630,7 @@ UNION ALL SELECT id, 'Kerala', 'https://images.unsplash.com/photo-1590080876063-
 UNION ALL SELECT id, 'Coorg', 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80', 'image', 'Coorg coffee plantation mist', 6 FROM pkg2_id
 UNION ALL SELECT id, 'Coorg', 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', 'image', 'Mountain sunrise view', 7 FROM pkg2_id;
 
--- ─────────────────────────────────────────────────────────────────────────────
 -- TESTIMONIALS
--- ─────────────────────────────────────────────────────────────────────────────
 WITH pkg_m_id AS (SELECT id FROM packages WHERE slug = 'madurai-heritage-temple-tour'),
      pkg1_id AS (SELECT id FROM packages WHERE slug = 'kerala-coastal-escape'),
      pkg2_id AS (SELECT id FROM packages WHERE slug = 'coorg-highlands-retreat')

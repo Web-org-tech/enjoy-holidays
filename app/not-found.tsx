@@ -25,14 +25,14 @@ export default function NotFound() {
             <rect x="77" y="60" width="6" height="80" rx="3" fill="var(--color-accent)" />
 
             {/* Signs */}
-            <rect x="40" y="65" width="55" height="20" rx="4" fill="var(--color-primary)" />
-            <text x="68" y="79" textAnchor="middle" fill="white" fontSize="9" fontWeight="600" fontFamily="sans-serif">Kochi →</text>
+            <rect x="40" y="65" width="58" height="20" rx="4" fill="var(--color-primary)" />
+            <text x="69" y="79" textAnchor="middle" fill="white" fontSize="9" fontWeight="600" fontFamily="sans-serif">Madurai →</text>
 
             <rect x="55" y="88" width="50" height="18" rx="4" fill="var(--color-secondary)" />
-            <text x="80" y="100" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="sans-serif">← Varkala</text>
+            <text x="80" y="100" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="sans-serif">← Munnar</text>
 
-            <rect x="45" y="108" width="52" height="18" rx="4" fill="var(--color-accent)" />
-            <text x="71" y="120" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="sans-serif">Coorg →</text>
+            <rect x="36" y="108" width="70" height="18" rx="4" fill="var(--color-accent)" />
+            <text x="71" y="120" textAnchor="middle" fill="white" fontSize="7.5" fontWeight="600" fontFamily="sans-serif">Rameswaram →</text>
 
             {/* Question mark floating */}
             <circle cx="115" cy="50" r="18" fill="rgba(212,92,51,0.1)" />

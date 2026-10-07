@@ -1,6 +1,6 @@
-# 🌴 ENJOY Holidays — Complete Setup & Deployment Guide
+# 🪷 PADMA TOURS & TRAVELS — Complete Setup & Deployment Guide
 
-Welcome to the **ENJOY Holidays** luxury travel platform. This guide provides step-by-step instructions to configure, run locally, and deploy the application to production.
+Welcome to the **PADMA TOURS & TRAVELS** website and admin management platform. This guide provides step-by-step instructions to configure, run locally, and deploy the application to Vercel and Supabase.
 
 ---
 
@@ -11,7 +11,7 @@ Welcome to the **ENJOY Holidays** luxury travel platform. This guide provides st
 4. [Supabase Storage Buckets](#4-supabase-storage-buckets)
 5. [Creating an Admin Account](#5-creating-an-admin-account)
 6. [Running Locally](#6-running-locally)
-7. [Building for Production](#7-building-for-production)
+7. [Deploying to Vercel](#7-deploying-to-vercel)
 8. [Admin Portal Features Guide](#8-admin-portal-features-guide)
 
 ---
@@ -22,12 +22,13 @@ Ensure you have installed:
 - **Node.js**: `v18.17.0` or higher (recommended: Node 20 LTS)
 - **npm**: `v9.0.0` or higher (or pnpm/yarn)
 - **Supabase Account**: Free or Pro project at [supabase.com](https://supabase.com)
+- **Vercel Account**: [vercel.com](https://vercel.com)
 
 ---
 
 ## 2. Environment Configuration
 
-1. In the project root, create a file named `.env.local` (or copy `.env.example`):
+1. In the project root, create or edit `.env.local`:
 
 ```bash
 # Supabase Public Keys
@@ -38,11 +39,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...
 
 # Admin Configuration
-ADMIN_EMAIL=admin@enjoyholidays.in
+ADMIN_EMAIL=nirmalharish1980@gmail.com
 
 # Public Website & WhatsApp Configuration
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_WHATSAPP_NUMBER=918531807705
+NEXT_PUBLIC_SITE_URL=https://padmatoursandtravels.in
+NEXT_PUBLIC_WHATSAPP_NUMBER=917010111256
 ```
 
 > ⚠️ **Security Notice**: Never commit `SUPABASE_SERVICE_ROLE_KEY` to public Git repositories. It is only accessed on the Next.js server side.
@@ -51,26 +52,17 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=918531807705
 
 ## 3. Supabase Database Setup
 
+### Fast Setup (One Click):
 1. Open your Supabase Dashboard: `https://supabase.com/dashboard/project/<your-project-id>`.
-2. Navigate to the **SQL Editor** on the left navigation bar.
-3. Execute the migration scripts located in `supabase/migrations/` in order:
+2. Navigate to **SQL Editor** on the left navigation bar.
+3. Open `supabase/full_schema_setup.sql`, copy all contents, paste into the SQL Editor, and click **Run**.
+   *This automatically sets up all 9 tables, indexes, triggers, Row Level Security policies, storage buckets, and initial packages!*
 
-### A. Initial Schema (`001_initial_schema.sql`)
-Creates the core tables:
-- `packages` (handcrafted travel itineraries)
-- `itinerary_days` (stops, activities, photos)
-- `enquiries` (leads with honeypot spam protection)
-- `testimonials` (guest reviews & moderation)
-- `site_settings` (dynamic hero banner, contact details, social links)
-- `gallery_items` (media showcase)
-
-### B. Row Level Security & Policies (`002_rls_policies.sql`)
-Sets up row-level security:
-- Public visitors can view published packages, published testimonials, and public site settings.
-- Only authenticated admins can create, modify, or delete data.
-
-### C. Seed Data (`003_seed_data.sql` - Optional)
-Seeds ready-to-use sample packages (Kerala Backwaters, Munnar Hills, Wayanad Wildlife) and authentic starter reviews.
+### Step-by-Step Alternative:
+If running migrations sequentially:
+1. `supabase/migrations/001_initial_schema.sql` (Creates tables and initial singleton settings)
+2. `supabase/migrations/002_rls_policies.sql` (Configures Row Level Security and Storage Buckets)
+3. `supabase/migrations/003_seed_data.sql` (Inserts authentic packages, gallery, and reviews)
 
 ---
 
@@ -78,7 +70,7 @@ Seeds ready-to-use sample packages (Kerala Backwaters, Munnar Hills, Wayanad Wil
 
 The platform includes a **Dual Image Uploader** that allows uploading files directly from your computer or pasting direct URLs.
 
-Ensure the following 3 storage buckets are created in your Supabase project under **Storage**:
+The setup scripts automatically create and set public permissions for these 3 buckets:
 
 | Bucket ID | Access | Allowed Formats | Description |
 | :--- | :--- | :--- | :--- |
@@ -86,18 +78,15 @@ Ensure the following 3 storage buckets are created in your Supabase project unde
 | `gallery` | **Public** | Images & Videos (MP4, WEBM) | Homepage hero background media & gallery |
 | `avatars` | **Public** | Images (JPG, PNG, WEBP) | Testimonial & guest profile photos |
 
-*Note: Bucket creation SQL statements are included at the end of `002_rls_policies.sql`.*
-
 ---
 
 ## 5. Creating an Admin Account
 
 1. In your Supabase Dashboard, go to **Authentication** → **Users**.
 2. Click **Add User** → **Create User**.
-3. Set the email to your `ADMIN_EMAIL` (e.g. `admin@enjoyholidays.in`) and create a secure password.
-4. Set **Auto Confirm Email** to checked.
-5. In your user metadata, or simply by matching `ADMIN_EMAIL`, you will have full access to `/admin`.
-6. Log in at `http://localhost:3000/admin/login`.
+3. Set the email to your `ADMIN_EMAIL` (`nirmalharish1980@gmail.com`) and choose a secure password.
+4. Check **Auto Confirm Email**.
+5. Log in at `https://your-domain.com/admin/login` or `http://localhost:3000/admin/login`.
 
 ---
 
@@ -121,46 +110,39 @@ Open your browser at:
 
 ---
 
-## 7. Building for Production
+## 7. Deploying to Vercel
 
-To test the production build locally or before deploying:
-
-```bash
-# 1. Typecheck and lint
-npm run lint
-npx tsc --noEmit
-
-# 2. Compile production bundle
-npm run build
-
-# 3. Start production server
-npm run start
-```
-
-### Deploying to Vercel
-1. Push your repository to GitHub or GitLab.
-2. Import the project into **Vercel**.
-3. In Project Settings → **Environment Variables**, add the variables from `.env.local`.
-4. Deploy!
+1. Push your repository to GitHub / GitLab / Bitbucket.
+2. Go to [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New...** → **Project**.
+3. Import this repository.
+4. In the **Environment Variables** section, add:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `NEXT_PUBLIC_WHATSAPP_NUMBER` (`917010111256`)
+   - `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.vercel.app` or custom domain)
+   - `ADMIN_EMAIL` (`nirmalharish1980@gmail.com`)
+5. Click **Deploy**.
+6. In Supabase Dashboard → **Authentication** → **URL Configuration**:
+   - Add your Vercel deployment URL (e.g. `https://*.vercel.app`) to **Redirect URLs**.
 
 ---
 
 ## 8. Admin Portal Features Guide
 
-### 🌟 1. Dynamic Homepage Hero Banner (`/admin/settings`)
-- Change the main headline, subtitle, and CTA buttons.
-- Upload an image or looping video file or paste a high-resolution URL to dynamically change the homepage hero background.
+The Admin Dashboard provides full control over the website:
+- **Packages**: Add, edit, reorder, or archive holiday packages and daily tours with day-by-day stops.
+- **Enquiries**: Review incoming customer leads, filter by status (New, Contacted, Converted), and export to CSV.
+- **Gallery**: Upload photos or videos with destination tags (Madurai, Kerala, Coorg, etc.).
+- **Testimonials**: Moderate and approve customer feedback and ratings.
+- **Site Settings**: Customize hero headline, contact phone numbers, WhatsApp, office address, and social links.
 
-### 🗺️ 2. Package & Itinerary Builder (`/admin/packages/new` or `/admin/packages/[id]/edit`)
-- **Dual Media Uploader**: Upload hero images and day photos directly or input image URLs.
-- **Activity Icon Picker**: Choose from 40+ categorized travel icons (Transit, Stays, Dining, Nature, Adventure, Wellness) or type custom keywords.
-- **Flexible Pricing**: Configure all-inclusive pricing (with food) and stays-only pricing.
+---
 
-### 💬 3. Customer Reviews Moderation (`/admin/testimonials`)
-- **Public Review Submission**: Visitors can click "Write a Review" on `/testimonials`.
-- **Pending Verification Queue**: Submitted reviews are held in the admin dashboard until you click **Approve & Publish**.
-- **Manual Creation**: Admin can also manually add verified reviews with guest photos.
+## 📞 Support & Handover Information
 
-### 🔒 4. Lead Generation & Enquiries (`/admin/enquiries`)
-- Customer enquiries from the contact form or package pages arrive in real-time with status updates (New, Contacted, Quoted, Booked, Closed).
-- Protected by invisible bot honeypots and strict phone/email regex validation.
+- **Client**: PADMA TOURS & TRAVELS
+- **Helpline**: +91 98659 87975
+- **WhatsApp**: +91 70101 11256
+- **Email**: nirmalharish1980@gmail.com
+- **Office**: No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002

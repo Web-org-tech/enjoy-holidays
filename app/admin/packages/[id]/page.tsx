@@ -54,12 +54,12 @@ export default async function EditPackagePage({
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#0a0d14" }}>
+    <div className="min-h-screen bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto pt-6 px-4 md:px-8 flex justify-end">
         <ConfirmDeleteButton
           itemType="Package"
           title="Delete package"
-          className="px-4 py-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs font-bold border border-red-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-[#FEF2F2] text-[#DC2626] hover:bg-[#FEE2E2] text-xs font-semibold border border-[#FECACA] flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
           onConfirm={async () => {
             "use server";
             await deletePackageAction(pkg.id);

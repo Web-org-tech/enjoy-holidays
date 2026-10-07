@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { Search, ChevronDown, Check, X, Sparkles } from "lucide-react";
-import ActivityIcon, { ALL_ICON_OPTIONS, ACTIVITY_CATEGORIES, IconOption } from "@/components/journey/ActivityIcon";
+import ActivityIcon, { ALL_ICON_OPTIONS, ACTIVITY_CATEGORIES } from "@/components/journey/ActivityIcon";
 
 interface ActivityIconPickerProps {
   value: string;
@@ -62,16 +62,16 @@ export default function ActivityIconPicker({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-[#DBD4C4] hover:border-[#004741] text-xs font-semibold transition-all shadow-sm group text-left min-w-[140px]"
+        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#059669] text-xs font-semibold text-[#111827] transition-all shadow-sm group text-left min-w-[140px] cursor-pointer"
         title="Choose activity or highlight icon"
       >
-        <div className="w-6 h-6 rounded-lg bg-[#F0EDE4] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-          <ActivityIcon icon={value || "activity"} size={14} />
+        <div className="w-6 h-6 rounded-lg bg-[#ECFDF5] text-[#059669] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+          <ActivityIcon icon={value || "activity"} size={13} />
         </div>
-        <span className="truncate flex-1 text-[#0D1F1C] capitalize">
+        <span className="truncate flex-1 text-[#111827] capitalize">
           {currentOption.label}
         </span>
-        <ChevronDown size={14} className="opacity-40 shrink-0 group-hover:opacity-80" />
+        <ChevronDown size={14} className="text-[#9CA3AF] shrink-0 group-hover:text-[#111827]" />
       </button>
 
       {/* Popover / Modal */}
@@ -79,23 +79,23 @@ export default function ActivityIconPicker({
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]"
+            className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="fixed sm:absolute z-50 left-4 right-4 sm:left-0 sm:right-auto sm:w-96 top-1/2 sm:top-full -translate-y-1/2 sm:translate-y-2 bg-white rounded-2xl shadow-2xl border border-[#DBD4C4] p-4 text-[#0D1F1C] max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+          <div className="fixed sm:absolute z-50 left-4 right-4 sm:left-0 sm:right-auto sm:w-96 top-1/2 sm:top-full -translate-y-1/2 sm:translate-y-2 bg-white rounded-2xl shadow-2xl border border-[#E5E7EB] p-4 text-[#111827] max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#DBD4C4]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
               <div className="flex items-center gap-2">
-                <Sparkles size={16} className="text-[#D49B35]" />
-                <span className="text-xs font-bold font-serif text-[#004741]">
-                  Choose Activity & Highlight Icon
+                <Sparkles size={16} className="text-[#059669]" />
+                <span className="text-xs font-bold text-[#111827]">
+                  Choose Activity &amp; Highlight Icon
                 </span>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-1 rounded-lg text-black/50 hover:text-black hover:bg-black/5"
+                className="p-1 rounded-lg text-[#9CA3AF] hover:text-[#111827] hover:bg-[#F3F4F6] transition-colors"
               >
                 <X size={16} />
               </button>
@@ -105,14 +105,14 @@ export default function ActivityIconPicker({
             <div className="relative mt-3">
               <Search
                 size={14}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none"
               />
               <input
                 type="text"
                 placeholder="Search icons (e.g. food, cruise, stay)..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#DBD4C4] text-xs text-[#0D1F1C] placeholder-[#718096] font-medium focus:outline-none focus:border-[#004741]"
+                className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#111827] placeholder-[#9CA3AF] font-medium focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all"
                 autoFocus
               />
             </div>
@@ -126,8 +126,8 @@ export default function ActivityIconPicker({
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-2.5 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all ${
                     selectedCategory === cat.id
-                      ? "bg-[#004741] text-white shadow-sm"
-                      : "bg-[#F0EDE4] text-[#0D1F1C]/70 hover:text-[#0D1F1C]"
+                      ? "bg-[#059669] text-white shadow-xs"
+                      : "bg-[#F1F5F9] text-[#4B5563] hover:text-[#111827] hover:bg-[#E2E8F0]"
                   }`}
                 >
                   {cat.label}
@@ -146,14 +146,14 @@ export default function ActivityIconPicker({
                     onClick={() => handleSelect(opt.value)}
                     className={`flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all ${
                       isSelected
-                        ? "bg-[#004741]/10 border-[#004741] text-[#004741] font-bold shadow-xs"
-                        : "bg-white border-[#DBD4C4]/70 hover:border-[#004741] hover:bg-[#F0EDE4]/40"
+                        ? "bg-[#ECFDF5] border-[#059669] text-[#047857] font-bold shadow-xs"
+                        : "bg-white border-[#E5E7EB] hover:border-[#059669] hover:bg-[#F8FAFC]"
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-lg bg-[#F0EDE4] flex items-center justify-center mb-1.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#F8FAFC] flex items-center justify-center mb-1.5 text-[#059669]">
                       <ActivityIcon icon={opt.value} size={16} />
                     </div>
-                    <span className="text-[10px] leading-tight line-clamp-1">
+                    <span className="text-[10px] leading-tight line-clamp-1 text-[#374151]">
                       {opt.label}
                     </span>
                   </button>
@@ -161,16 +161,16 @@ export default function ActivityIconPicker({
               })}
 
               {filteredOptions.length === 0 && (
-                <div className="col-span-3 py-6 text-center text-xs text-black/50">
+                <div className="col-span-3 py-6 text-center text-xs text-[#9CA3AF]">
                   No matching icons found for &quot;{search}&quot;.
                 </div>
               )}
             </div>
 
             {/* Custom Icon / Keyword Input */}
-            <div className="pt-3 border-t border-[#DBD4C4] mt-2">
-              <label className="block text-[11px] font-bold text-black/70 mb-1">
-                Custom Icon Keyword (e.g. &quot;safari&quot;, &quot;ayurveda&quot;, &quot;sunset&quot;):
+            <div className="pt-3 border-t border-[#E5E7EB] mt-2">
+              <label className="block text-[11px] font-semibold text-[#4B5563] mb-1">
+                Custom Icon Keyword (e.g. &quot;safari&quot;, &quot;sunset&quot;):
               </label>
               <div className="flex gap-2">
                 <input
@@ -184,12 +184,12 @@ export default function ActivityIconPicker({
                       handleApplyCustom();
                     }
                   }}
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-white border border-[#DBD4C4] text-xs text-[#0D1F1C] placeholder-[#718096] font-medium focus:outline-none focus:border-[#004741]"
+                  className="flex-1 px-3 py-1.5 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#111827] placeholder-[#9CA3AF] font-medium focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
                 />
                 <button
                   type="button"
                   onClick={handleApplyCustom}
-                  className="px-3 py-1.5 rounded-xl bg-[#004741] text-white text-xs font-bold hover:bg-[#00332E]"
+                  className="px-3 py-1.5 rounded-xl bg-[#059669] text-white text-xs font-bold hover:bg-[#047857] cursor-pointer"
                 >
                   <Check size={14} />
                 </button>

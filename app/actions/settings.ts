@@ -24,6 +24,7 @@ export async function updateSiteSettingsAction(formData: FormData): Promise<void
   const instagram = formData.get("instagram") as string;
   const facebook = formData.get("facebook") as string;
   const youtube = formData.get("youtube") as string;
+  const instagram_video_url = (formData.get("instagram_video_url") as string)?.trim() || "";
 
   const hero_content = {
     headline,
@@ -34,7 +35,7 @@ export async function updateSiteSettingsAction(formData: FormData): Promise<void
     background_media_type,
   };
   const contact_info = { phone, email, address, whatsapp_number, gst_number };
-  const social_links = { instagram, facebook, youtube };
+  const social_links = { instagram, facebook, youtube, instagram_video_url };
 
   const { data: existing } = await supabase.from("site_settings").select("id").limit(1).maybeSingle();
 
@@ -60,5 +61,6 @@ export async function updateSiteSettingsAction(formData: FormData): Promise<void
 
   revalidatePath("/admin/settings");
   revalidatePath("/");
+  revalidatePath("/about");
   revalidatePath("/contact");
 }

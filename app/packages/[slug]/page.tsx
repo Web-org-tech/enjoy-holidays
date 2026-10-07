@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const pkg = await getPackageBySlug(slug);
   if (!pkg) return { title: "Package Not Found" };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://enjoyholidays.in";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
 
   return {
     title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | PADMA TOURS & TRAVELS`,
@@ -328,10 +328,10 @@ export default async function PackageDetailPage({ params }: Params) {
               </a>
               <a
                 href={`tel:+${whatsappNumber}`}
-                className="mt-3 inline-flex items-center gap-2 px-6 py-3 rounded-full text-white/70 font-medium text-sm hover:text-white transition-colors w-full justify-center"
+                className="mt-3 inline-flex items-center gap-2 px-6 py-3 rounded-full text-white/90 font-bold text-sm hover:text-white transition-colors w-full justify-center border border-white/20 hover:bg-white/10"
               >
                 <Phone size={14} />
-                Or call us directly
+                Call
               </a>
             </div>
 

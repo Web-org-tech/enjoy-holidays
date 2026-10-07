@@ -5,21 +5,21 @@ import Link from "next/link";
 import { MapPin, ChevronLeft, ChevronRight, Compass } from "lucide-react";
 
 export const DESTINATIONS = [
+  { name: "Madurai Heritage", state: "Tamil Nadu", tag: "Meenakshi Amman & Palaces" },
+  { name: "Rameswaram Coastal", state: "Tamil Nadu", tag: "Pamban Bridge & Sacred Shrines" },
+  { name: "Kodaikanal Hills", state: "Tamil Nadu", tag: "Princess of Hill Stations" },
+  { name: "Kanyakumari", state: "Tamil Nadu", tag: "Sunrise & Triveni Sangam" },
+  { name: "Munnar Tea Gardens", state: "Kerala", tag: "Rolling Green Hills & Mist" },
   { name: "Kerala Backwaters", state: "Kerala", tag: "Houseboats & Lagoons" },
-  { name: "Coorg Highlands", state: "Karnataka", tag: "Coffee & Mist" },
-  { name: "Rajasthan Desert", state: "Rajasthan", tag: "Dunes & Forts" },
-  { name: "Goa Beaches", state: "Goa", tag: "Sun, Sand & Waves" },
-  { name: "Himachal Peaks", state: "Himachal", tag: "Snow & Valleys" },
-  { name: "Ooty Hills", state: "Tamil Nadu", tag: "Nilgiri Queen" },
-  { name: "Andaman Islands", state: "Andaman", tag: "Coral Reefs" },
-  { name: "Pondicherry", state: "Tamil Nadu", tag: "French Riviera" },
-  { name: "Munnar Tea Gardens", state: "Kerala", tag: "Rolling Green Hills" },
-  { name: "Varanasi Ghats", state: "Uttar Pradesh", tag: "Spiritual Ganges" },
-  { name: "Jaipur Palaces", state: "Rajasthan", tag: "Pink City Heritage" },
-  { name: "Ladakh Mountains", state: "Ladakh", tag: "High Altitude Passes" },
-  { name: "Kodaikanal", state: "Tamil Nadu", tag: "Princess of Hill Stations" },
-  { name: "Mysore Heritage", state: "Karnataka", tag: "Royal Palaces" },
-  { name: "Varkala Cliffs", state: "Kerala", tag: "Arabian Sea Cliffs" },
+  { name: "Ooty Hills", state: "Tamil Nadu", tag: "Nilgiri Mountain Railways" },
+  { name: "Coorg Highlands", state: "Karnataka", tag: "Coffee Plantations & Waterfalls" },
+  { name: "Pondicherry", state: "Tamil Nadu", tag: "French Quarter & Promenade" },
+  { name: "Mysore Heritage", state: "Karnataka", tag: "Royal Palaces & Gardens" },
+  { name: "Goa Beaches", state: "Goa", tag: "Golden Coast & Heritage" },
+  { name: "Rajasthan Palaces", state: "Rajasthan", tag: "Forts, Palaces & Desert" },
+  { name: "Himachal Valleys", state: "Himachal", tag: "Snow Peaks & Mountain Trails" },
+  { name: "Varanasi Ghats", state: "Uttar Pradesh", tag: "Spiritual Ganges & Ganga Aarti" },
+  { name: "Andaman Islands", state: "Andaman", tag: "Coral Reefs & Blue Waters" },
 ];
 
 export default function DestinationMarquee() {
@@ -104,7 +104,7 @@ export default function DestinationMarquee() {
 
   return (
     <section
-      className="py-12 sm:py-16 relative overflow-hidden select-none"
+      className="py-16 sm:py-24 my-4 sm:my-8 relative overflow-hidden select-none"
       style={{
         background: "linear-gradient(180deg, #093E3A 0%, #0B4F4A 50%, #083733 100%)",
       }}
@@ -119,14 +119,14 @@ export default function DestinationMarquee() {
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Header bar */}
-      <div className="container-site mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Header bar with generous margin */}
+      <div className="container-site mb-8 sm:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#FBBF24]">
             <Compass size={15} className="animate-spin-slow" />
             <span>Discover India With Us</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mt-1">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mt-1.5">
             Iconic Destinations &amp; Scenic Circuits
           </h2>
         </div>
@@ -134,12 +134,12 @@ export default function DestinationMarquee() {
         {/* Manual navigation controls */}
         <div className="flex items-center gap-2">
           <span className="text-white/60 text-xs hidden sm:inline mr-2">
-            Auto-sliding • Drag or use arrows to explore
+            Auto-sliding • Swipe or use arrows to explore
           </span>
           <button
             type="button"
             onClick={() => scrollByAmount(-320)}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all"
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all shadow-sm"
             aria-label="Scroll left"
           >
             <ChevronLeft size={18} />
@@ -147,7 +147,7 @@ export default function DestinationMarquee() {
           <button
             type="button"
             onClick={() => scrollByAmount(320)}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all"
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all shadow-sm"
             aria-label="Scroll right"
           >
             <ChevronRight size={18} />
@@ -155,30 +155,32 @@ export default function DestinationMarquee() {
         </div>
       </div>
 
-      {/* Scrollable Track */}
+      {/* Scrollable Track — Completely hiding dragger/scrollbar with no-scrollbar and inline styles */}
       <div
         ref={scrollContainerRef}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
-        className={`flex items-center gap-4 overflow-x-auto no-scrollbar px-6 cursor-grab ${
+        className={`flex items-center gap-5 sm:gap-6 overflow-x-auto no-scrollbar scrollbar-hide px-6 cursor-grab ${
           isDragging ? "cursor-grabbing" : ""
         }`}
         style={{
           scrollBehavior: isDragging ? "auto" : "smooth",
           WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
       >
         {displayItems.map((item, idx) => (
           <Link
             key={`${item.name}-${idx}`}
             href={`/packages?search=${encodeURIComponent(item.name)}`}
-            className="flex-shrink-0 group relative rounded-2xl px-5 py-3.5 transition-all duration-300 hover:scale-105"
+            className="flex-shrink-0 group relative rounded-2xl px-6 py-4.5 transition-all duration-300 hover:scale-105"
             style={{
               background: "rgba(255, 255, 255, 0.08)",
               border: "1px solid rgba(255, 255, 255, 0.15)",
               backdropFilter: "blur(12px)",
-              minWidth: "220px",
+              minWidth: "240px",
             }}
           >
             <div className="flex items-start justify-between gap-3">
@@ -186,15 +188,15 @@ export default function DestinationMarquee() {
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#FBBF24]">
                   {item.state}
                 </span>
-                <h3 className="text-white font-serif text-base font-bold group-hover:text-[#FBBF24] transition-colors whitespace-nowrap">
+                <h3 className="text-white font-serif text-base sm:text-lg font-bold group-hover:text-[#FBBF24] transition-colors whitespace-nowrap mt-0.5">
                   {item.name}
                 </h3>
-                <p className="text-white/60 text-xs mt-0.5 truncate max-w-[180px]">
+                <p className="text-white/70 text-xs mt-1 truncate max-w-[190px]">
                   {item.tag}
                 </p>
               </div>
-              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#D45C33] group-hover:text-white transition-all flex-shrink-0">
-                <MapPin size={14} />
+              <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#D45C33] group-hover:text-white transition-all flex-shrink-0">
+                <MapPin size={15} />
               </div>
             </div>
 

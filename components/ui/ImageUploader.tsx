@@ -128,14 +128,14 @@ export default function ImageUploader({
         </div>
 
         {/* Tab switch between file upload and URL paste */}
-        <div className="inline-flex rounded-xl p-0.5 bg-black/10 dark:bg-white/10 text-xs font-semibold">
+        <div className="inline-flex rounded-xl p-0.5 bg-[#F1F5F9] border border-[#E5E7EB] text-xs font-semibold">
           <button
             type="button"
             onClick={() => setMode("file")}
             className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
               mode === "file"
-                ? "bg-white text-[#0D1F1C] shadow-sm"
-                : "opacity-70 hover:opacity-100"
+                ? "bg-white text-[#111827] shadow-xs"
+                : "text-[#6B7280] hover:text-[#111827]"
             }`}
           >
             <Upload size={12} /> Upload File
@@ -145,8 +145,8 @@ export default function ImageUploader({
             onClick={() => setMode("url")}
             className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
               mode === "url"
-                ? "bg-white text-[#0D1F1C] shadow-sm"
-                : "opacity-70 hover:opacity-100"
+                ? "bg-white text-[#111827] shadow-xs"
+                : "text-[#6B7280] hover:text-[#111827]"
             }`}
           >
             <Link2 size={12} /> Image URL
@@ -164,10 +164,10 @@ export default function ImageUploader({
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className={`relative border-2 border-dashed rounded-2xl p-4 text-center cursor-pointer transition-all ${
+          className={`relative border-2 border-dashed rounded-2xl p-5 text-center cursor-pointer transition-all ${
             dragOver
-              ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 scale-[0.99]"
-              : "border-black/15 dark:border-white/15 hover:border-[var(--color-primary)] hover:bg-black/5 dark:hover:bg-white/5"
+              ? "border-[#059669] bg-[#ECFDF5] scale-[0.99]"
+              : "border-[#E5E7EB] hover:border-[#059669] hover:bg-[#F8FAFC]"
           }`}
         >
           <input
@@ -181,18 +181,18 @@ export default function ImageUploader({
           <div className="flex flex-col items-center justify-center py-2 text-center">
             {isPending ? (
               <div className="flex flex-col items-center gap-2 py-2">
-                <Loader2 size={24} className="animate-spin text-[var(--color-primary)]" />
-                <span className="text-xs font-semibold">Uploading to Cloud Storage...</span>
+                <Loader2 size={24} className="animate-spin text-[#059669]" />
+                <span className="text-xs font-semibold text-[#047857]">Uploading to Cloud Storage...</span>
               </div>
             ) : (
               <>
-                <div className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center mb-2">
-                  <Upload size={18} className="opacity-80" />
+                <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center mb-2">
+                  <Upload size={18} />
                 </div>
-                <p className="text-xs font-bold mb-0.5">
+                <p className="text-xs font-bold text-[#111827] mb-0.5">
                   Click to upload or drag and drop
                 </p>
-                <p className="text-[11px] opacity-60">
+                <p className="text-[11px] text-[#6B7280]">
                   {allowVideo
                     ? "PNG, JPG, WEBP, AVIF, MP4 or WEBM (Max 15MB)"
                     : "PNG, JPG, WEBP or AVIF (Max 15MB)"}
@@ -206,7 +206,7 @@ export default function ImageUploader({
           <div className="relative flex-1">
             <Link2
               size={14}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 pointer-events-none"
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none"
             />
             <input
               type="url"
@@ -219,13 +219,13 @@ export default function ImageUploader({
                 }
               }}
               placeholder={placeholder}
-              className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-black/15 dark:border-white/15 bg-white text-[#0D1F1C] placeholder-[#718096] text-xs font-medium focus:outline-none focus:border-[var(--color-primary)]"
+              className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#E5E7EB] bg-white text-[#111827] placeholder-[#9CA3AF] text-xs font-medium focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
             />
           </div>
           <button
             type="button"
             onClick={handleApplyUrl}
-            className="px-3.5 py-2.5 rounded-xl bg-[var(--color-primary)] text-white text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1 shrink-0"
+            className="px-4 py-2.5 rounded-xl bg-[#059669] text-white text-xs font-semibold hover:bg-[#047857] transition-colors flex items-center gap-1 shrink-0 cursor-pointer shadow-xs"
           >
             <Check size={14} /> Apply
           </button>
@@ -234,7 +234,7 @@ export default function ImageUploader({
 
       {/* Upload Error Alert */}
       {uploadError && (
-        <div className="flex items-center gap-2 text-xs text-rose-600 bg-rose-500/10 border border-rose-500/20 px-3 py-2 rounded-xl">
+        <div className="flex items-center gap-2 text-xs text-[#DC2626] bg-[#FEF2F2] border border-[#FECACA] px-3 py-2 rounded-xl">
           <AlertCircle size={14} className="shrink-0" />
           <span>{uploadError}</span>
         </div>
@@ -242,7 +242,7 @@ export default function ImageUploader({
 
       {/* Live Preview Box */}
       {value && (
-        <div className="relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 group">
+        <div className="relative rounded-2xl overflow-hidden border border-[#E5E7EB] bg-[#F8FAFC] group">
           <div className={`relative w-full ${aspectClass} overflow-hidden`}>
             {isVideo ? (
               <video

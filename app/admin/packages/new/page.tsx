@@ -3,7 +3,7 @@ import PackageEditor from "@/components/admin/PackageEditor";
 
 export default function NewPackagePage() {
   return (
-    <div className="min-h-screen" style={{ background: "#0a0d14" }}>
+    <div className="min-h-screen bg-[#F8FAFC]">
       <PackageEditor formAction={createPackageAction} isEditing={false} />
     </div>
   );

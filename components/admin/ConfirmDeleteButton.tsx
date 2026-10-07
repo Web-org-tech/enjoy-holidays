@@ -38,46 +38,43 @@ export default function ConfirmDeleteButton({
         onClick={() => setIsOpen(true)}
         className={
           className ||
-          "p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+          "p-2 rounded-xl text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] border border-transparent hover:border-[#FECACA] transition-colors cursor-pointer"
         }
         title={title}
         aria-label={title}
       >
-        <Trash2 size={14} />
+        <Trash2 size={15} />
       </button>
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-150"
           role="dialog"
           aria-modal="true"
           aria-labelledby="confirm-delete-title"
         >
-          <div
-            className="w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-white/10"
-            style={{ background: "#121824" }}
-          >
-            <div className="w-12 h-12 rounded-xl bg-red-500/15 text-red-400 flex items-center justify-center mb-4 mx-auto">
+          <div className="w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-[#E5E7EB] bg-white animate-in zoom-in-95 duration-150">
+            <div className="w-12 h-12 rounded-xl bg-[#FEF2F2] text-[#DC2626] flex items-center justify-center mb-4 mx-auto border border-[#FECACA]">
               <AlertTriangle size={24} />
             </div>
 
             <h3
               id="confirm-delete-title"
-              className="text-lg font-bold text-white text-center mb-2"
+              className="text-lg font-bold text-[#111827] text-center mb-1.5"
             >
               Delete {itemType}?
             </h3>
 
-            <p className="text-white/60 text-xs text-center mb-6 leading-relaxed">
+            <p className="text-[#4B5563] text-xs sm:text-sm text-center mb-6 leading-relaxed">
               Are you sure you want to delete this {itemType.toLowerCase()}? This action is permanent and cannot be undone.
             </p>
 
-            <div className="flex gap-3">
+            <div className="flex gap-2.5">
               <button
                 type="button"
                 disabled={loading}
                 onClick={() => setIsOpen(false)}
-                className="flex-1 py-2.5 rounded-xl text-xs font-semibold text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                className="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-[#374151] hover:bg-[#F1F5F9] bg-[#F8FAFC] border border-[#E5E7EB] transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -85,15 +82,15 @@ export default function ConfirmDeleteButton({
                 type="button"
                 disabled={loading}
                 onClick={handleConfirm}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-500 transition-colors flex items-center justify-center gap-1.5 shadow-lg shadow-red-900/40"
+                className="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#DC2626] hover:bg-[#B91C1C] transition-colors flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
               >
                 {loading ? (
                   <>
                     <Loader2 size={14} className="animate-spin" />
-                    Deleting...
+                    <span>Deleting...</span>
                   </>
                 ) : (
-                  "Yes, Delete"
+                  "Delete Permanently"
                 )}
               </button>
             </div>

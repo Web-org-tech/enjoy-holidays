@@ -131,6 +131,7 @@ export interface SiteSettings {
     facebook?: string;
     youtube?: string;
     twitter?: string;
+    instagram_video_url?: string;
   } | null;
   featured_package_ids: string[] | null;
   updated_at: string;

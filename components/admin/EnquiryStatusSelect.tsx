@@ -10,10 +10,10 @@ interface EnquiryStatusSelectProps {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  new: "bg-amber-500/15 text-amber-400 border border-amber-500/20",
-  contacted: "bg-blue-500/15 text-blue-400 border border-blue-500/20",
-  converted: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20",
-  closed: "bg-white/10 text-white/40 border border-white/10",
+  new: "bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]",
+  contacted: "bg-[#EFF6FF] text-[#1D4ED8] border-[#BFDBFE]",
+  converted: "bg-[#ECFDF5] text-[#047857] border-[#A7F3D0]",
+  closed: "bg-[#F3F4F6] text-[#4B5563] border-[#E5E7EB]",
 };
 
 export default function EnquiryStatusSelect({
@@ -41,17 +41,25 @@ export default function EnquiryStatusSelect({
         value={status}
         disabled={isPending}
         onChange={(e) => handleChange(e.target.value)}
-        className={`px-2.5 py-1 rounded-full text-xs font-bold capitalize cursor-pointer outline-none bg-[#0a0d14] transition-opacity ${
+        className={`px-3 py-1 rounded-xl text-xs font-semibold capitalize cursor-pointer outline-none border transition-all ${
           STATUS_COLORS[status] ?? STATUS_COLORS.new
-        } ${isPending ? "opacity-50" : ""}`}
+        } ${isPending ? "opacity-50" : "hover:brightness-95"}`}
         aria-label="Update enquiry status"
       >
-        <option value="new">New</option>
-        <option value="contacted">Contacted</option>
-        <option value="converted">Converted</option>
-        <option value="closed">Closed</option>
+        <option value="new" className="bg-white text-[#92400E] font-semibold">
+          New
+        </option>
+        <option value="contacted" className="bg-white text-[#1D4ED8] font-semibold">
+          Contacted
+        </option>
+        <option value="converted" className="bg-white text-[#047857] font-semibold">
+          Converted
+        </option>
+        <option value="closed" className="bg-white text-[#4B5563] font-semibold">
+          Closed
+        </option>
       </select>
-      {isPending && <Loader2 size={12} className="text-white/40 animate-spin" />}
+      {isPending && <Loader2 size={13} className="text-[#6B7280] animate-spin" />}
     </div>
   );
 }

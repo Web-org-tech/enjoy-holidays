@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, MapPin, Calendar, CheckCircle2, MessageCircle, ArrowRight, ShieldCheck } from "lucide-react";
+import { Clock, MapPin, Calendar, CheckCircle2, MessageCircle, ArrowRight, ShieldCheck, Phone } from "lucide-react";
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "917010111256";
 
@@ -65,10 +65,16 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="py-20 relative overflow-hidden bg-cream" aria-labelledby="services-heading">
+    <section
+      className="py-20 sm:py-24 relative overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #073834 0%, #0B4F4A 50%, #062E2A 100%)",
+      }}
+      aria-labelledby="services-heading"
+    >
       {/* Background soft ambient accents */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-primary)]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--color-secondary)]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container-site relative z-10">
         {/* Header */}
@@ -78,7 +84,7 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-bold tracking-widest uppercase mb-3"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-[#FBBF24] border border-white/15 text-xs font-bold tracking-widest uppercase mb-3 backdrop-blur-sm"
           >
             <Clock size={13} />
             <span>What We Offer • Est. 2004</span>
@@ -86,17 +92,17 @@ export default function ServicesSection() {
 
           <motion.h2
             id="services-heading"
-            className="display-lg text-[var(--color-text-primary)] mb-4"
+            className="display-lg text-white mb-4"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Our Core <span className="italic text-[var(--color-primary)]">Services</span>
+            Our Core <span className="italic text-[#FBBF24]">Services</span>
           </motion.h2>
 
           <motion.p
-            className="body-lg text-[var(--color-text-secondary)] text-sm sm:text-base max-w-2xl mx-auto"
+            className="body-lg text-white/80 text-sm sm:text-base max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -118,7 +124,7 @@ export default function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="flex flex-col bg-white rounded-3xl border border-[var(--color-border)] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 overflow-hidden group"
+                className="flex flex-col bg-white rounded-3xl border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 overflow-hidden group"
               >
                 {/* Top header banner */}
                 <div
@@ -133,27 +139,29 @@ export default function ServicesSection() {
                     {service.badge}
                   </span>
 
-                  <h3 className="font-serif text-2xl font-bold mb-1 leading-tight">{service.title}</h3>
-                  <p className="text-white/80 text-xs sm:text-sm font-medium">{service.tagline}</p>
+                  <h3 className="font-serif text-2xl font-bold mb-1 leading-tight !text-white text-white">
+                    {service.title}
+                  </h3>
+                  <p className="text-white/90 text-xs sm:text-sm font-medium">{service.tagline}</p>
                 </div>
 
                 {/* Body */}
                 <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-6">
                   <div>
-                    <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mb-6">
+                    <p className="text-[#2D423E] text-sm leading-relaxed mb-6 font-medium">
                       {service.description}
                     </p>
 
                     {/* Popular Routes / Highlights */}
                     <div className="mb-6">
-                      <div className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-primary)] mb-3 flex items-center gap-1.5">
-                        <MapPin size={14} className="text-[var(--color-primary)]" />
+                      <div className="text-xs font-bold uppercase tracking-wider text-[#004741] mb-3 flex items-center gap-1.5">
+                        <MapPin size={14} className="text-[#D45C33]" />
                         Popular Highlights:
                       </div>
                       <ul className="space-y-2">
                         {service.highlights.map((item) => (
-                          <li key={item} className="text-xs sm:text-sm text-[var(--color-text-primary)] flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] mt-1.5 flex-shrink-0" />
+                          <li key={item} className="text-xs sm:text-sm text-[#0D1F1C] flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#D45C33] mt-1.5 flex-shrink-0" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -161,10 +169,10 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Key features */}
-                    <div className="pt-4 border-t border-[var(--color-border)]">
+                    <div className="pt-4 border-t border-stone-200">
                       <div className="grid grid-cols-2 gap-2">
                         {service.features.map((feat) => (
-                          <div key={feat} className="flex items-center gap-1.5 text-[11px] text-[var(--color-text-muted)] font-medium">
+                          <div key={feat} className="flex items-center gap-1.5 text-[11px] text-[#475569] font-medium">
                             <CheckCircle2 size={12} className="text-emerald-600 flex-shrink-0" />
                             <span className="truncate">{feat}</span>
                           </div>
@@ -174,7 +182,7 @@ export default function ServicesSection() {
                   </div>
 
                   {/* Actions */}
-                  <div className="pt-4 border-t border-[var(--color-border)] flex flex-col gap-2.5">
+                  <div className="pt-4 border-t border-stone-200 flex flex-col gap-2.5">
                     <a
                       href={waUrl}
                       target="_blank"
@@ -191,9 +199,11 @@ export default function ServicesSection() {
 
                     <a
                       href="tel:+919865987975"
-                      className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors py-1"
+                      className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-[#004741] hover:text-[#D45C33] transition-colors py-1.5"
+                      id={`call-${service.id}-cta`}
                     >
-                      <span>Or call directly: +91 98659 87975</span>
+                      <Phone size={13} />
+                      <span>Call</span>
                     </a>
                   </div>
                 </div>
@@ -208,17 +218,17 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 p-6 sm:p-8 rounded-3xl border border-[var(--color-border)] bg-gradient-to-r from-white via-[var(--color-surface-alt)] to-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm"
+          className="mt-12 p-6 sm:p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-white/15 text-[#FBBF24] flex items-center justify-center flex-shrink-0 shadow-sm border border-white/10">
               <ShieldCheck size={28} />
             </div>
             <div>
-              <h4 className="font-serif text-lg font-bold text-[var(--color-text-primary)]">
+              <h4 className="font-serif text-lg font-bold text-white">
                 24/7 Round-the-Clock Booking &amp; On-Road Support
               </h4>
-              <p className="text-xs sm:text-sm text-[var(--color-text-secondary)]">
+              <p className="text-xs sm:text-sm text-white/80 mt-0.5">
                 Need an immediate vehicle in Madurai or planning a family tour? Our coordinators are available 24 hours a day.
               </p>
             </div>
@@ -227,9 +237,11 @@ export default function ServicesSection() {
           <div className="flex items-center gap-3 flex-shrink-0">
             <a
               href="tel:+919865987975"
-              className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-all shadow-sm"
+              className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold border-2 border-white text-white hover:bg-white hover:text-[#0B4F4A] transition-all shadow-sm flex items-center gap-2"
+              id="services-247-call-btn"
             >
-              Call +91 98659 87975
+              <Phone size={15} />
+              Call
             </a>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Padma Tours & Travels, I need 24/7 travel assistance.")}`}

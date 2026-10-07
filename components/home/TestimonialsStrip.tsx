@@ -87,10 +87,10 @@ export default function TestimonialsStrip({ testimonials = [] }: TestimonialsStr
   const [scrollLeftState, setScrollLeftState] = useState(0);
   const animationFrameId = useRef<number | null>(null);
 
-  // Combine fetched testimonials with verified fallbacks so reviews are NEVER hidden
+  // Use database testimonials if available; otherwise use verified fallback testimonials
   const combinedList =
     testimonials && testimonials.length > 0
-      ? [...testimonials, ...FALLBACK_TESTIMONIALS.slice(0, Math.max(0, 5 - testimonials.length))]
+      ? testimonials
       : FALLBACK_TESTIMONIALS;
 
   // Double list for seamless wrapping
@@ -234,6 +234,8 @@ export default function TestimonialsStrip({ testimonials = [] }: TestimonialsStr
         style={{
           scrollBehavior: isDragging ? "auto" : "smooth",
           WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
       >
         {items.map((t, idx) => (

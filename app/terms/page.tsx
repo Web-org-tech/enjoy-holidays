@@ -82,7 +82,7 @@ export default function TermsPage() {
               </h2>
             </div>
             <p className="body-md leading-relaxed mb-4">
-              We understand plans can change unexpectedly. Cancellations must be notified in writing to <a href="mailto:hello@enjoyholidays.in" className="text-[var(--color-primary)] underline">hello@enjoyholidays.in</a>. Our standard refund structure is as follows:
+              We understand plans can change unexpectedly. Cancellations must be notified in writing to <a href="mailto:nirmalharish1980@gmail.com" className="text-[var(--color-primary)] underline">nirmalharish1980@gmail.com</a>. Our standard refund structure is as follows:
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-[var(--color-border)] rounded-xl overflow-hidden mb-4">

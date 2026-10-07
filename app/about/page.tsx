@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getPublishedTestimonials } from "@/lib/supabase/queries";
+import { getPublishedTestimonials, getSiteSettings } from "@/lib/supabase/queries";
 import TestimonialsStrip from "@/components/home/TestimonialsStrip";
+import InstagramVideoSection from "@/components/about/InstagramVideoSection";
 import { Award, Heart, Compass, Users } from "lucide-react";
 
 export const revalidate = 3600;
@@ -20,7 +21,11 @@ const values = [
 ];
 
 export default async function AboutPage() {
-  const testimonials = await getPublishedTestimonials();
+  const [testimonials, settings] = await Promise.all([
+    getPublishedTestimonials(),
+    getSiteSettings(),
+  ]);
+  const instagramVideoUrl = settings?.social_links?.instagram_video_url;
 
   return (
     <>
@@ -94,6 +99,9 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Instagram Video Section (Active only if admin provided URL) ── */}
+      <InstagramVideoSection url={instagramVideoUrl} />
 
       {/* Values */}
       <section

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-let siteHost = "enjoyholidays.in";
+let siteHost = "padmatoursandtravels.in";
 if (siteUrl) {
   try {
     siteHost = new URL(siteUrl).host;
@@ -8,7 +8,7 @@ if (siteUrl) {
 }
 
 const allowedOrigins = Array.from(
-  new Set(["localhost:3000", "127.0.0.1:3000", siteHost, "enjoyholidays.in"])
+  new Set(["localhost:3000", "127.0.0.1:3000", siteHost, "padmatoursandtravels.in"])
 );
 
 const nextConfig = {

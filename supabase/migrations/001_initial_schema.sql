@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- ENJOY Holidays — Initial Database Schema
+-- PADMA TOURS & TRAVELS — Initial Database Schema
 -- Run this in Supabase SQL Editor (Project > SQL Editor > New Query)
 -- ═══════════════════════════════════════════════════════════════════════════
 
@@ -182,21 +182,21 @@ INSERT INTO site_settings (
   '{}',
   '{
     "headline": "Where Will You\nWander Next?",
-    "subtext": "Handcrafted holiday packages across India — we craft journeys, not just trips.",
+    "subtext": "Daily tours, Madurai local sightseeing, and customized holiday packages across India since 2004.",
     "cta_primary_label": "Explore Packages",
     "cta_secondary_label": "WhatsApp Us"
   }',
   '{
-    "phone": "+91 99999 99999",
-    "email": "hello@enjoyholidays.in",
-    "address": "123 Travel Lane, Kochi, Kerala 682001",
-    "whatsapp_number": "919999999999",
-    "gst_number": "29ABCDE1234F1Z5"
+    "phone": "+91 98659 87975",
+    "email": "nirmalharish1980@gmail.com",
+    "address": "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002",
+    "whatsapp_number": "917010111256",
+    "business_hours": "24/7 Round-the-Clock Service"
   }',
   '{
-    "instagram": "https://instagram.com/enjoyholidays",
-    "facebook": "https://facebook.com/enjoyholidays",
-    "youtube": "https://youtube.com/@enjoyholidays"
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com",
+    "whatsapp": "https://wa.me/917010111256"
   }',
   NULL
 ) ON CONFLICT DO NOTHING;

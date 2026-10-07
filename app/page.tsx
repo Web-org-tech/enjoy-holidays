@@ -63,7 +63,9 @@ export default async function HomePage() {
       />
 
       {/* ── Destination Marquee ────────────────────────────────────── */}
-      <DestinationMarquee />
+      <ScrollReveal direction="up" distance={30}>
+        <DestinationMarquee />
+      </ScrollReveal>
 
       {/* ── Services Offered (Daily Tour, Local Sightseeing, Packages) ── */}
       <ScrollReveal direction="up" distance={40}>

@@ -173,6 +173,8 @@ h1, h2, h3, h4, h5, h6 {
 input, textarea, select {
   color: #0D1F1C;
   -webkit-text-fill-color: #0D1F1C;
+  caret-color: #004741;
+  font-size: 16px; /* Prevents iOS & Android WebView viewport auto-zoom which dislocates the insertion point */
 }
 
 input::placeholder, textarea::placeholder {
@@ -181,17 +183,26 @@ input::placeholder, textarea::placeholder {
   opacity: 1;
 }
 
-/* Inputs on dark surfaces (e.g. admin panels or dark cards) */
-.dark input, .dark textarea, .dark select,
-.admin-surface input, .admin-surface textarea,
-.bg-white\/5 input, .bg-white\/5 textarea, .bg-white\/5 select,
-.bg-white\/10 input, .bg-white\/10 textarea, .bg-white\/10 select {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
+/* Scrollbar Hiding Utilities — Completely removes horizontal draggers/scrollbars across all browsers */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar,
+.scrollbar-hide {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
-.bg-white\/5 input::placeholder, .bg-white\/5 textarea::placeholder,
-.bg-white\/10 input::placeholder, .bg-white\/10 textarea::placeholder {
+/* Explicit text color and caret for dark overlays only */
+.dark-surface input, .dark-surface textarea, .dark-surface select {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  caret-color: #FBBF24 !important;
+}
+.dark-surface input::placeholder, .dark-surface textarea::placeholder {
   color: rgba(255, 255, 255, 0.45) !important;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
 }
@@ -546,35 +557,47 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 }
 
 /* ─────────────────────────────────────────────────
-   ADMIN DASHBOARD STYLES
+   ADMIN DASHBOARD STYLES (Modern Light Theme SaaS)
    ───────────────────────────────────────────────── */
-.admin-sidebar {
-  width: 260px;
-  min-height: 100vh;
-  background: #0f1117;
-  border-right: 1px solid rgba(255,255,255,0.07);
+.admin-theme {
+  background-color: #F8FAFC !important;
+  color: #111827 !important;
+  font-family: var(--font-sans);
 }
 
-.admin-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 20px;
-  border-radius: var(--radius-sm);
-  color: rgba(255,255,255,0.6);
-  font-weight: 500;
-  transition: all var(--transition-fast);
-  margin: 2px 8px;
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4,
+.admin-theme h5,
+.admin-theme h6 {
+  color: #111827 !important;
+  font-family: var(--font-sans);
 }
 
-.admin-nav-item:hover {
-  background: rgba(255,255,255,0.08);
-  color: white;
+.admin-theme input,
+.admin-theme textarea,
+.admin-theme select {
+  font-size: 14px;
+  caret-color: #059669;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB;
 }
 
-.admin-nav-item.active {
-  background: rgba(212, 92, 51, 0.2);
-  color: #eda98b;
+.admin-theme input::placeholder,
+.admin-theme textarea::placeholder {
+  color: #9CA3AF !important;
+  -webkit-text-fill-color: #9CA3AF !important;
+}
+
+.admin-theme input:focus,
+.admin-theme textarea:focus,
+.admin-theme select:focus {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15) !important;
+  outline: none !important;
 }
 
 /* ─────────────────────────────────────────────────

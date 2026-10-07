@@ -84,116 +84,47 @@ export default function PackageEditor({
   const [name, setName] = useState(initialData?.name || "");
   const [slug, setSlug] = useState(initialData?.slug || "");
   const [summary, setSummary] = useState(
-    initialData?.summary || "Handcrafted holiday journey curated with premium stays and authentic local experiences."
+    initialData?.summary || ""
   );
   const [destinations, setDestinations] = useState(
-    initialData?.destinations?.join(", ") || "Kochi, Alleppey, Varkala, Kovalam"
+    initialData?.destinations?.join(", ") || ""
   );
-  const [durationDays, setDurationDays] = useState(initialData?.duration_days || 4);
-  const [durationNights, setDurationNights] = useState(initialData?.duration_nights || 3);
+  const [durationDays, setDurationDays] = useState(initialData?.duration_days || 3);
+  const [durationNights, setDurationNights] = useState(initialData?.duration_nights || 2);
   const [paxCapacity, setPaxCapacity] = useState(initialData?.pax_capacity || 12);
-  const [priceWithFood, setPriceWithFood] = useState(initialData?.price_with_food || 18500);
+  const [priceWithFood, setPriceWithFood] = useState(initialData?.price_with_food || 8000);
   const [priceWithoutFood, setPriceWithoutFood] = useState<number | string>(
-    initialData?.price_without_food ?? 14200
+    initialData?.price_without_food ?? 6500
   );
   const [heroImageUrl, setHeroImageUrl] = useState(
-    initialData?.hero_image_url ||
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=80"
+    initialData?.hero_image_url || ""
   );
   const [vehicleType, setVehicleType] = useState(initialData?.vehicle_type || "jeep");
   const [status, setStatus] = useState(initialData?.status || "published");
 
   const [inclusionsText, setInclusionsText] = useState(
     initialData?.inclusions?.join("\n") ||
-      "Private AC Chauffeur Vehicle throughout\nDeluxe Heritage Homestay & Houseboat Stay\nDaily Breakfast & Traditional Meals\nBackwater Houseboat Cruise with Lunch\nKathakali Cultural Performance Pass\nAll Tolls, Fuel, Driver Allowances & Taxes"
+      "Private AC Chauffeur Vehicle throughout\nComfortable Hotel Accommodation\nDaily Breakfast & Refreshments\nSightseeing as per itinerary\nAll Tolls, Fuel, Parking & Driver Allowances"
   );
 
   const [exclusionsText, setExclusionsText] = useState(
     initialData?.exclusions?.join("\n") ||
-      "Flight / Train tickets to and from Kerala\nPersonal expenses, tips & shopping\nMonument entry fees not mentioned\nAyurvedic massages / Optional watersports"
+      "Flight / Train tickets to starting point\nPersonal expenses, tips & shopping\nMonument / special darshan entry tickets not specified\nItems not mentioned in inclusions"
   );
 
   // Dynamic Days Itinerary State
   const defaultInitialDays: ItineraryDay[] = [
     {
-      id: "day-0",
-      day_number: 0,
-      is_departure: true,
-      title: "Departure",
-      subtitle: "Journey Begins",
-      photo_url: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",
-      transition_text: "Board your flight or train to Kochi. Our team will be waiting to welcome you.",
-      activities: [
-        { id: "a1", icon: "transport", label: "Arrive Kochi International Airport / Railway Station" },
-        { id: "a2", icon: "hotel", label: "Check-in — Fort Kochi Heritage Homestay" },
-        { id: "a3", icon: "sunset", label: "Evening stroll at Fort Kochi beach & sunset" },
-      ],
-    },
-    {
       id: "day-1",
       day_number: 1,
-      title: "Kochi — The Queen of the Arabian Sea",
-      subtitle: "Fort Kochi & Cultural Immersion",
-      photo_url: "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=800&q=80",
-      transition_text: "Early morning drive south to Alleppey (90 min). The coconut-lined road is an experience in itself.",
-      activities: [
-        { id: "a4", icon: "breakfast", label: "Kerala breakfast: Appam with Vegetable Stew & Roast" },
-        { id: "a5", icon: "activity", label: "Chinese Fishing Nets, Jew Town & Spice Market Walk" },
-        { id: "a6", icon: "culture", label: "Kathakali Classical Dance & Martial Arts Show" },
-        { id: "a7", icon: "meal", label: "Dinner — Traditional Kerala Sadya served on banana leaf" },
-      ],
-    },
-    {
-      id: "day-2",
-      day_number: 2,
-      title: "Alleppey — Life on the Backwaters",
-      subtitle: "Private Houseboat Cruise",
-      photo_url: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80",
-      transition_text: "Check out and drive south to Varkala (2 hrs) — watch the landscape shift from backwaters to sea cliffs.",
-      activities: [
-        { id: "a8", icon: "transport", label: "Drive to Alleppey jetty through coastal hamlets" },
-        { id: "a9", icon: "boat", label: "Private Houseboat check-in & welcome tender coconut" },
-        { id: "a10", icon: "meal", label: "Authentic Karimeen (Pearl Spot) lunch on calm canals" },
-        { id: "a11", icon: "sunset", label: "Village walk & starlit overnight backwater stay" },
-      ],
-    },
-    {
-      id: "day-3",
-      day_number: 3,
-      title: "Varkala — Clifftop Serenity",
-      subtitle: "Beach, Ayurveda & Sunset",
-      photo_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-      transition_text: "Short drive south to Kovalam (45 min) for the final coastal chapter.",
-      activities: [
-        { id: "a12", icon: "breakfast", label: "Breakfast on deck as morning mist clears" },
-        { id: "a13", icon: "beach", label: "Cliff walk & Papanasam holy beach swim" },
-        { id: "a14", icon: "ayurveda", label: "Ayurvedic rejuvenating massage session (90 min)" },
-        { id: "a15", icon: "sunset", label: "Sunset overlooking the Arabian Sea from North Cliff" },
-      ],
-    },
-    {
-      id: "day-4",
-      day_number: 4,
-      title: "Kovalam & Farewell",
-      subtitle: "Lighthouse Beach & Memories",
-      photo_url: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80",
-      transition_text: "Transfer to Trivandrum Airport. Until next time — Kerala awaits your return.",
-      activities: [
-        { id: "a16", icon: "breakfast", label: "Breakfast at clifftop café with espresso" },
-        { id: "a17", icon: "beach", label: "Lighthouse Beach morning stroll & photography" },
-        { id: "a18", icon: "meal", label: "Fresh coastal seafood lunch by the waves" },
-      ],
-    },
-    {
-      id: "day-return",
-      day_number: 99,
-      is_return: true,
-      title: "Return",
-      subtitle: "Safe Travels Home",
+      title: "Arrival & Sightseeing",
+      subtitle: "Welcome & Tour Commences",
       photo_url: "",
       transition_text: "",
       activities: [
-        { id: "a19", icon: "transport", label: "Fly home with unforgettable memories and stories to tell" },
+        { id: "a1", icon: "transport", label: "Doorstep / Airport / Station pickup" },
+        { id: "a2", icon: "hotel", label: "Check-in at Hotel & Refresh" },
+        { id: "a3", icon: "activity", label: "Guided Sightseeing Tour" },
       ],
     },
   ];
@@ -202,7 +133,9 @@ export default function PackageEditor({
     initialData?.days && initialData.days.length > 0 ? initialData.days : defaultInitialDays
   );
 
-  const [expandedDayId, setExpandedDayId] = useState<string | null>("day-0");
+  const [expandedDayId, setExpandedDayId] = useState<string | null>(
+    initialData?.days && initialData.days.length > 0 ? initialData.days[0]?.id : "day-1"
+  );
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [previewFoodToggle, setPreviewFoodToggle] = useState<"with" | "without">("with");
 
@@ -369,72 +302,74 @@ export default function PackageEditor({
   }, [itineraryDays]);
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto text-[#0D1F1C]">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto text-[#111827] space-y-6">
       {/* Top Header & Tab Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-black/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E5E7EB]">
         <div>
           <Link
             href="/admin/packages"
-            className="inline-flex items-center gap-2 text-xs font-bold text-white/60 hover:text-white mb-2 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6B7280] hover:text-[#111827] mb-2 transition-colors"
           >
-            <ArrowLeft size={14} /> Back to Packages
+            <ArrowLeft size={14} /> Back to Tour Packages
           </Link>
-          <h1 className="text-2xl font-serif font-bold text-white flex items-center gap-2">
-            <PackageIcon className="text-[#004741] bg-[#F0EDE4] p-1.5 rounded-lg" size={28} />
-            {isEditing ? `Edit Package: ${name || "Tour Package"}` : "Create New Tour Package"}
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] flex items-center gap-2.5">
+            <span className="w-10 h-10 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center shrink-0">
+              <PackageIcon size={22} />
+            </span>
+            <span>{isEditing ? `Edit: ${name || "Tour Package"}` : "Create Tour Package"}</span>
           </h1>
-          <p className="text-white/50 text-xs mt-1">
-            Build your handcrafted itinerary, manage pricing, and preview in real-time.
+          <p className="text-[#4B5563] text-xs sm:text-sm mt-1">
+            Build your handcrafted itinerary, manage pricing options, and preview in real-time.
           </p>
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-2 bg-white/10 p-1.5 rounded-2xl backdrop-blur-md">
+        <div className="flex items-center gap-1 bg-[#F1F5F9] p-1 rounded-xl border border-[#E5E7EB] self-start sm:self-auto">
           <button
             type="button"
             onClick={() => setActiveTab("edit")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
               activeTab === "edit"
-                ? "bg-[#004741] text-white shadow-md"
-                : "text-white/70 hover:text-white"
+                ? "bg-[#059669] text-white shadow-sm"
+                : "text-[#4B5563] hover:text-[#111827]"
             }`}
           >
-            <Edit3 size={14} /> Form & Itinerary Editor
+            <Edit3 size={14} /> Form &amp; Itinerary
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("preview")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
               activeTab === "preview"
-                ? "bg-[#004741] text-white shadow-md"
-                : "text-white/70 hover:text-white"
+                ? "bg-[#059669] text-white shadow-sm"
+                : "text-[#4B5563] hover:text-[#111827]"
             }`}
           >
-            <Eye size={14} /> Real-Time Live Preview
+            <Eye size={14} /> Live Customer View
           </button>
         </div>
       </div>
 
-      <form action={formAction} className="space-y-8">
+      <form action={formAction} className="space-y-6">
         {/* Hidden field for full Itinerary JSON */}
         <input type="hidden" name="itinerary_json" value={itineraryJSON} />
 
         {/* TAB 1: FORM & DYNAMIC ITINERARY BUILDER */}
         <div className={activeTab === "edit" ? "block space-y-6" : "hidden"}>
           {/* Section 1: Basic Information */}
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#DBD4C4] shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif font-bold text-[#004741] flex items-center gap-2">
-                <Sparkles size={20} className="text-[#D49B35]" /> 1. Basic Package Information
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
+              <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
+                <Sparkles size={18} className="text-[#059669]" /> 1. Basic Package Information
               </h2>
-              <span className="text-[11px] font-semibold text-[#004741] bg-[#004741]/10 px-3 py-1 rounded-full">
-                SEO & Core Details
+              <span className="text-[11px] font-semibold text-[#047857] bg-[#ECFDF5] border border-[#A7F3D0] px-2.5 py-0.5 rounded-full">
+                Core Details
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Package Name *
                 </label>
                 <input
@@ -453,13 +388,13 @@ export default function PackageEditor({
                     }
                   }}
                   required
-                  placeholder="e.g. Kerala Coastal & Backwaters Odyssey"
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741] focus:ring-2 focus:ring-[#004741]/10"
+                  placeholder="e.g. Madurai Heritage & Rameswaram Circuit"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   URL Slug
                 </label>
                 <input
@@ -467,14 +402,14 @@ export default function PackageEditor({
                   name="slug"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  placeholder="kerala-coastal-odyssey"
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm font-mono focus:outline-none focus:border-[#004741]"
+                  placeholder="madurai-heritage-circuit"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm font-mono placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+              <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                 Destinations (Comma-separated)
               </label>
               <input
@@ -482,13 +417,13 @@ export default function PackageEditor({
                 name="destinations"
                 value={destinations}
                 onChange={(e) => setDestinations(e.target.value)}
-                placeholder="Kochi, Alleppey, Varkala, Kovalam"
-                className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                placeholder="Madurai, Rameswaram, Kodaikanal"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+              <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                 Package Summary / Subtitle
               </label>
               <textarea
@@ -496,13 +431,13 @@ export default function PackageEditor({
                 rows={2}
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
-                placeholder="A breathtaking journey along Kerala's tranquil backwaters and dramatic seaside cliffs..."
-                className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                placeholder="A curated tour covering sacred shrines, architectural landmarks, and scenic hill country..."
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+              <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                 Package Hero Banner Image
               </label>
               <ImageUploader
@@ -512,21 +447,21 @@ export default function PackageEditor({
                 aspectRatio="video"
                 placeholder="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&q=80"
                 onChange={(url) => setHeroImageUrl(url)}
-                className="text-[#0D1F1C]"
+                className="text-[#111827]"
               />
             </div>
           </div>
 
           {/* Section 2: Duration, Pricing & Vehicle */}
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#DBD4C4] shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-serif font-bold text-[#004741] flex items-center gap-2">
-                <Clock size={20} className="text-[#D49B35]" /> 2. Duration, Capacity & Pricing
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5E7EB]">
+              <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
+                <Clock size={18} className="text-[#059669]" /> 2. Duration, Capacity &amp; Pricing
               </h2>
               <button
                 type="button"
                 onClick={handleAutoGenerateStops}
-                className="text-xs font-bold text-[#004741] bg-[#004741]/10 hover:bg-[#004741]/20 px-3.5 py-1.5 rounded-xl transition-colors flex items-center gap-1.5"
+                className="text-xs font-semibold text-[#047857] bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#A7F3D0] px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5 self-start sm:self-auto"
               >
                 <Compass size={14} /> Auto-Generate Itinerary Stops
               </button>
@@ -534,7 +469,7 @@ export default function PackageEditor({
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Duration Days *
                 </label>
                 <input
@@ -544,12 +479,12 @@ export default function PackageEditor({
                   onChange={(e) => setDurationDays(Number(e.target.value))}
                   min={1}
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Duration Nights *
                 </label>
                 <input
@@ -559,12 +494,12 @@ export default function PackageEditor({
                   onChange={(e) => setDurationNights(Number(e.target.value))}
                   min={0}
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Max Capacity (Pax)
                 </label>
                 <input
@@ -572,19 +507,19 @@ export default function PackageEditor({
                   name="pax_capacity"
                   value={paxCapacity}
                   onChange={(e) => setPaxCapacity(Number(e.target.value))}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Vehicle Type
                 </label>
                 <select
                   name="vehicle_type"
                   value={vehicleType}
                   onChange={(e) => setVehicleType(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm font-medium focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 >
                   <option value="jeep">Jeep Safari</option>
                   <option value="boat">Houseboat / Cruise</option>
@@ -597,7 +532,7 @@ export default function PackageEditor({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Price (With Food) ₹ *
                 </label>
                 <input
@@ -607,12 +542,12 @@ export default function PackageEditor({
                   onChange={(e) => setPriceWithFood(Number(e.target.value))}
                   step="100"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
                   Price (Without Food) ₹
                 </label>
                 <input
@@ -621,105 +556,101 @@ export default function PackageEditor({
                   value={priceWithoutFood}
                   onChange={(e) => setPriceWithoutFood(e.target.value)}
                   step="100"
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
-                  Status
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
+                  Package Status
                 </label>
                 <select
                   name="status"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm font-bold focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm font-semibold focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 >
-                  <option value="published">🟢 Published (Live on Site)</option>
-                  <option value="draft">🟡 Draft</option>
-                  <option value="archived">⚪ Archived</option>
+                  <option value="published">Published (Live on Site)</option>
+                  <option value="draft">Draft (Hidden)</option>
+                  <option value="archived">Archived</option>
                 </select>
               </div>
             </div>
           </div>
 
           {/* Section 3: DYNAMIC DAY-BY-DAY ITINERARY BUILDER */}
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#DBD4C4] shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5E7EB]">
               <div>
-                <h2 className="text-lg font-serif font-bold text-[#004741] flex items-center gap-2">
-                  <Calendar size={20} className="text-[#D49B35]" /> 3. Day-by-Day Itinerary Builder ({itineraryDays.length} Stops)
+                <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2">
+                  <Calendar size={18} className="text-[#059669]" /> 3. Day-by-Day Itinerary Builder ({itineraryDays.length} Stops)
                 </h2>
-                <p className="text-xs text-[#60736F] mt-0.5">
-                  Start with Day 0 (Departure), add daily explorations, activities with icons, transition texts (`→`), and conclude with Return.
+                <p className="text-xs text-[#6B7280] mt-0.5">
+                  Configure daily highlights, activity icons, transition notes (`→`), and safe return.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleAddDay}
-                  className="px-4 py-2 rounded-xl bg-[#004741] text-white text-xs font-bold hover:bg-[#00332E] transition-all flex items-center gap-1.5 shadow-sm"
-                >
-                  <Plus size={14} /> Add Day / Stop
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={handleAddDay}
+                className="px-3.5 py-2 rounded-xl bg-[#059669] text-white text-xs font-semibold hover:bg-[#047857] transition-all flex items-center gap-1.5 shadow-sm self-start sm:self-auto"
+              >
+                <Plus size={14} /> Add Day / Stop
+              </button>
             </div>
 
             {/* List of Day Cards */}
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {itineraryDays.map((day, dIdx) => {
                 const isExpanded = expandedDayId === day.id;
-                const isFirst = dIdx === 0;
-                const isLast = dIdx === itineraryDays.length - 1;
 
                 return (
                   <div
                     key={day.id}
-                    className="bg-white rounded-2xl border border-[#DBD4C4] overflow-hidden shadow-sm transition-all"
+                    className="bg-white rounded-xl border border-[#E5E7EB] overflow-hidden shadow-xs transition-all"
                   >
                     {/* Day Card Header Bar */}
                     <div
                       onClick={() => setExpandedDayId(isExpanded ? null : day.id)}
-                      className="p-4 flex items-center justify-between cursor-pointer hover:bg-[#F0EDE4]/40 transition-colors"
+                      className="p-4 flex items-center justify-between cursor-pointer hover:bg-[#F8FAFC] transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shadow-sm ${
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shadow-xs ${
                             day.is_departure
-                              ? "bg-[#004741] text-white"
+                              ? "bg-[#059669] text-white"
                               : day.is_return
-                              ? "bg-[#D49B35] text-white"
-                              : "bg-[#F0EDE4] text-[#004741] border border-[#DBD4C4]"
+                              ? "bg-[#F59E0B] text-white"
+                              : "bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]"
                           }`}
                         >
                           {day.is_departure ? "D0" : day.is_return ? "★" : `D${day.day_number || dIdx}`}
                         </span>
 
                         <div>
-                          <div className="font-bold text-sm text-[#0D1F1C]">
+                          <div className="font-semibold text-sm text-[#111827]">
                             {day.title || `Day ${dIdx}`}
                           </div>
                           {day.subtitle && (
-                            <div className="text-xs text-[#60736F]">{day.subtitle}</div>
+                            <div className="text-xs text-[#6B7280]">{day.subtitle}</div>
                           )}
                         </div>
                       </div>
 
                       <div className="flex items-center gap-3">
-                        <span className="text-[11px] font-semibold text-[#60736F] bg-[#F0EDE4] px-2.5 py-1 rounded-full">
+                        <span className="text-[11px] font-semibold text-[#6B7280] bg-[#F1F5F9] px-2.5 py-0.5 rounded-full">
                           {day.activities?.length || 0} activities
                         </span>
-                        {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        {isExpanded ? <ChevronUp size={16} className="text-[#6B7280]" /> : <ChevronDown size={16} className="text-[#6B7280]" />}
                       </div>
                     </div>
 
                     {/* Day Expanded Form Details */}
                     {isExpanded && (
-                      <div className="p-5 border-t border-[#DBD4C4] bg-[#FAF8F5]/60 space-y-4">
+                      <div className="p-5 border-t border-[#E5E7EB] bg-[#F8FAFC] space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-xs font-bold text-[#0D1F1C] mb-1">
+                            <label className="block text-xs font-semibold text-[#374151] mb-1">
                               Day Title *
                             </label>
                             <input
@@ -727,12 +658,12 @@ export default function PackageEditor({
                               value={day.title}
                               onChange={(e) => handleUpdateDay(day.id, { title: e.target.value })}
                               placeholder="e.g. Alleppey — Life on the Backwaters"
-                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#DBD4C4] text-sm focus:outline-none focus:border-[#004741]"
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs font-bold text-[#0D1F1C] mb-1">
+                            <label className="block text-xs font-semibold text-[#374151] mb-1">
                               Day Subtitle
                             </label>
                             <input
@@ -740,13 +671,13 @@ export default function PackageEditor({
                               value={day.subtitle}
                               onChange={(e) => handleUpdateDay(day.id, { subtitle: e.target.value })}
                               placeholder="e.g. Private Houseboat Cruise"
-                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#DBD4C4] text-sm focus:outline-none focus:border-[#004741]"
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                             />
                           </div>
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-[#0D1F1C] mb-1">
+                          <label className="block text-xs font-semibold text-[#374151] mb-1">
                             Day Photo (Upload File or Direct Image URL)
                           </label>
                           <ImageUploader
@@ -756,20 +687,20 @@ export default function PackageEditor({
                             aspectRatio="video"
                             placeholder="https://images.unsplash.com/photo-..."
                             onChange={(url) => handleUpdateDay(day.id, { photo_url: url })}
-                            className="text-[#0D1F1C]"
+                            className="text-[#111827]"
                           />
                         </div>
 
                         {/* Activities List Editor */}
                         <div className="space-y-3 pt-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-[#004741]">
-                              Scheduled Activities & Highlights:
+                            <span className="text-xs font-bold text-[#111827]">
+                              Scheduled Activities &amp; Highlights:
                             </span>
                             <button
                               type="button"
                               onClick={() => handleAddActivity(day.id)}
-                              className="text-xs font-bold text-[#004741] hover:underline flex items-center gap-1"
+                              className="text-xs font-semibold text-[#059669] hover:text-[#047857] flex items-center gap-1"
                             >
                               <Plus size={12} /> Add Activity
                             </button>
@@ -779,7 +710,7 @@ export default function PackageEditor({
                             {day.activities.map((act) => (
                               <div
                                 key={act.id}
-                                className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-[#DBD4C4] shadow-xs"
+                                className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-[#E5E7EB] shadow-xs"
                               >
                                 <ActivityIconPicker
                                   value={act.icon}
@@ -795,13 +726,13 @@ export default function PackageEditor({
                                     handleUpdateActivity(day.id, act.id, { label: e.target.value })
                                   }
                                   placeholder="e.g. Sunset cruise along backwaters"
-                                  className="flex-1 px-3 py-2 text-xs text-[#0D1F1C] rounded-lg border border-[#DBD4C4] focus:outline-none focus:border-[#004741]"
+                                  className="flex-1 px-3 py-2 text-xs text-[#111827] rounded-lg border border-[#E5E7EB] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
                                 />
 
                                 <button
                                   type="button"
                                   onClick={() => handleRemoveActivity(day.id, act.id)}
-                                  className="p-2 text-black/40 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
+                                  className="p-2 text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg transition-colors shrink-0"
                                   title="Remove activity"
                                 >
                                   <Trash2 size={14} />
@@ -813,7 +744,7 @@ export default function PackageEditor({
 
                         {/* Transition Text to Next Stop */}
                         <div>
-                          <label className="block text-xs font-bold text-[#0D1F1C] mb-1">
+                          <label className="block text-xs font-semibold text-[#374151] mb-1">
                             Transition Note to Next Stop (`→`)
                           </label>
                           <input
@@ -823,16 +754,16 @@ export default function PackageEditor({
                               handleUpdateDay(day.id, { transition_text: e.target.value })
                             }
                             placeholder="e.g. Early morning scenic drive south to Alleppey (90 min)..."
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#DBD4C4] text-xs italic focus:outline-none focus:border-[#004741]"
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-xs italic text-[#111827] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0]"
                           />
                         </div>
 
                         {/* Day Card Footer Actions */}
-                        <div className="flex items-center justify-between pt-3 border-t border-[#DBD4C4]">
+                        <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
                           <button
                             type="button"
                             onClick={() => handleRemoveDay(day.id)}
-                            className="text-xs font-bold text-red-500 hover:text-red-700 flex items-center gap-1"
+                            className="text-xs font-semibold text-[#DC2626] hover:text-[#B91C1C] flex items-center gap-1"
                           >
                             <Trash2 size={13} /> Remove Stop
                           </button>
@@ -840,7 +771,7 @@ export default function PackageEditor({
                           <button
                             type="button"
                             onClick={() => setExpandedDayId(null)}
-                            className="text-xs font-bold text-[#004741] hover:underline"
+                            className="text-xs font-semibold text-[#059669] hover:underline"
                           >
                             Done Editing Stop
                           </button>
@@ -854,49 +785,35 @@ export default function PackageEditor({
           </div>
 
           {/* Section 4: Media, Inclusions & Exclusions */}
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#DBD4C4] shadow-sm space-y-4">
-            <h2 className="text-lg font-serif font-bold text-[#004741] flex items-center gap-2">
-              <Camera size={20} className="text-[#D49B35]" /> 4. Hero Banner, Inclusions & Exclusions
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm space-y-4">
+            <h2 className="text-base sm:text-lg font-bold text-[#111827] flex items-center gap-2 pb-3 border-b border-[#E5E7EB]">
+              <Camera size={18} className="text-[#059669]" /> 4. Inclusions &amp; Exclusions
             </h2>
-
-            <div>
-              <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
-                Hero Image URL
-              </label>
-              <input
-                type="url"
-                name="hero_image_url"
-                value={heroImageUrl}
-                onChange={(e) => setHeroImageUrl(e.target.value)}
-                placeholder="https://images.unsplash.com/photo-..."
-                className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-sm focus:outline-none focus:border-[#004741]"
-              />
-            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
-                  Package Inclusions (One per line)
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
+                  Package Inclusions (One item per line)
                 </label>
                 <textarea
                   name="inclusions"
                   rows={5}
                   value={inclusionsText}
                   onChange={(e) => setInclusionsText(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-xs font-mono focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-xs font-mono focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0D1F1C] mb-1.5">
-                  Package Exclusions (One per line)
+                <label className="block text-xs font-semibold text-[#374151] mb-1.5">
+                  Package Exclusions (One item per line)
                 </label>
                 <textarea
                   name="exclusions"
                   rows={5}
                   value={exclusionsText}
                   onChange={(e) => setExclusionsText(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-[#DBD4C4] text-[#0D1F1C] text-xs font-mono focus:outline-none focus:border-[#004741]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-xs font-mono focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] shadow-sm"
                 />
               </div>
             </div>
@@ -904,25 +821,25 @@ export default function PackageEditor({
         </div>
 
         {/* TAB 2: REAL-TIME LIVE TRAVEL PREVIEW */}
-        <div className={activeTab === "preview" ? "block space-y-8" : "hidden"}>
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#DBD4C4] shadow-sm flex items-center justify-between">
+        <div className={activeTab === "preview" ? "block space-y-6" : "hidden"}>
+          <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="text-xs font-bold text-[#004741] uppercase tracking-wider">
+              <span className="text-xs font-bold text-[#059669] uppercase tracking-wider">
                 Live Customer View Simulation
               </span>
-              <h2 className="text-xl font-serif font-bold text-[#0D1F1C]">
+              <h2 className="text-xl font-bold text-[#111827] mt-0.5">
                 {name || "Untitled Tour Package"}
               </h2>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#F0EDE4] p-1.5 rounded-2xl border border-[#DBD4C4]">
+            <div className="flex items-center gap-1.5 bg-[#F1F5F9] p-1 rounded-xl border border-[#E5E7EB]">
               <button
                 type="button"
                 onClick={() => setPreviewFoodToggle("with")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                   previewFoodToggle === "with"
-                    ? "bg-[#004741] text-white shadow-sm"
-                    : "text-[#60736F]"
+                    ? "bg-[#059669] text-white shadow-sm"
+                    : "text-[#6B7280] hover:text-[#111827]"
                 }`}
               >
                 With Food: ₹{priceWithFood.toLocaleString("en-IN")}
@@ -930,10 +847,10 @@ export default function PackageEditor({
               <button
                 type="button"
                 onClick={() => setPreviewFoodToggle("without")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                   previewFoodToggle === "without"
-                    ? "bg-[#004741] text-white shadow-sm"
-                    : "text-[#60736F]"
+                    ? "bg-[#059669] text-white shadow-sm"
+                    : "text-[#6B7280] hover:text-[#111827]"
                 }`}
               >
                 Without Food: ₹{Number(priceWithoutFood || priceWithFood).toLocaleString("en-IN")}
@@ -944,9 +861,11 @@ export default function PackageEditor({
           {/* Package Card Preview */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
-              <h3 className="text-sm font-bold text-white mb-3">Card Preview (Listing & Carousel)</h3>
-              <div className="bg-white rounded-3xl overflow-hidden border border-[#DBD4C4] shadow-xl">
-                <div className="relative h-56 bg-black/20">
+              <h3 className="text-sm font-bold text-[#111827] mb-3">
+                Card Preview (Listing &amp; Carousel)
+              </h3>
+              <div className="bg-white rounded-2xl overflow-hidden border border-[#E5E7EB] shadow-md">
+                <div className="relative h-56 bg-slate-100">
                   {heroImageUrl && (
                     <Image
                       src={heroImageUrl}
@@ -955,35 +874,35 @@ export default function PackageEditor({
                       className="object-cover"
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#004741] text-white shadow-md">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#059669] text-white shadow-sm">
                       {durationDays}D / {durationNights}N
                     </span>
                   </div>
                   <div className="absolute bottom-3 left-4 right-4 text-white">
-                    <h4 className="font-serif font-bold text-lg leading-tight">
+                    <h4 className="font-bold text-lg leading-tight">
                       {name || "Kerala Holiday"}
                     </h4>
-                    <p className="text-xs text-white/80 line-clamp-1 mt-0.5">
+                    <p className="text-xs text-white/90 line-clamp-1 mt-0.5">
                       {destinations}
                     </p>
                   </div>
                 </div>
 
                 <div className="p-5 space-y-4">
-                  <p className="text-xs text-[#2D423E] leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#4B5563] leading-relaxed line-clamp-2">
                     {summary}
                   </p>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-[#DBD4C4]">
+                  <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
                     <div>
-                      <div className="text-[10px] uppercase font-bold text-[#60736F]">Starting From</div>
-                      <div className="text-xl font-serif font-bold text-[#004741]">
+                      <div className="text-[10px] uppercase font-bold text-[#6B7280]">Starting From</div>
+                      <div className="text-lg font-extrabold text-[#059669]">
                         ₹{(previewFoodToggle === "with" ? priceWithFood : Number(priceWithoutFood || priceWithFood)).toLocaleString("en-IN")}
                       </div>
                     </div>
-                    <span className="px-4 py-2 rounded-xl bg-[#004741] text-white text-xs font-bold">
+                    <span className="px-3.5 py-2 rounded-xl bg-[#059669] text-white text-xs font-semibold">
                       Explore Itinerary →
                     </span>
                   </div>
@@ -993,42 +912,42 @@ export default function PackageEditor({
 
             {/* Journey Road Timeline Preview */}
             <div className="lg:col-span-2">
-              <h3 className="text-sm font-bold text-white mb-3">
+              <h3 className="text-sm font-bold text-[#111827] mb-3">
                 Live Journey Road / Itinerary Timeline ({itineraryDays.length} Stops)
               </h3>
 
-              <div className="bg-[#F0EDE4] rounded-3xl p-6 border border-[#DBD4C4] shadow-xl space-y-6">
-                <div className="flex items-center gap-2 pb-4 border-b border-[#DBD4C4]">
-                  <Compass className="text-[#004741]" size={20} />
-                  <span className="font-serif font-bold text-lg text-[#004741]">
+              <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-md space-y-6">
+                <div className="flex items-center gap-2 pb-4 border-b border-[#E5E7EB]">
+                  <Compass className="text-[#059669]" size={20} />
+                  <span className="font-bold text-base text-[#111827]">
                     Day-by-Day Interactive Travel Experience
                   </span>
                 </div>
 
                 <div className="space-y-6">
                   {itineraryDays.map((day, idx) => (
-                    <div key={day.id} className="relative pl-8 border-l-2 border-[#004741]/20 pb-4 last:border-l-0">
+                    <div key={day.id} className="relative pl-8 border-l-2 border-emerald-200 pb-4 last:border-l-0">
                       {/* Timeline Dot */}
                       <span
-                        className={`absolute -left-[17px] top-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-md ${
+                        className={`absolute -left-[17px] top-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm ${
                           day.is_departure
-                            ? "bg-[#004741] text-white"
+                            ? "bg-[#059669] text-white"
                             : day.is_return
-                            ? "bg-[#D49B35] text-white"
-                            : "bg-[#004741] text-white"
+                            ? "bg-[#F59E0B] text-white"
+                            : "bg-[#059669] text-white"
                         }`}
                       >
                         {day.is_departure ? "D0" : day.is_return ? "★" : idx}
                       </span>
 
-                      <div className="bg-white rounded-2xl p-5 border border-[#DBD4C4] shadow-sm space-y-3">
+                      <div className="bg-[#F8FAFC] rounded-xl p-4 border border-[#E5E7EB] shadow-xs space-y-3">
                         <div className="flex items-start justify-between">
                           <div>
-                            <h4 className="font-serif font-bold text-base text-[#004741]">
+                            <h4 className="font-bold text-sm text-[#111827]">
                               {day.title}
                             </h4>
                             {day.subtitle && (
-                              <p className="text-xs text-[#60736F] mt-0.5">{day.subtitle}</p>
+                              <p className="text-xs text-[#6B7280] mt-0.5">{day.subtitle}</p>
                             )}
                           </div>
                         </div>
@@ -1036,8 +955,8 @@ export default function PackageEditor({
                         {day.activities && day.activities.length > 0 && (
                           <div className="space-y-2 pt-1">
                             {day.activities.map((act) => (
-                              <div key={act.id} className="flex items-start gap-2.5 text-xs text-[#2D423E]">
-                                <span className="w-5 h-5 rounded-md bg-[#F0EDE4] flex items-center justify-center flex-shrink-0 mt-0.5 text-[#004741]">
+                              <div key={act.id} className="flex items-start gap-2.5 text-xs text-[#374151]">
+                                <span className="w-5 h-5 rounded-md bg-white border border-[#E5E7EB] flex items-center justify-center shrink-0 mt-0.5 text-[#059669]">
                                   <ActivityIcon icon={act.icon} size={11} />
                                 </span>
                                 <span>{act.label}</span>
@@ -1047,7 +966,7 @@ export default function PackageEditor({
                         )}
 
                         {day.transition_text && (
-                          <div className="mt-3 pt-2.5 border-t border-dashed border-[#DBD4C4] text-[11px] text-[#004741] font-medium flex items-center gap-1.5 italic">
+                          <div className="mt-2.5 pt-2 border-t border-dashed border-[#E5E7EB] text-[11px] text-[#059669] font-medium flex items-center gap-1.5 italic">
                             <span>→</span>
                             <span>{day.transition_text}</span>
                           </div>
@@ -1062,28 +981,28 @@ export default function PackageEditor({
         </div>
 
         {/* Action Save Bar */}
-        <div className="sticky bottom-4 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#DBD4C4] shadow-2xl flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-bold text-[#004741]">
-              {status === "published" ? "Ready to publish on live site" : "Will save as draft"}
+        <div className="sticky bottom-4 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#E5E7EB] shadow-lg flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse" />
+            <span className="text-xs font-semibold text-[#047857]">
+              {status === "published" ? "Will publish live immediately" : "Saving as draft"}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
               href="/admin/packages"
-              className="px-5 py-2.5 rounded-xl text-xs font-bold text-[#60736F] hover:text-[#0D1F1C] transition-colors"
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-[#6B7280] hover:text-[#111827] transition-colors"
             >
               Cancel
             </Link>
 
             <button
               type="submit"
-              className="px-6 py-3 rounded-xl bg-[#004741] hover:bg-[#00332E] text-white text-xs font-bold shadow-lg hover:scale-105 transition-all flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Save size={15} />
-              {isEditing ? "Save & Update Package" : "Publish Package"}
+              <Save size={14} />
+              <span>{isEditing ? "Save & Update Package" : "Publish Package"}</span>
             </button>
           </div>
         </div>

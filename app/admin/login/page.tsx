@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClientSupabaseClient } from "@/lib/supabase/client";
-import { Eye, EyeOff, Loader2, Lock } from "lucide-react";
-import type { Metadata } from "next";
+import { Eye, EyeOff, Loader2, Lock, ShieldCheck, Compass } from "lucide-react";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -26,7 +25,7 @@ export default function AdminLoginPage() {
     });
 
     if (authError) {
-      setError("Invalid email or password. Please try again.");
+      setError("Incorrect email or password. Please try again.");
       setLoading(false);
       return;
     }
@@ -36,39 +35,32 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4"
-      style={{ background: "#0a0d14" }}
-    >
-      {/* Background glow */}
-      <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(212,92,51,0.08) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative w-full max-w-sm">
-        {/* Logo */}
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#F8FAFC] text-[#111827]">
+      <div className="w-full max-w-md">
+        {/* Logo and Welcome */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-xl"
-            style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}>
-            <Lock size={22} className="text-white" />
+          <div className="w-14 h-14 rounded-2xl mx-auto mb-4 bg-[#059669] text-white flex items-center justify-center shadow-md">
+            <Compass size={28} className="stroke-[2.2]" />
           </div>
-          <h1 className="font-serif text-2xl text-white mb-1">Admin Access</h1>
-          <p className="text-white/40 text-sm">Sign in to manage ENJOY Holidays</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] tracking-tight mb-1.5">
+            PADMA Tours Admin
+          </h1>
+          <p className="text-[#4B5563] text-sm">
+            Sign in to manage tour packages, customer enquiries, and media
+          </p>
         </div>
 
-        {/* Form */}
+        {/* Form Card */}
         <form
           onSubmit={handleLogin}
-          className="rounded-2xl p-6 flex flex-col gap-4"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+          className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#E5E7EB] flex flex-col gap-5"
         >
           <div>
-            <label htmlFor="admin-email" className="block text-xs text-white/50 font-medium mb-1.5">
-              Email
+            <label
+              htmlFor="admin-email"
+              className="block text-xs font-semibold uppercase tracking-wider text-[#374151] mb-2"
+            >
+              Email Address
             </label>
             <input
               id="admin-email"
@@ -76,14 +68,17 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@enjoyholidays.in"
-              className="w-full px-4 py-3 rounded-xl bg-white/6 border border-white/10 text-white text-sm placeholder-white/25 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              placeholder="admin@padmatours.com"
+              className="w-full px-4 py-3 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
               autoComplete="email"
             />
           </div>
 
           <div>
-            <label htmlFor="admin-password" className="block text-xs text-white/50 font-medium mb-1.5">
+            <label
+              htmlFor="admin-password"
+              className="block text-xs font-semibold uppercase tracking-wider text-[#374151] mb-2"
+            >
               Password
             </label>
             <div className="relative">
@@ -93,41 +88,55 @@ export default function AdminLoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-3 pr-12 rounded-xl bg-white/6 border border-white/10 text-white text-sm placeholder-white/25 focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+                placeholder="Enter your password"
+                className="w-full px-4 py-3 pr-11 rounded-xl bg-white border border-[#E5E7EB] text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#A7F3D0] transition-all shadow-sm"
                 autoComplete="current-password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B7280] hover:text-[#111827] p-1"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
 
           {error && (
-            <p className="text-red-400 text-xs px-1" role="alert">{error}</p>
+            <div
+              className="p-3.5 rounded-xl bg-[#FEF2F2] border border-[#FECACA] text-[#B91C1C] text-xs font-semibold flex items-center gap-2"
+              role="alert"
+            >
+              <span className="text-sm">⚠️</span>
+              <span>{error}</span>
+            </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-200 disabled:opacity-60 mt-2"
-            style={{
-              background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
-            }}
+            className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-semibold text-sm text-white bg-[#059669] hover:bg-[#047857] active:bg-[#065F46] shadow-sm transition-all disabled:opacity-60 mt-1 cursor-pointer"
             id="admin-login-btn"
           >
-            {loading ? <><Loader2 size={16} className="animate-spin" /> Signing in...</> : "Sign In"}
+            {loading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                <span>Signing in...</span>
+              </>
+            ) : (
+              <>
+                <Lock size={16} />
+                <span>Sign In to Admin Panel</span>
+              </>
+            )}
           </button>
         </form>
 
-        <p className="text-center text-white/20 text-xs mt-6">
-          Restricted access. Authorised personnel only.
-        </p>
+        <div className="text-center mt-6 flex items-center justify-center gap-1.5 text-[#6B7280] text-xs font-medium">
+          <ShieldCheck size={14} className="text-[#059669]" />
+          <span>Secure Admin Portal • PADMA TOURS &amp; TRAVELS</span>
+        </div>
       </div>
     </div>
   );

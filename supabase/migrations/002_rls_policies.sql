@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- ENJOY Holidays — Row Level Security Policies
+-- PADMA TOURS & TRAVELS — Row Level Security Policies
 -- Run AFTER 001_initial_schema.sql
 -- ═══════════════════════════════════════════════════════════════════════════
 

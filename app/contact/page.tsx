@@ -158,8 +158,8 @@ export default function ContactPage() {
                   <p className="text-xs text-[#4B5E59] mt-0.5">
                     {phone} • Immediate vehicle dispatch &amp; emergency support
                   </p>
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#D45C33] mt-2 group-hover:underline">
-                    Click to Call Now →
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D45C33] mt-2 group-hover:underline">
+                    <Phone size={13} /> Call
                   </span>
                 </div>
               </a>

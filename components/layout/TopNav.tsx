@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import BrandLogo from "@/components/ui/BrandLogo";
 
 const navLinks = [
@@ -78,7 +78,23 @@ export default function TopNav() {
           </nav>
 
           {/* CTA + Mobile menu button */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Desktop Direct Call Button */}
+            <a
+              href="tel:+919865987975"
+              className={`hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 active:scale-95 shadow-sm ${
+                scrolled
+                  ? "border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white"
+                  : "border-2 border-white/80 text-white hover:bg-white hover:text-[#0B4F4A] backdrop-blur-sm"
+              }`}
+              id="nav-call-cta"
+              aria-label="Call Padma Tours"
+            >
+              <Phone size={14} />
+              <span>Call</span>
+            </a>
+
+            {/* Desktop WhatsApp Enquiry */}
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20holiday%20package%21`}
               target="_blank"
@@ -87,8 +103,19 @@ export default function TopNav() {
               style={{ background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)" }}
               id="nav-enquire-cta"
             >
-              <Phone size={14} />
+              <MessageCircle size={15} />
               Enquire Now
+            </a>
+
+            {/* Mobile Call Button (Always accessible without opening menu) */}
+            <a
+              href="tel:+919865987975"
+              className="md:hidden flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold bg-[#D45C33] text-white shadow-sm active:scale-95 transition-transform"
+              id="mobile-nav-call-cta"
+              aria-label="Direct Call"
+            >
+              <Phone size={12} />
+              <span>Call</span>
             </a>
 
             <button
@@ -141,7 +168,15 @@ export default function TopNav() {
                   </motion.div>
                 );
               })}
-              <div className="pt-2 mt-2 border-t border-[var(--color-border)]">
+              <div className="pt-2 mt-2 border-t border-[var(--color-border)] flex flex-col gap-2">
+                <a
+                  href="tel:+919865987975"
+                  className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold border-2 border-[var(--color-primary)] text-[var(--color-primary)] bg-[var(--color-primary)]/5"
+                  id="mobile-drawer-call-btn"
+                >
+                  <Phone size={15} />
+                  Call
+                </a>
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20holiday%20package%21`}
                   target="_blank"
@@ -149,7 +184,7 @@ export default function TopNav() {
                   className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold text-white shadow-md"
                   style={{ background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)" }}
                 >
-                  <Phone size={14} />
+                  <MessageCircle size={15} />
                   Enquire on WhatsApp
                 </a>
               </div>
