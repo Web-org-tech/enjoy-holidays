@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Phone, Mail, MapPin, MessageCircle, Clock, ShieldCheck, CheckCircle2, Send, Car, Compass } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { absoluteUrl } from "@/lib/site";
+import { getContactPageJsonLd, getBreadcrumbJsonLd } from "@/lib/structured-data";
 import EnquiryForm from "@/components/packages/EnquiryForm";
 
 export const revalidate = 3600;
@@ -10,15 +12,22 @@ export const metadata: Metadata = {
   description:
     "Get in touch with PADMA TOURS & TRAVELS in Madurai. Available 24 hours a day for daily tours, Madurai local sightseeing, cab bookings, and customized holiday packages across India. Call +91 98659 87975 or WhatsApp +91 70101 11256.",
   alternates: {
-    canonical: "https://padmatoursandtravels.in/contact",
+    canonical: absoluteUrl("/contact"),
   },
   openGraph: {
     title: "Contact PADMA TOURS & TRAVELS (Madurai) — 24/7 Support",
     description:
       "Planning a tour, sightseeing, or car rental? Reach us anytime 24/7 via WhatsApp, Phone, or at our Madurai Racecourse Colony office.",
-    url: "https://padmatoursandtravels.in/contact",
+    url: absoluteUrl("/contact"),
     type: "website",
-    images: [{ url: "/logo.png", width: 512, height: 512, alt: "Padma Tours and Travels Madurai" }],
+    images: [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: "Contact Padma Tours & Travels Madurai" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact PADMA TOURS & TRAVELS — 24/7 Service",
+    description:
+      "Call +91 98659 87975 or WhatsApp +91 70101 11256 for instant cab and tour quotes in Madurai.",
+    images: [absoluteUrl("/og-image.png")],
   },
 };
 
@@ -29,34 +38,21 @@ export default function ContactPage() {
   const address = "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters, Madurai - 625002";
   const waUrl = buildWhatsAppUrl({ phone: whatsappNumber });
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    name: "Contact PADMA TOURS & TRAVELS",
-    description: "24/7 Travel Agency contact page in Madurai for daily tours, cabs and tour packages.",
-    mainEntity: {
-      "@type": "TravelAgency",
-      name: "PADMA TOURS & TRAVELS",
-      telephone: "+91-9865987975",
-      email: "nirmalharish1980@gmail.com",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "No: B19/3 Racecourse Colony, Opp. Old Passport Office, Government Quarters",
-        addressLocality: "Madurai",
-        addressRegion: "Tamil Nadu",
-        postalCode: "625002",
-        addressCountry: "IN",
-      },
-      openingHours: "Mo-Su 00:00-24:00",
-      sameAs: ["https://wa.me/917010111256"],
-    },
-  };
+  const contactJsonLd = getContactPageJsonLd();
+  const breadcrumbJsonLd = getBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "Contact Us", href: "/contact" },
+  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Header Banner */}

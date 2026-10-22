@@ -2,7 +2,7 @@
 
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/supabase/auth";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function updateSiteSettingsAction(formData: FormData): Promise<void> {
   await requireAdmin();
@@ -59,6 +59,7 @@ export async function updateSiteSettingsAction(formData: FormData): Promise<void
     if (error) console.error("updateSiteSettingsAction error:", error);
   }
 
+  revalidateTag("site-settings");
   revalidatePath("/admin/settings");
   revalidatePath("/");
   revalidatePath("/about");

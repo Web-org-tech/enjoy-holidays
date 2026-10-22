@@ -2,19 +2,55 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getAllGalleryItems } from "@/lib/supabase/queries";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { absoluteUrl } from "@/lib/site";
+
+import { getBreadcrumbJsonLd } from "@/lib/structured-data";
 
 export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "Gallery — Through the Lens of Our Journeys",
+  title: "Tour Gallery — Destination Photos & Moments | PADMA TOURS & TRAVELS",
   description:
-    "Explore stunning photos and videos from our holiday destinations — Kerala backwaters, Coorg highlands, Goa beaches and more.",
+    "Explore photos from our holiday destinations across South India — Madurai temples, Rameswaram, Kerala backwaters, Coorg, and Ooty hills.",
+  alternates: {
+    canonical: absoluteUrl("/gallery"),
+  },
+  openGraph: {
+    title: "Tour Gallery — Destination Photos & Moments | PADMA TOURS & TRAVELS",
+    description:
+      "Explore photos from our holiday destinations across South India — Madurai temples, Rameswaram, Kerala backwaters, Coorg, and Ooty hills.",
+    url: absoluteUrl("/gallery"),
+    type: "website",
+    images: [
+      {
+        url: absoluteUrl("/og-image.png"),
+        width: 1200,
+        height: 630,
+        alt: "PADMA TOURS & TRAVELS Tour Gallery",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tour Gallery | PADMA TOURS & TRAVELS",
+    description: "Explore destination photos across Madurai, Kerala, and South India.",
+    images: [absoluteUrl("/og-image.png")],
+  },
 };
 
 export default async function GalleryPage() {
   const items = await getAllGalleryItems();
+  const breadcrumbJsonLd = getBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "Gallery", href: "/gallery" },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Header */}
       <section
         className="relative pt-36 sm:pt-44 pb-16 sm:pb-20 grain-overlay overflow-hidden"

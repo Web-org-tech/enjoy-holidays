@@ -1,3 +1,4 @@
+import "server-only";
 import { createClient } from "@supabase/supabase-js";
 
 // Service-role client — only for admin Server Actions, never exposed to browser

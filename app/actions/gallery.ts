@@ -2,7 +2,7 @@
 
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/supabase/auth";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function createGalleryItemAction(formData: FormData): Promise<void> {
   await requireAdmin();
@@ -29,6 +29,7 @@ export async function createGalleryItemAction(formData: FormData): Promise<void>
     return;
   }
 
+  revalidateTag("gallery");
   revalidatePath("/admin/gallery");
   revalidatePath("/gallery");
   revalidatePath("/");
@@ -44,6 +45,7 @@ export async function deleteGalleryItemAction(id: string): Promise<void> {
     return;
   }
 
+  revalidateTag("gallery");
   revalidatePath("/admin/gallery");
   revalidatePath("/gallery");
   revalidatePath("/");

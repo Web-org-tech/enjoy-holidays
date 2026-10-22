@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Guest Feedback & Reviews — PADMA TOURS & TRAVELS",
   description:
     "Share your travel experience, photos, and star review with PADMA TOURS & TRAVELS (Madurai). Rate your journey and help fellow travellers plan their dream trip.",
   alternates: {
-    canonical: "https://padmatoursandtravels.in/feedback",
+    canonical: absoluteUrl("/feedback"),
   },
   openGraph: {
     title: "Submit Guest Review — PADMA TOURS & TRAVELS",
     description:
       "Share your travel experience, photos, and rating with PADMA TOURS & TRAVELS.",
-    url: "https://padmatoursandtravels.in/feedback",
+    url: absoluteUrl("/feedback"),
     type: "website",
-    images: [{ url: "/logo.png", width: 512, height: 512, alt: "Padma Tours and Travels" }],
+    images: [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: "Padma Tours and Travels Guest Feedback" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Submit Guest Review — PADMA TOURS & TRAVELS",
     description:
       "Share your travel experience, photos, and rating with PADMA TOURS & TRAVELS.",
-    images: ["/logo.png"],
+    images: [absoluteUrl("/og-image.png")],
   },
 };
 

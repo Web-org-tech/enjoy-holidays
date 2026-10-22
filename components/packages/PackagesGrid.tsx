@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import type { PackageCardData } from "@/lib/supabase/types";
 import PackageCard from "./PackageCard";
 import Image from "next/image";
@@ -100,6 +101,16 @@ export default function PackagesGrid({ packages }: PackagesGridProps) {
   const [mobileSortOpen, setMobileSortOpen] = useState(false);
   const [mobileActiveTab, setMobileActiveTab] = useState<MobileTab>("destinations");
 
+  // ─── Sync with URL search params (e.g., from marquee or direct links) ──────
+  const searchParams = useSearchParams();
+  const urlSearch = searchParams?.get("search") || "";
+
+  useEffect(() => {
+    if (urlSearch) {
+      setSearch(urlSearch);
+    }
+  }, [urlSearch]);
+
   // ─── Click Outside handler for search recommendations ────────────────────
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -191,7 +202,20 @@ export default function PackagesGrid({ packages }: PackagesGridProps) {
         const matchesName = pkg.name.toLowerCase().includes(q);
         const matchesSummary = pkg.summary?.toLowerCase().includes(q);
         const matchesDest = pkg.destinations.some((d) => d.toLowerCase().includes(q));
-        if (!matchesName && !matchesSummary && !matchesDest) return false;
+
+        if (!matchesName && !matchesSummary && !matchesDest) {
+          // Fall back to keyword token matching for terms like "Madurai Heritage", "Kerala Backwaters"
+          const tokens = q.split(/\s+/).filter((t) => t.length > 2);
+          const matchesAnyToken =
+            tokens.length > 0 &&
+            tokens.some(
+              (tok) =>
+                pkg.name.toLowerCase().includes(tok) ||
+                pkg.summary?.toLowerCase().includes(tok) ||
+                pkg.destinations.some((d) => d.toLowerCase().includes(tok))
+            );
+          if (!matchesAnyToken) return false;
+        }
       }
 
       // 2. Destinations (Multi-select)

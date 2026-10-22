@@ -4,7 +4,8 @@ import "./globals.css";
 import TopNav from "@/components/layout/TopNav";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { getSiteSettings } from "@/lib/supabase/queries";
+import { SITE_URL } from "@/lib/site";
 
 const dmSerifDisplay = DM_Serif_Display({
   weight: ["400"],
@@ -22,7 +23,10 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://padmatoursandtravels.in"),
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "./",
+  },
   title: {
     default: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Since 2004)",
     template: "%s | PADMA TOURS & TRAVELS",
@@ -44,23 +48,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://padmatoursandtravels.in",
+    url: SITE_URL,
     siteName: "PADMA TOURS & TRAVELS",
     images: [
       {
-        url: "/logo.png",
-        width: 512,
-        height: 512,
-        alt: "PADMA TOURS & TRAVELS — 20+ Years of Travel Excellence",
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Holiday Packages (Est. 2004)",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "PADMA TOURS & TRAVELS — 20+ Years of Travel Excellence",
     description:
       "Daily tours, Madurai local sightseeing, and customized holiday packages across India. 24/7 service.",
-    images: ["/logo.png"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -75,29 +79,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/logo.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
     ],
-    shortcut: "/logo.png",
+    shortcut: "/icon.png",
     apple: [
-      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
 };
-
-async function getSiteSettings() {
-  try {
-    const supabase = await createServerSupabaseClient();
-    const { data } = await supabase
-      .from("site_settings")
-      .select("theme_colors, contact_info")
-      .single();
-    return data;
-  } catch {
-    return null;
-  }
-}
 
 export default async function RootLayout({
   children,
@@ -120,8 +109,6 @@ export default async function RootLayout({
       className={`${dmSerifDisplay.variable} ${manrope.variable}`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
         {dynamicTheme && (
           <style
             id="dynamic-theme"
