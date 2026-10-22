@@ -29,7 +29,12 @@ const nextConfig = {
       },
     ],
   },
+  eslint: {
+    // Quality rule runs npm run lint separately; avoids double-parsing heap spikes
+    ignoreDuringBuilds: true,
+  },
   experimental: {
+    cpus: 1,
     serverActions: {
       allowedOrigins,
     },
