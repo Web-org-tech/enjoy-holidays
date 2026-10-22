@@ -6,8 +6,10 @@ import PackagesCarousel from "@/components/home/PackagesCarousel";
 import TrustBadges from "@/components/home/TrustBadges";
 import TestimonialsStrip from "@/components/home/TestimonialsStrip";
 import DestinationMarquee from "@/components/home/DestinationMarquee";
+import FaqSection from "@/components/home/FaqSection";
+import { HOME_FAQS } from "@/lib/faqs";
 import { getFeaturedPackages, getPublishedTestimonials, getSiteSettings } from "@/lib/supabase/queries";
-import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/structured-data";
+import { getLocalBusinessJsonLd, getWebsiteJsonLd, getFaqPageJsonLd } from "@/lib/structured-data";
 import { SkeletonCard } from "@/components/ui/Skeleton";
 import TourLoader from "@/components/ui/TourLoader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -17,9 +19,31 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Est. 2004)",
   description:
-    "Trusted travel agency in Madurai since 2004. Daily tours, Madurai local sightseeing, temple circuits, and customized holiday packages across South India. Available 24 hours.",
+    "Trusted travel agency in Madurai since 2004. Daily tours, Madurai local sightseeing, temple circuits, car rental with driver, and customized holiday packages across South India. Available 24 hours.",
   alternates: {
     canonical: absoluteUrl("/"),
+  },
+  openGraph: {
+    title: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Est. 2004)",
+    description:
+      "Trusted travel agency in Madurai since 2004. Daily tours, Madurai local sightseeing, temple circuits, and customized holiday packages across South India. Available 24 hours.",
+    url: absoluteUrl("/"),
+    type: "website",
+    images: [
+      {
+        url: absoluteUrl("/og-image.png"),
+        width: 1200,
+        height: 630,
+        alt: "PADMA TOURS & TRAVELS — Madurai Travel Agency Since 2004",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PADMA TOURS & TRAVELS — Daily Tours & Madurai Sightseeing",
+    description:
+      "Daily tours, Madurai local sightseeing, car rental with driver, and South India tour packages. Available 24/7.",
+    images: [absoluteUrl("/og-image.png")],
   },
 };
 
@@ -30,19 +54,30 @@ async function FeaturedPackages({ featuredIds }: { featuredIds?: string[] }) {
   return <PackagesCarousel packages={packages} />;
 }
 
-async function Testimonials() {
-  const testimonials = await getPublishedTestimonials();
-  return <TestimonialsStrip testimonials={testimonials} />;
-}
-
 export default async function HomePage() {
-  const settings = await getSiteSettings();
+  const [settings, testimonials] = await Promise.all([
+    getSiteSettings(),
+    getPublishedTestimonials(),
+  ]);
+
   const heroContent = settings?.hero_content;
   const featuredIds = settings?.featured_package_ids ?? undefined;
   const whatsappNumber = settings?.contact_info?.whatsapp_number;
 
-  const jsonLd = getLocalBusinessJsonLd();
+  // Derive genuine review statistics from published testimonials (never fabricated)
+  const reviewStats =
+    testimonials.length > 0
+      ? {
+          ratingValue: (
+            testimonials.reduce((sum, t) => sum + (t.rating || 5), 0) / testimonials.length
+          ).toFixed(1),
+          reviewCount: testimonials.length,
+        }
+      : undefined;
+
+  const jsonLd = getLocalBusinessJsonLd(reviewStats);
   const websiteJsonLd = getWebsiteJsonLd();
+  const faqJsonLd = getFaqPageJsonLd(HOME_FAQS);
 
   return (
     <>
@@ -54,6 +89,10 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
@@ -99,15 +138,12 @@ export default async function HomePage() {
 
       {/* ── Testimonials ─────────────────────────────────────────── */}
       <ScrollReveal direction="up" distance={30}>
-        <Suspense
-          fallback={
-            <div className="py-16 flex items-center justify-center">
-              <TourLoader label="Gathering verified guest stories..." />
-            </div>
-          }
-        >
-          <Testimonials />
-        </Suspense>
+        <TestimonialsStrip testimonials={testimonials} />
+      </ScrollReveal>
+
+      {/* ── Frequently Asked Questions ────────────────────────────── */}
+      <ScrollReveal direction="up" distance={30}>
+        <FaqSection />
       </ScrollReveal>
 
       {/* ── Bottom padding for mobile nav ────────────────────────── */}

@@ -31,6 +31,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const pkg = await getPackageBySlug(slug);
   if (!pkg) notFound();
 
+  const ogImage = pkg.hero_image_url
+    ? [{ url: pkg.hero_image_url, width: 1200, height: 630 }]
+    : [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: pkg.name }];
+
   return {
     title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | PADMA TOURS & TRAVELS`,
     description: pkg.seo_description ?? pkg.summary,
@@ -40,7 +44,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     openGraph: {
       title: pkg.name,
       description: pkg.summary,
-      images: pkg.hero_image_url ? [{ url: pkg.hero_image_url, width: 1200, height: 630 }] : [],
+      images: ogImage,
       type: "website",
       url: absoluteUrl(`/packages/${slug}`),
     },
@@ -48,7 +52,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       card: "summary_large_image",
       title: pkg.name,
       description: pkg.summary,
-      images: pkg.hero_image_url ? [pkg.hero_image_url] : [],
+      images: [ogImage[0].url],
     },
   };
 }

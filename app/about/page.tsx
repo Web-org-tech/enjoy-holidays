@@ -6,6 +6,8 @@ import InstagramVideoSection from "@/components/about/InstagramVideoSection";
 import { Award, Heart, Compass, Users } from "lucide-react";
 import { absoluteUrl } from "@/lib/site";
 
+import { getAboutPageJsonLd, getBreadcrumbJsonLd } from "@/lib/structured-data";
+
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
@@ -20,6 +22,21 @@ export const metadata: Metadata = {
     description:
       "Founded in 2004 in Madurai, PADMA TOURS & TRAVELS has delivered trusted daily tours, local sightseeing, and customized holiday packages across India for over two decades.",
     url: absoluteUrl("/about"),
+    type: "website",
+    images: [
+      {
+        url: absoluteUrl("/og-image.png"),
+        width: 1200,
+        height: 630,
+        alt: "About PADMA TOURS & TRAVELS Madurai",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us — PADMA TOURS & TRAVELS",
+    description: "Over 20 years of trusted travel guidance in Madurai and South India. 24/7 Service.",
+    images: [absoluteUrl("/og-image.png")],
   },
 };
 
@@ -37,8 +54,23 @@ export default async function AboutPage() {
   ]);
   const instagramVideoUrl = settings?.social_links?.instagram_video_url;
 
+  const aboutJsonLd = getAboutPageJsonLd();
+  const breadcrumbJsonLd = getBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+  ]);
+
   return (
     <>
+      {/* Structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Header */}
       <section
         className="pt-36 pb-16 grain-overlay"

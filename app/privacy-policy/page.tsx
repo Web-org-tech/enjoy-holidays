@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shield, Lock, Eye, FileText, ArrowLeft } from "lucide-react";
 import { absoluteUrl } from "@/lib/site";
+import { getBreadcrumbJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — PADMA TOURS & TRAVELS",
@@ -10,13 +11,34 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/privacy-policy"),
   },
+  openGraph: {
+    title: "Privacy Policy | PADMA TOURS & TRAVELS",
+    description: "How PADMA TOURS & TRAVELS collects and safeguards your personal information.",
+    url: absoluteUrl("/privacy-policy"),
+    type: "website",
+    images: [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: "Privacy Policy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | PADMA TOURS & TRAVELS",
+    description: "How PADMA TOURS & TRAVELS protects customer information.",
+    images: [absoluteUrl("/og-image.png")],
+  },
 };
 
 export default function PrivacyPolicyPage() {
   const lastUpdated = "September 16, 2026";
+  const breadcrumbJsonLd = getBreadcrumbJsonLd([
+    { name: "Home", href: "/" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Header */}
       <section
         className="pt-36 pb-14 grain-overlay"
