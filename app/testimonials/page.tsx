@@ -5,6 +5,7 @@ import { Star, MessageCircle, Quote, ArrowLeft } from "lucide-react";
 import { getPublishedTestimonials } from "@/lib/supabase/queries";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import ReviewModal from "@/components/home/ReviewModal";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -12,6 +13,15 @@ export const metadata: Metadata = {
   title: "Guest Reviews & Stories — PADMA TOURS & TRAVELS",
   description:
     "Read authentic reviews from travellers who explored Madurai, Tamil Nadu, Kerala, and beyond with PADMA TOURS & TRAVELS. Real experiences, real memories.",
+  alternates: {
+    canonical: absoluteUrl("/testimonials"),
+  },
+  openGraph: {
+    title: "Guest Reviews & Stories — PADMA TOURS & TRAVELS",
+    description:
+      "Read authentic reviews from travellers who explored Madurai, Tamil Nadu, Kerala, and beyond with PADMA TOURS & TRAVELS.",
+    url: absoluteUrl("/testimonials"),
+  },
 };
 
 export default async function TestimonialsPage() {

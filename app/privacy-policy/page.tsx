@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Shield, Lock, Eye, FileText, ArrowLeft } from "lucide-react";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — PADMA TOURS & TRAVELS",
   description:
     "Read how PADMA TOURS & TRAVELS collects, uses, and safeguards your personal information when booking tours and travel experiences.",
+  alternates: {
+    canonical: absoluteUrl("/privacy-policy"),
+  },
 };
 
 export default function PrivacyPolicyPage() {

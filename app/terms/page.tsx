@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FileCheck, AlertCircle, CreditCard, RotateCcw, ArrowLeft } from "lucide-react";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions — PADMA TOURS & TRAVELS",
   description:
     "Review the booking conditions, payment schedules, cancellation guidelines, and operational policies for PADMA TOURS & TRAVELS packages.",
+  alternates: {
+    canonical: absoluteUrl("/terms"),
+  },
 };
 
 export default function TermsPage() {

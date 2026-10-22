@@ -12,10 +12,15 @@ import { SkeletonCard } from "@/components/ui/Skeleton";
 import TourLoader from "@/components/ui/TourLoader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+import { absoluteUrl } from "@/lib/site";
+
 export const metadata: Metadata = {
   title: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Est. 2004)",
   description:
     "Trusted travel agency in Madurai since 2004. Daily tours, Madurai local sightseeing, temple circuits, and customized holiday packages across South India. Available 24 hours.",
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
 };
 
 export const revalidate = 3600; // ISR: revalidate every hour

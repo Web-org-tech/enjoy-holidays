@@ -4,6 +4,7 @@ import { getPublishedTestimonials, getSiteSettings } from "@/lib/supabase/querie
 import TestimonialsStrip from "@/components/home/TestimonialsStrip";
 import InstagramVideoSection from "@/components/about/InstagramVideoSection";
 import { Award, Heart, Compass, Users } from "lucide-react";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -11,6 +12,15 @@ export const metadata: Metadata = {
   title: "About Us — PADMA TOURS & TRAVELS (Est. 2004)",
   description:
     "Founded in 2004 in Madurai, PADMA TOURS & TRAVELS has delivered trusted daily tours, local sightseeing, and customized holiday packages across India for over two decades.",
+  alternates: {
+    canonical: absoluteUrl("/about"),
+  },
+  openGraph: {
+    title: "About Us — PADMA TOURS & TRAVELS (Est. 2004)",
+    description:
+      "Founded in 2004 in Madurai, PADMA TOURS & TRAVELS has delivered trusted daily tours, local sightseeing, and customized holiday packages across India for over two decades.",
+    url: absoluteUrl("/about"),
+  },
 };
 
 const values = [

@@ -1,6 +1,6 @@
 import type { Package, PackageWithDays } from "@/lib/supabase/types";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
 const SITE_NAME = "PADMA TOURS & TRAVELS";
 
 // ─── LocalBusiness JSON-LD ────────────────────────────────────────────────────
@@ -10,8 +10,8 @@ export function getLocalBusinessJsonLd() {
     "@type": "TravelAgency",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
-    image: `${SITE_URL}/logo.png`,
+    logo: absoluteUrl("/logo.png"),
+    image: absoluteUrl("/logo.png"),
     description:
       "Premier travel agency in Madurai since 2004. Offering daily tours, temple pilgrimages, local sightseeing, and customized package tours across South India and All India. 24/7 service.",
     telephone: "+91-9865987975",

@@ -2,12 +2,22 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getAllGalleryItems } from "@/lib/supabase/queries";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Gallery — Through the Lens of Our Journeys",
   description:
     "Explore stunning photos and videos from our holiday destinations — Kerala backwaters, Coorg highlands, Goa beaches and more.",
+  alternates: {
+    canonical: absoluteUrl("/gallery"),
+  },
+  openGraph: {
+    title: "Gallery — Through the Lens of Our Journeys",
+    description:
+      "Explore stunning photos and videos from our holiday destinations — Kerala backwaters, Coorg highlands, Goa beaches and more.",
+    url: absoluteUrl("/gallery"),
+  },
 };
 
 export default async function GalleryPage() {

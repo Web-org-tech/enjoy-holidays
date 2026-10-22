@@ -27,6 +27,15 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
+  // Staging / preview protection: add X-Robots-Tag: noindex, nofollow on non-canonical hosts
+  const host = request.headers.get("host") || request.nextUrl.host;
+  const isDev = host.startsWith("localhost") || host.startsWith("127.0.0.1");
+  const isCanonical = host === "www.padmacabs.in";
+
+  if (!isDev && !isCanonical) {
+    supabaseResponse.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+
   // Protect all /admin/* routes except /admin/login
   if (pathname.startsWith("/admin")) {
     const {
@@ -39,6 +48,9 @@ export async function middleware(request: NextRequest) {
         dashboardUrl.pathname = "/admin";
         const response = NextResponse.redirect(dashboardUrl);
         supabaseResponse.cookies.getAll().forEach((c) => response.cookies.set(c.name, c.value, c));
+        if (!isDev && !isCanonical) {
+          response.headers.set("X-Robots-Tag", "noindex, nofollow");
+        }
         return response;
       }
       return supabaseResponse;
@@ -50,6 +62,9 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set("redirectTo", pathname);
       const response = NextResponse.redirect(loginUrl);
       supabaseResponse.cookies.getAll().forEach((c) => response.cookies.set(c.name, c.value, c));
+      if (!isDev && !isCanonical) {
+        response.headers.set("X-Robots-Tag", "noindex, nofollow");
+      }
       return response;
     }
   }

@@ -5,6 +5,7 @@ import TopNav from "@/components/layout/TopNav";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { SITE_URL } from "@/lib/site";
 
 const dmSerifDisplay = DM_Serif_Display({
   weight: ["400"],
@@ -22,7 +23,10 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://padmatoursandtravels.in"),
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "./",
+  },
   title: {
     default: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Since 2004)",
     template: "%s | PADMA TOURS & TRAVELS",
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://padmatoursandtravels.in",
+    url: SITE_URL,
     siteName: "PADMA TOURS & TRAVELS",
     images: [
       {

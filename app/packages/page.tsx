@@ -4,6 +4,7 @@ import { getAllPublishedPackages } from "@/lib/supabase/queries";
 import { getPackageListJsonLd } from "@/lib/structured-data";
 import PackagesGrid from "@/components/packages/PackagesGrid";
 import { SkeletonCard } from "@/components/ui/Skeleton";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -11,10 +12,14 @@ export const metadata: Metadata = {
   title: "Holiday Packages — Explore All Destinations",
   description:
     "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget. Book Kerala backwaters, Coorg coffee trails, Rajasthan safaris and more.",
+  alternates: {
+    canonical: absoluteUrl("/packages"),
+  },
   openGraph: {
     title: "Holiday Packages | PADMA TOURS & TRAVELS",
     description:
       "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget.",
+    url: absoluteUrl("/packages"),
   },
 };
 
