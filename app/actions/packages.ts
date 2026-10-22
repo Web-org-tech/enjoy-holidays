@@ -2,7 +2,7 @@
 
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/supabase/auth";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 interface ItineraryActivityInput {
@@ -130,6 +130,7 @@ export async function createPackageAction(formData: FormData): Promise<void> {
     }
   }
 
+  revalidateTag("packages");
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");
@@ -251,6 +252,7 @@ export async function updatePackageAction(id: string, formData: FormData): Promi
     }
   }
 
+  revalidateTag("packages");
   revalidatePath("/admin/packages");
   revalidatePath(`/admin/packages/${id}`);
   revalidatePath("/packages");
@@ -270,6 +272,7 @@ export async function deletePackageAction(id: string): Promise<void> {
     return;
   }
 
+  revalidateTag("packages");
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");
@@ -290,6 +293,7 @@ export async function togglePackageStatusAction(id: string, currentStatus: strin
     return;
   }
 
+  revalidateTag("packages");
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");

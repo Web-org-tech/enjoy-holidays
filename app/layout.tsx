@@ -4,7 +4,7 @@ import "./globals.css";
 import TopNav from "@/components/layout/TopNav";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { getSiteSettings } from "@/lib/supabase/queries";
 import { SITE_URL } from "@/lib/site";
 
 const dmSerifDisplay = DM_Serif_Display({
@@ -89,19 +89,6 @@ export const metadata: Metadata = {
     ],
   },
 };
-
-async function getSiteSettings() {
-  try {
-    const supabase = await createServerSupabaseClient();
-    const { data } = await supabase
-      .from("site_settings")
-      .select("theme_colors, contact_info")
-      .single();
-    return data;
-  } catch {
-    return null;
-  }
-}
 
 export default async function RootLayout({
   children,
