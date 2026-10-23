@@ -80,15 +80,14 @@ export default function HeroSection(props: HeroSectionProps) {
       {/* Floating decorative dots (flight path) */}
       <div className="absolute inset-0 z-1 pointer-events-none" aria-hidden="true">
         {[...Array(6)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-white/30"
+            className="absolute w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse-soft"
             style={{
               left: `${15 + i * 14}%`,
               top: `${30 + Math.sin(i) * 20}%`,
+              animationDelay: `${i * 0.4}s`,
             }}
-            animate={{ opacity: [0.2, 0.8, 0.2], y: [-4, 4, -4] }}
-            transition={{ duration: 3 + i * 0.5, repeat: Infinity, delay: i * 0.4 }}
           />
         ))}
       </div>
@@ -128,6 +127,7 @@ export default function HeroSection(props: HeroSectionProps) {
               ) : (
                 line
               )}
+              {" "}
             </span>
           ))}
         </motion.h1>
@@ -217,12 +217,9 @@ export default function HeroSection(props: HeroSectionProps) {
         aria-hidden="true"
       >
         <span className="label text-white/50 text-[10px]">Scroll to explore</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
+        <div className="animate-bounce">
           <ChevronDown size={20} className="text-white/50" />
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

@@ -40,7 +40,6 @@ export default function BrandLogo({
           width={48}
           height={48}
           className="w-full h-full object-cover rounded-full group-hover:rotate-6 transition-transform"
-          priority
         />
       </div>
 

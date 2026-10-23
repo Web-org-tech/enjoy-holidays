@@ -90,7 +90,7 @@ export default function PackagesCarousel({ packages }: PackagesCarouselProps) {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: Math.min(i * 0.1, 0.4) }}
           >
-            <PackageCard pkg={pkg} priority={i < 2} />
+            <PackageCard pkg={pkg} priority={false} />
           </motion.div>
         ))}
       </div>

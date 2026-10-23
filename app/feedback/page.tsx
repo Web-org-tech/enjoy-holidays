@@ -5,6 +5,7 @@ import { Sparkles, Star, ShieldCheck, Heart, ArrowRight, Quote } from "lucide-re
 import FeedbackForm from "@/components/feedback/FeedbackForm";
 import FeedbackShareButtons from "@/components/feedback/FeedbackShareButtons";
 import { getPublishedTestimonials } from "@/lib/supabase/queries";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -12,6 +13,9 @@ export const metadata: Metadata = {
   title: "Guest Feedback & Reviews — PADMA TOURS & TRAVELS",
   description:
     "Share your travel story and feedback with PADMA TOURS & TRAVELS. Read authentic reviews from families, couples, and pilgrims who traveled with us.",
+  alternates: {
+    canonical: absoluteUrl("/feedback"),
+  },
 };
 
 export default async function FeedbackPage() {
