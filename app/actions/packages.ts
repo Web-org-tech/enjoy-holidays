@@ -134,6 +134,7 @@ export async function createPackageAction(formData: FormData): Promise<void> {
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 
   redirect("/admin/packages");
 }
@@ -258,6 +259,7 @@ export async function updatePackageAction(id: string, formData: FormData): Promi
   revalidatePath("/packages");
   revalidatePath(`/packages/${slug}`);
   revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 
   redirect("/admin/packages");
 }
@@ -276,6 +278,7 @@ export async function deletePackageAction(id: string): Promise<void> {
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 }
 
 export async function togglePackageStatusAction(id: string, currentStatus: string): Promise<void> {
@@ -297,4 +300,5 @@ export async function togglePackageStatusAction(id: string, currentStatus: strin
   revalidatePath("/admin/packages");
   revalidatePath("/packages");
   revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 }
