@@ -18,7 +18,7 @@ import EnquiryForm from "@/components/packages/EnquiryForm";
 export const revalidate = 3600;
 
 interface Params {
-  params: Promise<{ slug: string }>;
+  params: { slug: string } | Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {

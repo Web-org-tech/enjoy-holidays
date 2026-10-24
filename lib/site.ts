@@ -60,12 +60,16 @@ export const SITE_URL = resolveCanonicalSiteUrl(process.env.NEXT_PUBLIC_SITE_URL
  * Returns an absolute URL guaranteed to start with SITE_URL and have a clean single slash.
  */
 export function absoluteUrl(path: string = ""): string {
+  const base = (SITE_URL || CANONICAL_SITE_URL).replace(/\/+$/, "");
   if (!path || path === "/" || path === ".") {
-    return SITE_URL;
+    return base;
   }
-  const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  // Prevent any double slashes at the start of path
-  const normalizedPath = cleanPath.replace(/^\/+/, "/");
-  return `${SITE_URL}${normalizedPath}`;
+  const cleanPath = path.replace(/\/+/g, "/");
+  const normalizedPath = cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`;
+  if (normalizedPath === "/") {
+    return base;
+  }
+  return `${base}${normalizedPath}`;
 }
+
 

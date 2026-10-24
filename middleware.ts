@@ -28,9 +28,10 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Staging / preview protection: add X-Robots-Tag: noindex, nofollow on non-canonical hosts
-  const host = request.headers.get("host") || request.nextUrl.host;
-  const isDev = host.startsWith("localhost") || host.startsWith("127.0.0.1");
-  const isCanonical = host === "www.padmacabs.in";
+  const rawHost = request.headers.get("host") || request.nextUrl.host || "";
+  const host = rawHost.split(":")[0].toLowerCase();
+  const isDev = host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0";
+  const isCanonical = host === "www.padmacabs.in" || host === "padmacabs.in";
 
   if (!isDev && !isCanonical) {
     supabaseResponse.headers.set("X-Robots-Tag", "noindex, nofollow");
