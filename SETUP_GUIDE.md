@@ -42,7 +42,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...
 ADMIN_EMAIL=nirmalharish1980@gmail.com
 
 # Public Website & WhatsApp Configuration
-NEXT_PUBLIC_SITE_URL=https://www.padmacabs.in
+NEXT_PUBLIC_SITE_URL=https://padmatoursandtravels.in
 NEXT_PUBLIC_WHATSAPP_NUMBER=917010111256
 ```
 

@@ -61,24 +61,6 @@ const services = [
     accentColor: "#FBBF24",
     waMessage: "Hi Padma Tours & Travels, I would like to plan a Customized Package Tour for my upcoming holiday.",
   },
-  {
-    id: "car-rental",
-    title: "Madurai Car Rental with Driver",
-    badge: "24/7 Cab Service",
-    tagline: "Comfortable sedans, Innova Crysta & Tempo Travellers",
-    description:
-      "Reliable private car rental in Madurai with verified, courteous drivers. Available 24 hours for Madurai airport transfers, local city drops, temple circuits, and South India outstation journeys.",
-    highlights: [
-      "Madurai Airport (IXM) & Railway Transfers",
-      "Outstation Cabs to Rameswaram, Kodaikanal & Kerala",
-      "AC Sedans (Etios, Dzire) & Premium SUVs (Innova Crysta)",
-      "Tempo Travellers (12-18 Seater) for Families & Groups",
-    ],
-    features: ["Polite, Experienced Drivers", "All-Inclusive Clear Billing", "Clean & Sanitized Vehicles", "24/7 Direct Booking"],
-    gradient: "from-[#1A365D] to-[#2B6CB0]",
-    accentColor: "#63B3ED",
-    waMessage: "Hi Padma Tours & Travels, I'm looking to book a car rental with driver in Madurai.",
-  },
 ];
 
 export default function ServicesSection() {
@@ -130,8 +112,8 @@ export default function ServicesSection() {
           </motion.p>
         </div>
 
-        {/* 4 Services Cards in 2x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {/* 3 Services Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(service.waMessage)}`;
 

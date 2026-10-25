@@ -23,12 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*
-!.env.example
-!.env.local.example
-
-# audit evidence raw captures
-/audit/evidence/
+.env*.local
+.env
+.env.local
 
 # vercel
 .vercel

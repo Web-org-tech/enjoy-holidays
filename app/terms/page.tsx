@@ -1,44 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FileCheck, AlertCircle, CreditCard, RotateCcw, ArrowLeft } from "lucide-react";
-import { absoluteUrl } from "@/lib/site";
-import { getBreadcrumbJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions — PADMA TOURS & TRAVELS",
   description:
     "Review the booking conditions, payment schedules, cancellation guidelines, and operational policies for PADMA TOURS & TRAVELS packages.",
-  alternates: {
-    canonical: absoluteUrl("/terms"),
-  },
-  openGraph: {
-    title: "Terms & Conditions | PADMA TOURS & TRAVELS",
-    description: "Booking conditions and cancellation guidelines for PADMA TOURS & TRAVELS.",
-    url: absoluteUrl("/terms"),
-    type: "website",
-    images: [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: "Terms and Conditions" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Terms & Conditions | PADMA TOURS & TRAVELS",
-    description: "Booking conditions and cancellation guidelines for PADMA TOURS & TRAVELS.",
-    images: [absoluteUrl("/og-image.png")],
-  },
 };
 
 export default function TermsPage() {
   const lastUpdated = "September 16, 2026";
-  const breadcrumbJsonLd = getBreadcrumbJsonLd([
-    { name: "Home", href: "/" },
-    { name: "Terms & Conditions", href: "/terms" },
-  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
       {/* Header */}
       <section
         className="pt-36 pb-14 grain-overlay"

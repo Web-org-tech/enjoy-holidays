@@ -3,12 +3,8 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "404 — Trail Not Found | PADMA TOURS & TRAVELS",
+  title: "404 — Trail Not Found",
   description: "This trail doesn't exist on our map. Let's get you back on track.",
-  robots: {
-    index: false,
-    follow: true,
-  },
 };
 
 export default function NotFound() {
@@ -64,7 +60,7 @@ export default function NotFound() {
           Looks like this path isn&apos;t on our map. The page you&apos;re looking for may have moved or been removed.
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-bold text-sm transition-all hover:scale-105 shadow-lg"
@@ -80,12 +76,6 @@ export default function NotFound() {
           >
             <MapPin size={14} />
             Explore Packages
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-300 text-gray-700 font-semibold text-sm hover:bg-gray-100 transition-all"
-          >
-            Contact Desk
           </Link>
         </div>
       </div>

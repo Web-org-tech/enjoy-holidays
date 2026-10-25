@@ -6,7 +6,6 @@ import { Clock, Users, MapPin, ChevronRight, MessageCircle, Phone, ChevronDown }
 import { getPackageBySlug, getAllPackageSlugs, getSimilarPackages } from "@/lib/supabase/queries";
 import { getPackageJsonLd, getBreadcrumbJsonLd } from "@/lib/structured-data";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { absoluteUrl } from "@/lib/site";
 import JourneyRoad from "@/components/journey/JourneyRoad";
 import PackageCard from "@/components/packages/PackageCard";
 import Badge from "@/components/ui/Badge";
@@ -29,30 +28,25 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const pkg = await getPackageBySlug(slug);
-  if (!pkg) notFound();
+  if (!pkg) return { title: "Package Not Found" };
 
-  const ogImage = pkg.hero_image_url
-    ? [{ url: pkg.hero_image_url, width: 1200, height: 630 }]
-    : [{ url: absoluteUrl("/og-image.png"), width: 1200, height: 630, alt: pkg.name }];
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
 
   return {
     title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | PADMA TOURS & TRAVELS`,
     description: pkg.seo_description ?? pkg.summary,
-    alternates: {
-      canonical: absoluteUrl(`/packages/${slug}`),
-    },
     openGraph: {
       title: pkg.name,
       description: pkg.summary,
-      images: ogImage,
+      images: pkg.hero_image_url ? [{ url: pkg.hero_image_url, width: 1200, height: 630 }] : [],
       type: "website",
-      url: absoluteUrl(`/packages/${slug}`),
+      url: `${siteUrl}/packages/${slug}`,
     },
     twitter: {
       card: "summary_large_image",
       title: pkg.name,
       description: pkg.summary,
-      images: [ogImage[0].url],
+      images: pkg.hero_image_url ? [pkg.hero_image_url] : [],
     },
   };
 }

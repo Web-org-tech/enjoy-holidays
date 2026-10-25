@@ -1,61 +1,32 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getAllPublishedPackages } from "@/lib/supabase/queries";
-import { getPackageListJsonLd, getBreadcrumbJsonLd } from "@/lib/structured-data";
+import { getPackageListJsonLd } from "@/lib/structured-data";
 import PackagesGrid from "@/components/packages/PackagesGrid";
 import { SkeletonCard } from "@/components/ui/Skeleton";
-import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Tour Packages from Madurai — South India Holiday Tours | PADMA TOURS & TRAVELS",
+  title: "Holiday Packages — Explore All Destinations",
   description:
-    "Explore handcrafted holiday packages from Madurai. Temple circuits, Rameswaram, Kodaikanal, Kerala backwaters, Munnar, and customized India holiday tours. Available 24/7.",
-  alternates: {
-    canonical: absoluteUrl("/packages"),
-  },
+    "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget. Book Kerala backwaters, Coorg coffee trails, Rajasthan safaris and more.",
   openGraph: {
-    title: "Tour Packages from Madurai — South India Holiday Tours | PADMA TOURS & TRAVELS",
+    title: "Holiday Packages | PADMA TOURS & TRAVELS",
     description:
-      "Explore handcrafted holiday packages from Madurai. Temple circuits, Rameswaram, Kodaikanal, Kerala backwaters, and customized South India holiday tours.",
-    url: absoluteUrl("/packages"),
-    type: "website",
-    images: [
-      {
-        url: absoluteUrl("/og-image.png"),
-        width: 1200,
-        height: 630,
-        alt: "Tour Packages from Madurai — PADMA TOURS & TRAVELS",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Tour Packages from Madurai | PADMA TOURS & TRAVELS",
-    description:
-      "Explore handcrafted holiday packages from Madurai. Temple circuits, Rameswaram, Kodaikanal, Kerala backwaters, and customized India tours.",
-    images: [absoluteUrl("/og-image.png")],
+      "Browse all handcrafted holiday packages across India. Filter by destination, duration, and budget.",
   },
 };
 
 async function PackagesList() {
   const packages = await getAllPublishedPackages();
-  const packageListJsonLd = getPackageListJsonLd(packages);
-  const breadcrumbJsonLd = getBreadcrumbJsonLd([
-    { name: "Home", href: "/" },
-    { name: "Tour Packages", href: "/packages" },
-  ]);
+  const jsonLd = getPackageListJsonLd(packages);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(packageListJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <PackagesGrid packages={packages} />
     </>

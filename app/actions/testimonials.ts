@@ -2,7 +2,7 @@
 
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/supabase/auth";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function createTestimonialAction(formData: FormData): Promise<void> {
   await requireAdmin();
@@ -31,9 +31,7 @@ export async function createTestimonialAction(formData: FormData): Promise<void>
     return;
   }
 
-  revalidateTag("testimonials");
   revalidatePath("/admin/testimonials");
-  revalidatePath("/testimonials");
   revalidatePath("/");
 }
 
@@ -51,9 +49,7 @@ export async function toggleTestimonialPublishAction(id: string, currentPublishe
     return;
   }
 
-  revalidateTag("testimonials");
   revalidatePath("/admin/testimonials");
-  revalidatePath("/testimonials");
   revalidatePath("/");
 }
 
@@ -67,9 +63,7 @@ export async function deleteTestimonialAction(id: string): Promise<void> {
     return;
   }
 
-  revalidateTag("testimonials");
   revalidatePath("/admin/testimonials");
-  revalidatePath("/testimonials");
   revalidatePath("/");
 }
 
