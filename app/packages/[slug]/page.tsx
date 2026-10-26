@@ -30,10 +30,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const pkg = await getPackageBySlug(slug);
   if (!pkg) return { title: "Package Not Found" };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.padmacabs.in";
 
   return {
-    title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N | PADMA TOURS & TRAVELS`,
+    title: pkg.seo_title ?? `${pkg.name} — ${pkg.duration_days}D/${pkg.duration_nights}N`,
     description: pkg.seo_description ?? pkg.summary,
     openGraph: {
       title: pkg.name,

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Guest Feedback & Reviews — PADMA TOURS & TRAVELS",
+  title: "Guest Feedback & Reviews",
   description:
     "Share your travel experience, photos, and star review with PADMA TOURS & TRAVELS (Madurai). Rate your journey and help fellow travellers plan their dream trip.",
   alternates: {
-    canonical: "https://padmatoursandtravels.in/feedback",
+    canonical: "https://www.padmacabs.in/feedback",
   },
   openGraph: {
     title: "Submit Guest Review — PADMA TOURS & TRAVELS",
     description:
       "Share your travel experience, photos, and rating with PADMA TOURS & TRAVELS.",
-    url: "https://padmatoursandtravels.in/feedback",
+    url: "https://www.padmacabs.in/feedback",
     type: "website",
     images: [{ url: "/logo.png", width: 512, height: 512, alt: "Padma Tours and Travels" }],
   },

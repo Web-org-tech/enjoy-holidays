@@ -9,7 +9,7 @@ import { getPublishedTestimonials } from "@/lib/supabase/queries";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Guest Feedback & Reviews — PADMA TOURS & TRAVELS",
+  title: "Guest Feedback & Reviews",
   description:
     "Share your travel story and feedback with PADMA TOURS & TRAVELS. Read authentic reviews from families, couples, and pilgrims who traveled with us.",
 };

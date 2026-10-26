@@ -22,7 +22,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://padmatoursandtravels.in"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.padmacabs.in"),
   title: {
     default: "PADMA TOURS & TRAVELS — Daily Tours, Sightseeing & Packages (Since 2004)",
     template: "%s | PADMA TOURS & TRAVELS",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://padmatoursandtravels.in",
+    url: "https://www.padmacabs.in",
     siteName: "PADMA TOURS & TRAVELS",
     images: [
       {
@@ -75,13 +75,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/logo.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
     ],
-    shortcut: "/logo.png",
+    shortcut: "/icon.png",
     apple: [
-      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
 };
@@ -120,8 +118,6 @@ export default async function RootLayout({
       className={`${dmSerifDisplay.variable} ${manrope.variable}`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
         {dynamicTheme && (
           <style
             id="dynamic-theme"

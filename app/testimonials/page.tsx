@@ -9,7 +9,7 @@ import ReviewModal from "@/components/home/ReviewModal";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Guest Reviews & Stories — PADMA TOURS & TRAVELS",
+  title: "Guest Reviews & Stories",
   description:
     "Read authentic reviews from travellers who explored Madurai, Tamil Nadu, Kerala, and beyond with PADMA TOURS & TRAVELS. Real experiences, real memories.",
 };

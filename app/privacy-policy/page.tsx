@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Shield, Lock, Eye, FileText, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — PADMA TOURS & TRAVELS",
+  title: "Privacy Policy",
   description:
     "Read how PADMA TOURS & TRAVELS collects, uses, and safeguards your personal information when booking tours and travel experiences.",
 };

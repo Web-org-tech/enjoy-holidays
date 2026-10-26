@@ -1,8 +1,21 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
+function getCanonicalBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (
+    envUrl &&
+    !envUrl.includes("localhost") &&
+    !envUrl.includes("127.0.0.1") &&
+    !envUrl.includes(".vercel.app")
+  ) {
+    return envUrl.replace(/\/+$/, "");
+  }
+  return "https://www.padmacabs.in";
+}
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = getCanonicalBaseUrl();
+
   return {
     rules: [
       {
@@ -11,6 +24,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/admin/*"],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

@@ -1,6 +1,19 @@
 import type { Package, PackageWithDays } from "@/lib/supabase/types";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://padmatoursandtravels.in";
+function getCanonicalBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (
+    envUrl &&
+    !envUrl.includes("localhost") &&
+    !envUrl.includes("127.0.0.1") &&
+    !envUrl.includes(".vercel.app")
+  ) {
+    return envUrl.replace(/\/+$/, "");
+  }
+  return "https://www.padmacabs.in";
+}
+
+const SITE_URL = getCanonicalBaseUrl();
 const SITE_NAME = "PADMA TOURS & TRAVELS";
 
 // ─── LocalBusiness JSON-LD ────────────────────────────────────────────────────

@@ -6,17 +6,17 @@ import EnquiryForm from "@/components/packages/EnquiryForm";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Contact Us — PADMA TOURS & TRAVELS (Madurai • 24/7 Service)",
+  title: "Contact Us — Madurai 24/7 Travel Support & Cab Booking",
   description:
     "Get in touch with PADMA TOURS & TRAVELS in Madurai. Available 24 hours a day for daily tours, Madurai local sightseeing, cab bookings, and customized holiday packages across India. Call +91 98659 87975 or WhatsApp +91 70101 11256.",
   alternates: {
-    canonical: "https://padmatoursandtravels.in/contact",
+    canonical: "https://www.padmacabs.in/contact",
   },
   openGraph: {
     title: "Contact PADMA TOURS & TRAVELS (Madurai) — 24/7 Support",
     description:
       "Planning a tour, sightseeing, or car rental? Reach us anytime 24/7 via WhatsApp, Phone, or at our Madurai Racecourse Colony office.",
-    url: "https://padmatoursandtravels.in/contact",
+    url: "https://www.padmacabs.in/contact",
     type: "website",
     images: [{ url: "/logo.png", width: 512, height: 512, alt: "Padma Tours and Travels Madurai" }],
   },

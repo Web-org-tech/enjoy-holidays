@@ -4,7 +4,7 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 
 export const metadata: Metadata = {
-  title: "Admin Panel — PADMA TOURS & TRAVELS",
+  title: "Admin Panel",
   robots: { index: false, follow: false },
 };
 

@@ -8,7 +8,7 @@ import { Award, Heart, Compass, Users } from "lucide-react";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "About Us — PADMA TOURS & TRAVELS (Est. 2004)",
+  title: "About Us — 20+ Years of Travel Excellence (Est. 2004)",
   description:
     "Founded in 2004 in Madurai, PADMA TOURS & TRAVELS has delivered trusted daily tours, local sightseeing, and customized holiday packages across India for over two decades.",
 };

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FileCheck, AlertCircle, CreditCard, RotateCcw, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — PADMA TOURS & TRAVELS",
+  title: "Terms & Conditions",
   description:
     "Review the booking conditions, payment schedules, cancellation guidelines, and operational policies for PADMA TOURS & TRAVELS packages.",
 };
