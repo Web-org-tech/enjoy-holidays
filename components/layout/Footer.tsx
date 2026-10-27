@@ -156,10 +156,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} PADMA TOURS &amp; TRAVELS. All rights reserved.
+            © {new Date().getFullYear()} PADMA TOURS & TRAVELS. All rights reserved.
           </p>
           <p className="text-white/40 text-xs">
-            Handcrafted travel experiences across Madurai, Tamil Nadu &amp; All India.
+            Handcrafted travel experiences across Madurai, Tamil Nadu & All India.
           </p>
         </div>
       </div>

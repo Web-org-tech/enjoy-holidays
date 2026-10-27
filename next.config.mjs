@@ -8,7 +8,15 @@ if (siteUrl) {
 }
 
 const allowedOrigins = Array.from(
-  new Set(["localhost:3000", "127.0.0.1:3000", siteHost, "padmatoursandtravels.in"])
+  new Set([
+    "localhost:3000",
+    "127.0.0.1:3000",
+    siteHost,
+    "www.padmacabs.in",
+    "padmacabs.in",
+    "enjoy-holidays.vercel.app",
+    "padmatoursandtravels.in",
+  ])
 );
 
 const nextConfig = {

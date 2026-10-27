@@ -58,7 +58,7 @@ export default function BrandLogo({
             isWhite ? "text-[var(--color-secondary-light)]" : "text-[var(--color-primary)]"
           }`}
         >
-          TOURS &amp; TRAVELS
+          TOURS & TRAVELS
         </span>
         <span
           className={`text-[8px] font-semibold tracking-wider transition-colors duration-300 ${

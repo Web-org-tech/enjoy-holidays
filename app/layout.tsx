@@ -116,6 +116,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${dmSerifDisplay.variable} ${manrope.variable}`}
+      suppressHydrationWarning
     >
       <head>
         {dynamicTheme && (
@@ -127,7 +128,7 @@ export default async function RootLayout({
           />
         )}
       </head>
-      <body className="bg-cream font-sans antialiased">
+      <body className="bg-cream font-sans antialiased" suppressHydrationWarning>
         {/* Accessibility: skip to main content */}
         <a href="#main-content" className="skip-to-content">
           Skip to main content
